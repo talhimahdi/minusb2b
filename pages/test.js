@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import API from "../webservices";
 
-function test() {
+const test = () => {
   useEffect(
     () => async () => {
       const products = await API.products.all();
@@ -12,6 +12,6 @@ function test() {
   );
 
   return <div>test</div>;
-}
+};
 
 export default test;

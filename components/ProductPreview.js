@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { XCircleIcon } from "@heroicons/react/solid";
 import { Navigation, Pagination } from "swiper";
+import Link from "next/link";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -173,9 +174,9 @@ export default function ProductPreview({
                       <div>
                         <div className="space-y-1">
                           <h3 className="leading-none text-3xl text-black">
-                            <a href={productState?.href}>
-                              {productState?.name}
-                            </a>
+                            <Link href={productState?.href}>
+                              <a>{productState?.name}</a>
+                            </Link>
                           </h3>
                           <h2 className="leading-none text-gray-500 font-semibold">
                             {productState?.legend}

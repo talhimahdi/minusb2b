@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AddToCart from "./AddToCart";
 import ProductPreview from "./ProductPreview";
 import QuantityInput from "./QuantityInput";
+import Link from "next/link";
 
 function SingleProductList({ product, addProduct }) {
   // const clicked_product = {
@@ -272,7 +273,9 @@ function SingleProductList({ product, addProduct }) {
               </span>
               <div className="space-y-0.5">
                 <h3 className="leading-none text-2xl text-black font-londrina">
-                  <a href={productState?.href}>{productState?.name}</a>
+                  <Link href={productState?.href}>
+                    <a>{productState?.name}</a>
+                  </Link>
                 </h3>
                 <h2 className="leading-none text-black">
                   {productState?.legend}
