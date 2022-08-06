@@ -173,34 +173,35 @@ function Cart({ open, close }) {
                         </div>
 
                         {/* Logo */}
-                        <a
-                          href="/"
-                          className="flex-none relative w-36 h-16 md:w-48 md:h-20"
-                        >
-                          {/* <Image
+                        <Link href="/">
+                          <a className="flex-none relative w-36 h-16 md:w-48 md:h-20">
+                            {/* <Image
                             src="/logo-minus-pro.svg"
                             layout="fill"
                             className="relative"
                             alt=""
                           /> */}
-                          <img
-                            src="/logo-minus-pro.svg"
-                            alt=""
-                            className="relative"
-                          />
-                        </a>
+                            <img
+                              src="/logo-minus-pro.svg"
+                              alt=""
+                              className="relative"
+                            />
+                          </a>
+                        </Link>
 
                         <div className="flex items-center justify-end space-x-0 md:space-x-6">
                           {/* Account */}
-                          <a
-                            href="#"
-                            className="p-2 flex items-center text-black space-x-2"
-                          >
-                            <UserIcon className="w-6 h-6" aria-hidden="true" />
-                            <span className="hidden md:block uppercase font-bold">
-                              Compte
-                            </span>
-                          </a>
+                          <Link href="#">
+                            <a className="p-2 flex items-center text-black space-x-2">
+                              <UserIcon
+                                className="w-6 h-6"
+                                aria-hidden="true"
+                              />
+                              <span className="hidden md:block uppercase font-bold">
+                                Compte
+                              </span>
+                            </a>
+                          </Link>
 
                           {/* Cart */}
                           <a
