@@ -1,0 +1,64 @@
+/* abel-regular - latin */
+@font-face {
+  font-family: "Abel";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../public/fonts/abel/abel-v18-latin-regular.eot"); /* IE9 Compat Modes */
+  src: local(""),
+    url("../public/fonts/abel/abel-v18-latin-regular.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("../public/fonts/abel/abel-v18-latin-regular.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../public/fonts/abel/abel-v18-latin-regular.woff") format("woff"),
+    /* Modern Browsers */ url("../public/fonts/abel/abel-v18-latin-regular.ttf")
+      format("truetype"),
+    /* Safari, Android, iOS */
+      url("../public/fonts/abel/abel-v18-latin-regular.svg#Abel") format("svg"); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: "Londrina_Solid";
+  font-style: bold;
+  font-weight: 400;
+  src: local(""),
+    url("../public/fonts/londrina_Solid/LondrinaSolid-Black.ttf")
+      format("truetype"),
+    url("../public/fonts/londrina_Solid/LondrinaSolid-Light.ttf")
+      format("truetype"),
+    url("../public/fonts/londrina_Solid/LondrinaSolid-Regular.ttf")
+      format("truetype"),
+    url("../public/fonts/londrina_Solid/LondrinaSolid-Thin.ttf")
+      format("truetype");
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .swiper {
+  overflow: unset !important;
+} */
+
+@layer utilities {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.DETAILS ul {
+  list-style: disc;
+  margin: 0;
+  padding: 0;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #252525 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #252525 !important;
+}
