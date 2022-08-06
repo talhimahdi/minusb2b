@@ -273,7 +273,7 @@ function SingleProductList({ product, addProduct }) {
               </span>
               <div className="space-y-0.5">
                 <h3 className="leading-none text-2xl text-black font-londrina">
-                  <Link href={productState?.href}>
+                  <Link href={"#"}>
                     <a>{productState?.name}</a>
                   </Link>
                 </h3>
