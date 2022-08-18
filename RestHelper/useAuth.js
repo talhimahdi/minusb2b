@@ -1,6 +1,7 @@
 // Hook (use-auth.js)
-import React, { useState, useContext, createContext } from "react";
-import { Urls } from "../configs/configs";
+import React, { useState, useContext, createContext, useEffect } from "react";
+import { Urls, salt } from "../configs/configs";
+import { useRouter } from "next/router";
 
 const AuthContext = createContext();
 // Provider component that wraps your app and makes auth object ...
@@ -16,7 +17,10 @@ export const useAuth = () => {
 };
 // Provider hook that creates auth object and handles state
 function useAuthProvider() {
-  const [user, setUser] = useState(null);
+  const router = useRouter();
+  const [user, setUser] = useState({});
+  const [cart, setCart] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const login = async ({ email, password }) => {
     if (email != "" && password != "") {
@@ -24,31 +28,55 @@ function useAuthProvider() {
         method: "POST",
         headers: {
           Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({ email, password }),
+        body: new URLSearchParams({
+          email: email,
+          password: password,
+        }),
       };
 
-      await fetch(Urls.login, requestOptions)
+      return await fetch(Urls.login, requestOptions)
         .then((response) => response?.json())
-        .then((result) => {
-          if (result?.success && result?.code == 200) {
-            setUser(result?.psdata);
+        .then((response) => {
+          if (response?.results?.succes && response?.results?.code === 200) {
+            setUser(response?.results?.data?.customer);
+            // setCart(response?.results?.data?.cart);
             if (typeof window !== "undefined") {
-              localStorage.setItem("user", JSON.stringify(result?.psdata));
-              sessionStorage.setItem(
-                "item_key",
-                JSON.stringify(result?.psdata)
+              localStorage.setItem(
+                "local_data",
+                encrypt(response?.results?.data, salt)
               );
             }
-            console.log(result);
+            router.push("/products");
           } else {
-            console.log("Error: " + result.psdata);
+            console.log("Error: " + response?.results?.message);
           }
+          return response?.results;
         })
         .catch((error) => console.log("error", error));
     }
 
-    return { ...user };
+    // return { ...user, ...cart };
+  };
+
+  const getCart = async (cartId) => {
+    var requestOptions = {
+      method: "GET",
+    };
+
+    const result = await fetch(Urls.getCart(cartId), requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => console.log("error", error));
+
+    if (result?.code == 200 && result?.success && result?.cart) {
+      setCart(result?.cart);
+      return true;
+    }
+    return false;
   };
 
   const register = ({ email, password }) => {
@@ -57,11 +85,45 @@ function useAuthProvider() {
   const logout = () => {
     return {};
   };
+
+  const getUserLocal = () => {
+    if (typeof window !== "undefined" && localStorage.length > 0) {
+      const localData = decrypt(localStorage.getItem("local_data"), salt);
+      setUser(localData?.customer);
+      return localData;
+    }
+    return false;
+  };
+
   // Return the user object and auth methods
   return {
     user,
+    getUserLocal,
+    getCart,
     login,
     register,
     logout,
+    cart,
+    setCart,
+    setUser,
+    isLoaded,
   };
+}
+
+function encrypt(o, salt) {
+  o = JSON.stringify(o).split("");
+  for (var i = 0, l = o.length; i < l; i++)
+    if (o[i] == "{") o[i] = "}";
+    else if (o[i] == "}") o[i] = "{";
+  return encodeURI(salt + o.join(""));
+}
+
+function decrypt(o, salt) {
+  o = decodeURI(o);
+  if (salt && o.indexOf(salt) != 0) return false;
+  o = o.substring(salt.length).split("");
+  for (var i = 0, l = o.length; i < l; i++)
+    if (o[i] == "{") o[i] = "}";
+    else if (o[i] == "}") o[i] = "{";
+  return JSON.parse(o.join(""));
 }

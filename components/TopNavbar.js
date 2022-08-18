@@ -12,15 +12,7 @@ export default function TopNavbar() {
               </span>
             </p>
           </div>
-          <div className="flex-1 text-center">
-            <Link href={"/products"}>
-              <a>
-                <p className="text-secondary truncate font-semibold">
-                  Liste des Produits
-                </p>
-              </a>
-            </Link>
-          </div>
+
           <div className="flex-1 text-end sm:order-3 sm:ml-2">
             <p className="font-medium text-secondary truncate">
               <span className="md:hidden">07 84 86 49 81</span>

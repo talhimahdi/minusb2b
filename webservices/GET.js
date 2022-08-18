@@ -20,17 +20,19 @@ export default class GET {
           data[this.name].forEach((item) => {
             this.one(item.id).then((item) => {
               for (var i in item) {
-                console.log(item[i]);
-                // if (this.name == "products") {
-                //   item[i] = {
-                //     ...item[i],
-                //     images: API.images.getProductImages(
-                //       item.id,
-                //       item.associations.images
-                //     ),
-                //   };
-                // }
-                returnData.push(item[i]);
+                //console.log(item[i]);
+                if (this.name == "products") {
+                  const productItem = {
+                    ...item[i],
+                    images: API.images.getProductImages(
+                      item[i].id,
+                      item[i].associations.images
+                    ),
+                  };
+                  returnData.push(productItem);
+                } else {
+                  returnData.push(item[i]);
+                }
                 break;
               }
 

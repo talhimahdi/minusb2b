@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SearchIcon } from "@heroicons/react/solid";
 import SingleProductList from "./SingleProductList";
 
-function ProductList({ products, addProduct }) {
+function ProductList({ products }) {
   const [query, setQuery] = useState("");
   const [productsState, setProductsState] = useState(products);
 
@@ -10,7 +10,8 @@ function ProductList({ products, addProduct }) {
     setQuery(keyword);
     console.log(query);
   };
-  if (productsState?.length < 1) {
+
+  if (products?.length < 1) {
     return (
       <div className="bg-primary pt-20 -mt-20">
         <div className="max-w-sm mx-auto md:max-w-7xl my-5 py-5">
@@ -49,22 +50,20 @@ function ProductList({ products, addProduct }) {
         </div>
         {/* Products */}
         <section className="space-y-6 mt-4">
-          {productsState?.filter((product) =>
-            product.name.toLowerCase().includes(query)
+          {products?.filter((product) =>
+            product?.name?.toLowerCase().includes(query)
           ).length > 0 ? (
-            productsState
-              ?.filter((product) => product.name.toLowerCase().includes(query))
+            products
+              ?.filter((product) =>
+                product?.name?.toLowerCase().includes(query)
+              )
               .map((product) => (
-                <SingleProductList
-                  key={product?.id_product}
-                  product={product}
-                  addProduct={addProduct}
-                />
+                <SingleProductList key={product?.id} product={product} />
               ))
           ) : (
             <div className="bg-primary pt-20 -mt-20">
               <div className="max-w-sm mx-auto md:max-w-7xl my-5 py-5">
-                No products to show!?
+                No products to show!
               </div>
             </div>
           )}

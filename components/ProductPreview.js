@@ -8,94 +8,12 @@ import Link from "next/link";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import QuantityInput from "./QuantityInput";
-import { Urls } from "../configs/configs";
 import AddToCart from "./AddToCart";
+import ResponseModal from "./ResponseModal";
 
-const selectedProduct = {
-  id_product: 1,
-  name: "T-shirt imprimé colibri",
-  available_for_order: "1",
-  show_price: "1",
-  new_products: "0",
-  on_sale_products: "0",
-  quantity: 0,
-  minimal_quantity: "1",
-  allow_out_of_stock: "0",
-  discount_percentage: 20,
-  price: "28,68 €",
-  float_price: 28.68,
-  discount_price: "22,94 €",
-  discount_float_price: 22.944,
-  images: [
-    {
-      src: "/preview_images/hummingbird-printed-t-shirt-1.jpg",
-    },
-    {
-      src: "/preview_images/hummingbird-printed-t-shirt-2.jpg",
-    },
-  ],
-  cover_image:
-    "http://localhost/prestaboutique/1-large_default/hummingbird-printed-t-shirt.jpg",
-  combinations: [],
-  options: [],
-  description:
-    "<p><span></span><span></span><span style=\"white-space:pre-wrap;\">Mon papa chou, ma fille adorée ! Quel lien incroyable que celui qui unit un père et sa fille ! Un livre plein d'humour et de légèreté à remplir rien qu'à deux pour profiter de cette relation si particulière. Que l'on consomme une page par jour ou toutes d'un coup, père et fille sont certains de partager un moment de complicité !<br /><br />Une belle idée cadeau pour la fête des pères, le Noël d'un papa...<br /><br />Format : 15 x 21 cm, 60 pages<br /><br />Couverture : souple<br /><br />Couleur : Quadrichromie et un beau corail pantone<br /><br />Âge : à partir de 6 ans<br /><br />Ce livre à remplir est imprimé dans le Nord de la France. Votre commande est ensuite préparée avec amour dans un ESAT (atelier protégé) par des travailleurs handicapés. Un partenariat qui met du sens dans notre entreprise Minus.<br /><br />Minus Editions imagine des livres et des jeux qui créent du lien entre les enfants et leurs parents.<br /></span></p>",
-  description_short:
-    '<ul>\r\n<li><span style="white-space:pre-wrap;">22 œuvres majeures de l\'Histoire de l\'Art</span></li>\r\n<li><span style="white-space:pre-wrap;">3 façons de jouer pour alterner le plaisir d\'apprendre</span></li>\r\n<li><span style="white-space:pre-wrap;">Une façon ludique d\'apprendre les bases de l\'Art</span></li>\r\n<li><span style="white-space:pre-wrap;">À partir de 5 ans pour jouer en famille</span></li>\r\n<li><span style="white-space:pre-wrap;">Avec un livret explicatif pour en savoir plus sur les œuvres et les artistes</span></li>\r\n</ul>',
-  reference: "demo_1",
-  category_name: "hommes",
-  manufacturer_name: "Studio Design",
-  product_info: [
-    {
-      name: "Marque",
-      value: "Studio Design",
-    },
-    {
-      name: "SKU",
-      value: "demo_1",
-    },
-    {
-      name: "Condition",
-      value: "New",
-    },
-    {
-      name: "Composition",
-      value: "Coton",
-    },
-    {
-      name: "Propriété",
-      value: "Manches courtes",
-    },
-  ],
-  accessories: [],
-  customization_fields: {
-    is_customizable: "1",
-    customizable_items: [
-      {
-        id_customization_field: "2",
-        required: "1",
-        title: "Slogan",
-        type: "text",
-      },
-    ],
-  },
-  pack_products: [],
-  seller_info: [],
-  product_attachments_array: [],
-  // product_url:
-  //   "http://localhost/prestaboutique/hommes/1-hummingbird-printed-t-shirt.html",
-  groups: [],
-};
-
-export default function ProductPreview({
-  isOpen,
-  setIsOpen,
-  product,
-  addProduct,
-  onchange,
-}) {
+export default function ProductPreview({ isOpen, setIsOpen, product }) {
   const [productState, setProductState] = useState(product);
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -109,7 +27,17 @@ export default function ProductPreview({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-white bg-opacity-90 transition-opacity" />
+          <div>
+            <div className="fixed inset-0 bg-white bg-opacity-90 transition-opacity" />
+            {modalOpen && (
+              <ResponseModal
+                title={"Produit ajouté avec succes!"}
+                description={""}
+                open={modalOpen}
+                setModalOpen={setModalOpen}
+              />
+            )}
+          </div>
         </Transition.Child>
 
         <div className="fixed z-10 inset-0 overflow-y-auto ">
@@ -160,7 +88,7 @@ export default function ProductPreview({
                         // onSlideChange={() => console.log("slide change")}
                         // onSwiper={(swiper) => console.log(swiper)}
                       >
-                        {productState?.all_images?.map((image, index) => (
+                        {productState?.images?.map((image, index) => (
                           <SwiperSlide key={index} className="w-full">
                             <img
                               src={image?.url}
@@ -174,7 +102,7 @@ export default function ProductPreview({
                       <div>
                         <div className="space-y-1">
                           <h3 className="leading-none text-3xl text-black">
-                            <Link href={productState?.href}>
+                            <Link href={"#"}>
                               <a>{productState?.name}</a>
                             </Link>
                           </h3>
@@ -184,7 +112,7 @@ export default function ProductPreview({
                         </div>
                         <div className="pt-0 sm:pt-5">
                           <h2 className="text-black text-3xl font-semibold">
-                            {productState?.price}
+                            {parseFloat(productState?.price).toFixed(2)} €
                           </h2>
                         </div>
                         <div className="sm:mt-10">
@@ -201,7 +129,10 @@ export default function ProductPreview({
                           max={150}
                           min={1}
                           product={productState}
-                          onChange={onchange}
+                          idProduct={productState?.id}
+                          btnVisible={true}
+                          btnText={"Je le veux !"}
+                          setModalOpen={setModalOpen}
                         />
                       </div>
                     </div>

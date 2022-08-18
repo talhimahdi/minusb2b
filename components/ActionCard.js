@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Urls } from "../configs/configs";
 
-export default function ActionCard({ onLogin }) {
+export default function ActionCard({ onLogin, errorMessage = "" }) {
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
@@ -120,6 +120,9 @@ export default function ActionCard({ onLogin }) {
                       />
                     </div>
                   </div>
+                  <div>
+                    <p>{errorMessage}</p>
+                  </div>
 
                   <div className="flex flex-col items-center mb-5 md:mb-0">
                     <p>Pas encore de compte ?</p>
@@ -172,34 +175,4 @@ export default function ActionCard({ onLogin }) {
       </div>
     </div>
   );
-
-  //   return (
-  //     <>
-  //       <div className="flex w-32 h-32 object-center object-cover">
-  //         <Image src={"/images/info1.png"} width={400} height={400} />
-  //       </div>
-  //       <div className="flex max-w-md bg-blue-100 shadow sm:rounded-lg mx-2 items-center">
-  //         <div className="flex flex-col px-4 py-5 sm:p-6 items-center">
-  //           <h3 className="text-lg leading-6 font-medium text-gray-900 font-LondrinaSolid">
-  //             Delete your account
-  //           </h3>
-  //           <div className="mt-2 max-w-xl text-sm text-gray-500">
-  //             <p>
-  //               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cur id
-  //               non ita fit? Commoda autem et incommoda in eo genere sunt, quae
-  //               praeposita et reiecta diximus; Duo Reges: constructio interrete.
-  //             </p>
-  //           </div>
-  //           <div className="mt-5">
-  //             <button
-  //               type="button"
-  //               className="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
-  //             >
-  //               Delete account
-  //             </button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </>
-  //   );
 }

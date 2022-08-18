@@ -1,18 +1,27 @@
-const baseUrl = "http://localhost/prestaboutique/rest/";
+const salt = "KB9VMZW 15USVQ CR98RPM 7JBZB 4XKP6Q5";
+
+// const baseUrl = "http://localhost/prestaboutique/rest/";
+const ws_key = "7JBZBCR98RPM4XKP6Q5KB9VMZW15USVQ";
+const output_format = "JSON";
+
+const baseUrl = "http://localhost/prestaboutique/api/";
 const Urls = {
-  register: baseUrl + "register",
-  login: baseUrl + "login",
-  logout: baseUrl + "logout",
-  productList: baseUrl + "featuredproducts",
-  productDetails: baseUrl + "productdetail?product_id=",
-  getCart: baseUrl + "cart?image_size=medium_default",
-  updateCart: (id, qty) => {
-    // &id_product_attribute=11
-    return (
-      baseUrl +
-      `cart?update=1&id_product=${id}&op=up&action=update&image_size=medium_default&qty=${qty}`
-    );
-  },
+  // register: baseUrl + "register",
+  login:
+    baseUrl + `restapi/login?output_format=${output_format}&ws_key=${ws_key}`,
+  // logout: baseUrl + "logout",
+  productList:
+    baseUrl +
+    `restapi/products/?output_format=${output_format}&ws_key=${ws_key}&limit=0,100&sort=id_ASC`,
+  getCart: (cartId) =>
+    baseUrl +
+    `restapi/getCart/${cartId}/?output_format=${output_format}&ws_key=${ws_key}`,
+  addToCart:
+    baseUrl +
+    `restapi/addToCart/?output_format=${output_format}&ws_key=${ws_key}`,
+  deleteFromCart:
+    baseUrl +
+    `restapi/deleteFromCart/?output_format=${output_format}&ws_key=${ws_key}`,
 };
 
-export { baseUrl, Urls };
+export { Urls, salt };

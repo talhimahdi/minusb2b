@@ -11,10 +11,7 @@ export default function Header() {
   return (
     <div className="bg-white">
       <header className="relative bg-white">
-        <nav
-          aria-label="Top"
-          className="max-w-7xl mx-auto px-4 py-5 sm:px-6 lg:px-8"
-        >
+        <nav aria-label="Top" className="max-w-7xl mx-auto px-4 md:px-0 py-5">
           <div className="flex items-center justify-between">
             <div className="h-full flex space-x-8">
               <Link href="#">
@@ -82,18 +79,3 @@ export default function Header() {
     </div>
   );
 }
-
-// <div className="flex px-2 md:px-16 py-3 justify-between bg-white">
-//     <Link href="#"><a>
-//         <span className="flex">
-//             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-//                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-//             </svg>
-
-//             <div>
-//                 <span className="hidden md:block text-base">RETOURNER SUR LE SITE PRINCIPAL</span>
-//                 <span className="block md:hidden">SITE B2C</span>
-//             </div>
-//         </span>
-//     </a></Link>
-// </div>

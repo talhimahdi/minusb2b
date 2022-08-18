@@ -1,40 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import ActionCard from "../components/ActionCard";
 import Cover from "../components/Cover";
 import Infos from "../components/Infos";
 import { useAuth } from "../RestHelper/useAuth";
+import { Result } from "postcss";
 
 export default function Connexion() {
+  const router = useRouter();
   const auth = useAuth();
+  const [renderUi, setRenderUi] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const onLogin = ({ email, password }) => {
-    auth.login({ email, password });
+  useEffect(() => {
+    if (auth?.getUserLocal()) {
+      router.push("/products");
+    } else setRenderUi(true);
+  }, []);
+
+  const onLogin = async ({ email, password }) => {
+    const result = await auth?.login({ email, password });
+
+    setErrorMessage(result?.message);
+    console.log(result);
   };
 
-  if (typeof window !== "undefined") {
-    if (sessionStorage.length > 0) {
-      // const text = localStorage.getItem("user");
-      // console.log(JSON.parse(text.toString()));
-
-      var item_value = JSON.parse(sessionStorage.getItem("item_key"));
-      console.log(item_value);
-    } else {
-      console.log("User not loggedIn!");
-    }
-  }
-  // if (auth?.user) {
-  //   console.log(auth.user);
-  // } else {
-  //   console.log("User not loggedIn!");
-  // }
-
   return (
-    <div className="max-w-7xl mx-auto mt-10 py-5 px-4 sm:px-6 lg:px-8">
-      <Cover />
-      <Infos />
-      <div className="mt-5">
-        <ActionCard onLogin={onLogin} />
-      </div>
+    <div>
+      {renderUi ? (
+        <div className="max-w-7xl mx-auto mt-10 py-5 px-4 sm:px-6 lg:px-8">
+          <Cover />
+          <Infos />
+          <div className="mt-5">
+            <ActionCard onLogin={onLogin} errorMessage={errorMessage} />
+          </div>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }
