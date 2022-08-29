@@ -17,8 +17,8 @@ function MyApp({ Component, pageProps }) {
       } else {
         router.push("/connexion");
       }
-    }
-    // []
+    },
+    []
   );
 
   return (
