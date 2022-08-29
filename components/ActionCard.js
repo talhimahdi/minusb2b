@@ -12,39 +12,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
   return (
     <div className="mt-12">
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="pt-6">
-          <div className="flow-root bg-primary px-6 pb-8">
-            <div className="-mt-20 flex flex-col items-center justify-center">
-              <div className="flex flex-auto items-center justify-center">
-                <div className="flex-none relative w-32 h-32 object-center object-cover rounded-full border-8 border-white bg-white">
-                  {/* <Image src={"/images/info1.png"} layout="fill" alt="" /> */}
-                  <img src={"/images/info1.png"} alt="" />
-                </div>
-              </div>
-              <h3 className="uppercase mt-8 text-xl text-gray-900 font-londrina">
-                COMMANDEZ PAR MAIL OU PAR TÉLÉPHONE
-              </h3>
-              <p className="mt-5 text-base text-black text-center">
-                Vous êtes plutôt téléphone et rêvez d’entendre notre douce voix,
-                appelez-nous pour échanger ou passer commande au 07 84 86 49 81
-                ou envoyez-nous un email à
-                <span className="underline ml-1">
-                  commande@minus-editions.fr
-                </span>
-              </p>
-              <div className="flex justify-center md:justify-end mt-8">
-                <button
-                  type="button"
-                  className="uppercase justify-center items-center w-60 h-10 border border-gray-300 shadow-sm text-sm  text-white bg-black focus:outline-none"
-                >
-                  JE TÉLÉCHARGE LE CATALOGUE
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="pt-6">
+        <div className="pt-6 order-1 md:order-2">
           <div className="flow-root bg-primary px-6 pb-8">
             <div className="-mt-20 flex flex-col items-center justify-center">
               <div className="flex flex-auto items-center justify-center">
@@ -53,7 +21,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   <img src={"/images/info2.png"} alt="" />
                 </div>
               </div>
-              <h3 className="uppercase mt-8 text-xl text-gray-900 font-londrina">
+              <h3 className="uppercase mt-8 text-xl text-gray-900 font-londrina text-center">
                 COMMANDER EN LIGNE SUR LE SITE MINUS
               </h3>
               <p className="mt-5 text-base text-black text-center">
@@ -65,14 +33,11 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   type="button"
                   className="uppercase justify-center items-center w-60 h-10 border border-gray-300 shadow-sm text-sm  text-white bg-black focus:outline-none"
                 >
-                  JE CRÉÉ MON COMPTE
+                  <Link href={"/register"}>
+                    <a>Je crée mon compte</a>
+                  </Link>
                 </button>
               </div>
-              <h3 className="uppercase mt-8 text-xl text-gray-900 font-londrina">
-                DÉJÀ INSCRIT ?
-              </h3>
-              <p className="text-base text-black text-center">Connectez-vous</p>
-
               <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <form className="space-y-4" action="#" method="POST">
                   <div>
@@ -126,7 +91,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
 
                   <div className="flex flex-col items-center mb-5 md:mb-0">
                     <p>Pas encore de compte ?</p>
-                    <Link href={"/"}>
+                    <Link href={"/register"}>
                       <a className="underline ">Inscrivez-vous !</a>
                     </Link>
                   </div>
@@ -145,13 +110,53 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
           </div>
         </div>
 
-        <div className="pt-6">
+        <div className="pt-6 order-2 md:order-1">
           <div className="flow-root bg-primary px-6 pb-8">
             <div className="-mt-20 flex flex-col items-center justify-center">
               <div className="flex flex-auto items-center justify-center">
                 <div className="flex-none relative w-32 h-32 object-center object-cover rounded-full border-8 border-white bg-white">
                   {/* <Image src={"/images/info1.png"} layout="fill" alt="" /> */}
                   <img src={"/images/info1.png"} alt="" />
+                </div>
+              </div>
+              <h3 className="uppercase mt-8 text-xl text-gray-900 font-londrina text-center">
+                COMMANDEZ PAR MAIL OU PAR TÉLÉPHONE
+              </h3>
+              <p className="mt-5 text-base text-black text-center">
+                Vous êtes plutôt téléphone et rêvez d’entendre notre douce voix,
+                appelez-nous pour échanger ou passer commande au 07 84 86 49 81
+                ou envoyez-nous un email à
+                <span className="underline ml-1">
+                  commande@minus-editions.fr
+                </span>
+              </p>
+              <div className="flex justify-center md:justify-end mt-8">
+                <button
+                  type="button"
+                  className="uppercase justify-center items-center w-60 h-10 border border-gray-300 shadow-sm text-sm  text-white bg-black focus:outline-none"
+                >
+                  JE TÉLÉCHARGE LE CATALOGUE
+                </button>
+              </div>
+              <div>
+                <h3 className="uppercase mt-8 text-xl text-gray-900 font-londrina text-center">
+                  DÉJÀ INSCRIT ?
+                </h3>
+                <p className="text-base text-black text-center">
+                  Connectez-vous
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-6 order-3 md:order-3">
+          <div className="flow-root bg-primary px-6 pb-8">
+            <div className="-mt-20 flex flex-col items-center justify-center">
+              <div className="flex flex-auto items-center justify-center">
+                <div className="flex-none relative w-32 h-32 object-center object-cover rounded-full border-8 border-white bg-white">
+                  {/* <Image src={"/images/info1.png"} layout="fill" alt="" /> */}
+                  <img src={"/images/info3.png"} alt="" />
                 </div>
               </div>
               <h3 className="uppercase mt-8 text-xl text-center text-gray-900 font-londrina">

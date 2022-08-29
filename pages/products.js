@@ -12,14 +12,57 @@ function Products(/*{ productsList }*/) {
   const router = useRouter();
   const auth = useAuth();
   const [products, setProducts] = useState([]);
-  // const [cart, setCart] = useState([]);
+  const [slides, setSlides] = useState({});
   const [openCart, setOpenCart] = useState(false);
-  // const [localData, setLocalData] = useState({});
+  const [pageNumber, setPageNumber] = useState(0);
+  const [limit, setLimit] = useState(10);
   const [renderUi, setRenderUi] = useState(false);
+
+  const getSlides = async () => {
+    var requestOptions = {
+      method: "GET",
+    };
+
+    const url = Urls.getSlider;
+    const result = await fetch(url, requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        if (data?.results?.code == 200 && data?.results?.succes) {
+          return data?.results;
+        } else {
+          console.log("Error!!");
+        }
+      })
+      .catch((error) => console.log("error", error));
+
+    if (result?.slides) {
+      setSlides(result.slides);
+    }
+  };
+
+  const getProducts = async () => {
+    var requestOptions = {
+      method: "GET",
+    };
+
+    const url = Urls.productList(pageNumber, limit);
+    const result = await fetch(url, requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => console.log("error", error));
+
+    if (result?.results?.code == 200 && result?.results?.data) {
+      setProducts((prev) => [...prev, ...result?.results?.data]);
+      setPageNumber((prev) => prev + 1);
+    }
+  };
 
   useEffect(
     () => async () => {
       if (auth?.user?.id) {
+        await getSlides();
         await getProducts();
         await auth?.getCart(auth?.user?.id_cart);
         setRenderUi(true);
@@ -30,46 +73,26 @@ function Products(/*{ productsList }*/) {
     []
   );
 
-  const getProducts = async () => {
-    var requestOptions = {
-      method: "GET",
-    };
-
-    const url = Urls.productList;
-    const result = await fetch(url, requestOptions)
-      .then((response) => response?.json())
-      .then((data) => {
-        return data;
-      })
-      .catch((error) => console.log("error", error));
-
-    if (result?.results?.code == 200 && result?.results?.data) {
-      setProducts(result?.results?.data);
-    }
-  };
-
   return (
     <>
       {
-        /*renderUi*/ true && (
-          <div className="py-5">
-            <CoverThumbnails />
-            <ProductList products={products} />
-            {openCart && (
-              <Cart
-                open={openCart}
-                close={() => setOpenCart(false)}
-                cart={auth?.cart}
-                setOpenCart={setOpenCart}
-              />
-            )}
-            <BottomCart
-              passerCommande={() => {
-                if (auth?.cart?.products_count > 0) setOpenCart(true);
-              }}
+        /*renderUi && */ <div className="py-5">
+          <CoverThumbnails slides={slides} />
+          <ProductList products={products} getProducts={getProducts} />
+          {openCart && (
+            <Cart
+              open={openCart}
+              close={() => setOpenCart(false)}
+              cart={auth?.cart}
+              setOpenCart={setOpenCart}
             />
-          </div>
-        )
+          )}
+          <BottomCart
+            passerCommande={() => {
+              if (auth?.cart?.products_count > 0) setOpenCart(true);
+            }}
+          />
+        </div>
       }
     </>
   );

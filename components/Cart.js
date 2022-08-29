@@ -21,31 +21,15 @@ function Cart({ open, close, setOpenCart }) {
   const [modalTitle, setModalTitle] = useState("");
 
   const removeProduct = async (idProduct) => {
-    var requestOptions = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        cart_id: auth?.user?.id_cart,
-        product_id: idProduct,
-      }),
-    };
+    const result = await auth?.removeProduct(idProduct);
 
-    await fetch(Urls.deleteFromCart, requestOptions)
-      .then((response) => response?.json())
-      .then((result) => {
-        if (result?.code == 200 && result?.succes && result?.cart) {
-          auth?.setCart(result?.cart);
-          if (result?.cart?.products_count == 0) {
-            setOpenCart(false);
-          }
-          setModalTitle("Produit supprimé avec succes!");
-          setModalOpen(true);
-        }
-      })
-      .catch((error) => console.log("error", error));
+    if (result) {
+      if (auth?.cart?.products_count == 0) {
+        setOpenCart(false);
+      }
+      setModalTitle("Produit supprimé avec succes!");
+      setModalOpen(true);
+    }
   };
 
   return (
@@ -161,15 +145,27 @@ function Cart({ open, close, setOpenCart }) {
                     <div className="block md:hidden overflow-x-hidden overflow-y-auto bg-white">
                       <div className="flex flex-col p-5 space-y-14">
                         <div className="space-y-6">
-                          <div>
-                            <ProgressBar
-                              amount={auth?.cart?.totals?.total?.amount}
-                              total={250}
-                            />
+                          <div className="space-y-2">
+                            {auth?.offers?.map((offer) => (
+                              <ProgressBar
+                                key={offer?.title + offer?.amount}
+                                title={offer?.title}
+                                amount={auth?.cart?.totals?.total?.amount}
+                                total={offer?.amount}
+                              />
+                            ))}
                           </div>
                           <section
                             aria-labelledby="summary-heading"
-                            className="bg-[#EEEEEE] px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-3 space-y-4"
+                            className="bg-[#EEEEEE] px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-3 space-y-4
+                            relative before:content-[' h'] 
+                            before:absolute 
+                            before:-bottom-8 before:left-12
+                            before:w-8 
+                            before:h-8 
+                            before:border-l-16 before:border-l-transparent 
+                            before:border-r-16 before:border-r-transparent 
+                            before:border-t-16 before:border-t-[#EEEEEE]"
                           >
                             <div className="space-y-2">
                               <div className="flex items-center justify-between">
@@ -374,7 +370,6 @@ function Cart({ open, close, setOpenCart }) {
                                   <AddToCart
                                     max={150}
                                     min={1}
-                                    // onChange={onQuantityChange}
                                     product={product}
                                     defaultQuantity={product?.cart_quantity}
                                     btnVisible={false}
@@ -391,12 +386,16 @@ function Cart({ open, close, setOpenCart }) {
                     {/* End New Layout */}
                     <div className="hidden md:block relative p-5 md:p-0 md:pt-12 flex-1 overflow-x-hidden overflow-y-auto">
                       <div className="pb-24 space-y-5 md:max-w-7xl mx-auto">
-                        <div className="flex flex-col md:flex-row items-center">
-                          <div className="block flex-1 w-full h-full">
-                            <ProgressBar
-                              amount={auth?.cart?.totals?.total?.amount}
-                              total={250}
-                            />
+                        <div className="flex flex-col md:flex-row items-end">
+                          <div className="block flex-1 w-full h-full space-y-2">
+                            {auth?.offers?.map((offer) => (
+                              <ProgressBar
+                                key={offer?.title + offer?.amount}
+                                title={offer?.title}
+                                amount={auth?.cart?.totals?.total?.amount}
+                                total={offer?.amount}
+                              />
+                            ))}
                           </div>
                           <div className="flex-1 h-full">
                             <div className="h-full">
@@ -519,7 +518,16 @@ function Cart({ open, close, setOpenCart }) {
                           {/* Order summary */}
                           <section
                             aria-labelledby="summary-heading"
-                            className="mt-16 bg-[#EEEEEE] px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-3 space-y-4"
+                            className="mt-16 bg-[#EEEEEE] px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-3 space-y-4 
+                            relative before:content-[''] 
+                            before:absolute 
+                            before:-top-8 before:right-12
+                            before:w-8 
+                            before:h-8
+                            before:border-l-16 before:border-l-transparent 
+                            before:border-r-16 before:border-r-transparent 
+                            before:border-b-16 before:border-b-[#EEEEEE] 
+                            "
                           >
                             <div className="space-y-2">
                               <div className="flex items-center justify-between">

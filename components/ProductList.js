@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SearchIcon } from "@heroicons/react/solid";
 import SingleProductList from "./SingleProductList";
 
-function ProductList({ products }) {
+function ProductList({ products, setPage, getProducts }) {
   const [query, setQuery] = useState("");
   const [productsState, setProductsState] = useState(products);
 
@@ -11,10 +11,14 @@ function ProductList({ products }) {
     console.log(query);
   };
 
+  const getMoreProducts = async () => {
+    await getProducts();
+  };
+
   if (products?.length < 1) {
     return (
       <div className="bg-primary pt-20 -mt-20">
-        <div className="max-w-sm mx-auto md:max-w-7xl my-5 py-5">
+        <div className="max-w-sm mx-5 md:mx-auto md:max-w-7xl my-5 py-5">
           No products to show!
         </div>
       </div>
@@ -22,7 +26,7 @@ function ProductList({ products }) {
   }
   return (
     <div className="bg-primary pt-20 -mt-20">
-      <div className="max-w-sm mx-auto md:max-w-7xl my-5 py-5">
+      <div className="max-w-sm  mx-5 md:mx-auto md:max-w-7xl my-5 py-5">
         {/* Filter */}
         <div className="flex flex-0.5 space-x-5">
           <div className="flex mt-1 sm:mt-0  shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
@@ -68,6 +72,15 @@ function ProductList({ products }) {
             </div>
           )}
         </section>
+        <div className="text-center border-t border-gray-200 py-6 px-4 sm:px-6">
+          <button
+            type="submit"
+            className=" bg-black shadow-sm py-3 px-4 text-base font-bold text-white hover:font-bold focus:outline-none focus:ring-0"
+            onClick={getMoreProducts}
+          >
+            Voir plus de produits
+          </button>
+        </div>
       </div>
     </div>
   );

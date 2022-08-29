@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProgressBar({ amount, total }) {
+function ProgressBar({ title, amount, total }) {
   const pourcentage =
     (amount * 100) / total < 100 ? (amount * 100) / total : 100;
 
@@ -11,9 +11,7 @@ function ProgressBar({ amount, total }) {
           style={{ width: `${pourcentage}%` }}
           className={`absolute bg-primary h-full`}
         ></div>
-        <div className="absolute p-2 h-full ">
-          FRANCO DÈS {total}€ D&apos;ACHATS !
-        </div>
+        <div className="absolute p-2 h-full ">{title}</div>
         <div className="absolute p-2 h-full right-0 text-end">
           {amount}€ / {total}€
         </div>
@@ -24,9 +22,7 @@ function ProgressBar({ amount, total }) {
             style={{ width: `${pourcentage}%` }}
             className={`absolute bg-primary w-full h-full`}
           ></div>
-          <div className="absolute p-2 w-full h-full">
-            FRANCO DÈS {total}€ D&apos;ACHATS !
-          </div>
+          <div className="absolute p-2 w-full h-full">{title}</div>
           <div className="absolute p-2 w-full h-full right-0 text-end">
             {amount}€ / {total}€
           </div>

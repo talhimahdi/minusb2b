@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import {
   Dialog,
   Popover,
@@ -12,106 +12,161 @@ import {
   SearchIcon,
   ShoppingBagIcon,
   XIcon,
+  PlusCircleIcon,
 } from "@heroicons/react/outline";
 import { CheckCircleIcon, TrashIcon } from "@heroicons/react/solid";
-
-const products = [
-  {
-    id: 1,
-    name: "RENC’ART AVEC L’ART",
-    slug: "3 JEUX SUR L’HISTOIRE DE L’ART",
-    href: "#",
-    price: "27,00 €",
-    priceHt: "10,30 €",
-    priceTVA: "1,60 €",
-    imageSrc: "../images/products/product-1.png",
-    details: [
-      "22 œuvresmajeures de l’Histoire de l’Art",
-      "3 façons de jouer pour alterner le plaisir d’apprendre",
-      "Une façon ludique d’apprendre les bases de l’Art",
-      "À partir de 5 ans pour jouer en famille",
-      "Avec un livret explicatif pour en savoir plus sur les œuvres et les artistes",
-    ],
-  },
-  {
-    id: 2,
-    name: "RENC’ART AVEC L’ART",
-    slug: "3 JEUX SUR L’HISTOIRE DE L’ART",
-    href: "#",
-    price: "27,00 €",
-    priceHt: "10,30 €",
-    priceTVA: "1,60 €",
-    imageSrc: "../images/products/product-1.png",
-    details: [
-      "22 œuvresmajeures de l’Histoire de l’Art",
-      "3 façons de jouer pour alterner le plaisir d’apprendre",
-      "Une façon ludique d’apprendre les bases de l’Art",
-      "À partir de 5 ans pour jouer en famille",
-      "Avec un livret explicatif pour en savoir plus sur les œuvres et les artistes",
-    ],
-  },
-  {
-    id: 3,
-    name: "RENC’ART AVEC L’ART",
-    slug: "3 JEUX SUR L’HISTOIRE DE L’ART",
-    href: "#",
-    price: "27,00 €",
-    priceHt: "10,30 €",
-    priceTVA: "1,60 €",
-    imageSrc: "../images/products/product-1.png",
-    details: [
-      "22 œuvresmajeures de l’Histoire de l’Art",
-      "3 façons de jouer pour alterner le plaisir d’apprendre",
-      "Une façon ludique d’apprendre les bases de l’Art",
-      "À partir de 5 ans pour jouer en famille",
-      "Avec un livret explicatif pour en savoir plus sur les œuvres et les artistes",
-    ],
-  },
-  {
-    id: 4,
-    name: "RENC’ART AVEC L’ART",
-    slug: "3 JEUX SUR L’HISTOIRE DE L’ART",
-    href: "#",
-    price: "27,00 €",
-    priceHt: "10,30 €",
-    priceTVA: "1,60 €",
-    imageSrc: "../images/products/product-1.png",
-    details: [
-      "22 œuvresmajeures de l’Histoire de l’Art",
-      "3 façons de jouer pour alterner le plaisir d’apprendre",
-      "Une façon ludique d’apprendre les bases de l’Art",
-      "À partir de 5 ans pour jouer en famille",
-      "Avec un livret explicatif pour en savoir plus sur les œuvres et les artistes",
-    ],
-  },
-];
-const deliveryMethods = [
-  {
-    id: 1,
-    title: "Standard",
-    turnaround: "4–10 business days",
-    price: "$5.00",
-  },
-  { id: 2, title: "Express", turnaround: "2–5 business days", price: "$16.00" },
-];
-const paymentMethods = [
-  { id: "credit-card", title: "Credit card" },
-  { id: "paypal", title: "PayPal" },
-  { id: "etransfer", title: "eTransfer" },
-];
+import { useAuth } from "../RestHelper/useAuth";
+import ProductCheckout from "../components/ProductCheckout";
+import CheckoutSummary from "../components/CheckoutSummary";
+import { Urls } from "../configs/configs";
+import { useRouter } from "next/router";
+import NewAddressForm from "../components/NewAddressForm";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 function Checkout() {
-  const [open, setOpen] = useState(false);
-  const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(
-    deliveryMethods[0]
+  const auth = useAuth();
+  const router = useRouter();
+  const [selectedAddress, setSelectedAddress] = useState({});
+  const [addresses, setAddresses] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [carriers, setCarriers] = useState([]);
+  const [selectedCarrier, setSelectedCarrier] = useState({});
+  const [paymentMethods, setPaymentMethods] = useState([]);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState({});
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const openNewAddressForm = () => {
+    setIsFormOpen(true);
+  };
+
+  const addAddress = async (addressInfos) => {
+    addressInfos.id_customer = auth?.user?.id;
+    var requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(addressInfos),
+    };
+    const result = await fetch(Urls.addNewAddress, requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        return data?.results;
+      })
+      .catch((error) => console.log("error", error));
+
+    if (result?.code == 200 && result?.succes) {
+      setAddresses([...addresses, result?.new_address]);
+      setSelectedAddress(result?.new_address);
+      setIsFormOpen(false);
+    } else {
+      console.log("error!!!");
+    }
+  };
+
+  const removeAddress = async (idAddress) => {
+    if (!confirm("voulez vous vraiment supprimer l'adresse?")) return;
+    var requestOptions = {
+      method: "GET",
+    };
+    const result = await fetch(Urls.deleteAddress(idAddress), requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        return data?.results;
+      })
+      .catch((error) => console.log("error", error));
+
+    if (result?.code == 200 && result?.succes) {
+      /*const result = */ getAddresses();
+
+      // GET ADDRESSES
+
+      // setAddresses([...addresses, result?.new_address]);
+      // setSelectedAddress(result?.new_address);
+      // setIsFormOpen(false);
+    } else {
+      console.log("error!!!");
+    }
+  };
+
+  const getAddresses = async () => {
+    var requestOptions = {
+      method: "GET",
+    };
+
+    await fetch(Urls.getAddresses(auth?.user?.id), requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        if (data?.results?.code == 200 && data?.results?.succes) {
+          // return data?.results;
+          setAddresses(data?.results?.addresses);
+          setCountries(data?.results?.countries);
+          data?.results?.addresses.length > 0 &&
+            setSelectedAddress(data?.results?.addresses[0]);
+        }
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const getCarriers = async () => {
+    var requestOptions = {
+      method: "GET",
+    };
+
+    await fetch(Urls.getCarriers, requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        if (data?.results?.code == 200 && data?.results?.succes) {
+          setCarriers(data?.results?.carriers);
+          data?.results?.carriers.length > 0 &&
+            setSelectedCarrier(data?.results?.carriers[0]);
+        }
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const getPaymentMethods = async () => {
+    var requestOptions = {
+      method: "GET",
+    };
+
+    await fetch(Urls.getPaymentMethods, requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        if (data?.results?.code == 200 && data?.results?.succes) {
+          setPaymentMethods(data?.results?.paymentMethods);
+          data?.results?.paymentMethods.length > 0 &&
+            setSelectedPaymentMethod(data?.results?.paymentMethods[0]);
+        }
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  useEffect(
+    () => async () => {
+      if (auth?.user?.id) {
+        await getAddresses();
+        await getCarriers();
+        await getPaymentMethods();
+      } else {
+        router.push("/connexion");
+      }
+    },
+    []
   );
 
   return (
     <div className="bg-white">
+      <NewAddressForm
+        open={isFormOpen}
+        setOpen={setIsFormOpen}
+        countries={countries}
+        addAddress={addAddress}
+      />
       <main className="max-w-7xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto lg:max-w-none">
           <h1 className="sr-only">Checkout</h1>
@@ -142,196 +197,127 @@ function Checkout() {
                 </div>
               </div>
 
-              <div className="mt-10 border-t border-gray-200 pt-10">
-                <h2 className="text-lg font-bold text-gray-900">
-                  Informations sur la livraison
-                </h2>
+              <div className="mt-3">
+                <RadioGroup
+                  value={selectedAddress}
+                  onChange={setSelectedAddress}
+                >
+                  <RadioGroup.Label className="text-lg font-bold text-gray-900">
+                    <h2 className="text-lg font-bold text-gray-900">
+                      Adresses
+                    </h2>
+                  </RadioGroup.Label>
 
-                <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                  <div>
-                    <label
-                      htmlFor="first-name"
-                      className="block text-sm font-bold text-gray-700"
-                    >
-                      Prénom
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        id="first-name"
-                        name="first-name"
-                        autoComplete="given-name"
-                        className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="last-name"
-                      className="block text-sm font-bold text-gray-700"
-                    >
-                      Nom
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        id="last-name"
-                        name="last-name"
-                        autoComplete="family-name"
-                        className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label
-                      htmlFor="company"
-                      className="block text-sm font-bold text-gray-700"
-                    >
-                      Entreprise
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        name="company"
-                        id="company"
-                        className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label
-                      htmlFor="address"
-                      className="block text-sm font-bold text-gray-700"
-                    >
-                      Adresse
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        name="address"
-                        id="address"
-                        autoComplete="street-address"
-                        className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label
-                      htmlFor="apartment"
-                      className="block text-sm font-bold text-gray-700"
-                    >
-                      Complément d’adresse
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        name="apartment"
-                        id="apartment"
-                        className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="city"
-                      className="block text-sm font-bold text-gray-700"
-                    >
-                      Ville
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        name="city"
-                        id="city"
-                        autoComplete="address-level2"
-                        className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="country"
-                      className="block text-sm font-bold text-gray-700"
-                    >
-                      Pays
-                    </label>
-                    <div className="mt-1">
-                      <select
-                        id="country"
-                        name="country"
-                        autoComplete="country-name"
-                        className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
+                  <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    {/* {addresses?.map((address) => (
+                      <div key={address.id}>
+                        <RadioGroup.Option
+                          value={address}
+                          className={({ checked, active }) =>
+                            classNames(
+                              checked
+                                ? "border-transparent"
+                                : "border-gray-300",
+                              active ? "ring-2 ring-secondary" : "",
+                              "relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none"
+                            )
+                          }
+                        ></RadioGroup.Option>
+                      </div>
+                    ))} */}
+                    {addresses?.map((address) => (
+                      <RadioGroup.Option
+                        key={address.id}
+                        value={address}
+                        className={({ checked, active }) =>
+                          classNames(
+                            checked ? "border-transparent" : "border-gray-300",
+                            active ? "ring-2 ring-secondary" : "",
+                            "relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none"
+                          )
+                        }
                       >
-                        <option>United States</option>
-                        <option>Canada</option>
-                        <option>Mexico</option>
-                      </select>
-                    </div>
+                        {({ checked, active }) => (
+                          <>
+                            <span className="flex-1 flex flex-col justify-between">
+                              <RadioGroup.Label
+                                as="span"
+                                className="block text-lg font-bold text-gray-900"
+                              >
+                                {address.alias}
+                              </RadioGroup.Label>
+                              <RadioGroup.Description
+                                as="span"
+                                className="mt-1 text-sm text-black space-y-1"
+                              >
+                                <p>{address.address1}</p>
+                                <p>{address.address2}</p>
+                                <p>{address.country_name}</p>
+                                <p>{address.city}</p>
+                                <p>{address?.phone}</p>
+                              </RadioGroup.Description>
+                              <RadioGroup.Description>
+                                <span className="flex items-end justify-start mt-4">
+                                  <TrashIcon
+                                    onClick={() => removeAddress(address.id)}
+                                    className="h-5 w-5 text-secondary hover:text-red-500"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              </RadioGroup.Description>
+                            </span>
+                            {checked ? (
+                              <CheckCircleIcon
+                                className="h-5 w-5 text-secondary"
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                            <span
+                              className={classNames(
+                                active ? "border" : "border-2",
+                                checked
+                                  ? "border-secondary"
+                                  : "border-transparent",
+                                "absolute -inset-px pointer-events-none"
+                              )}
+                              aria-hidden="true"
+                            />
+                          </>
+                        )}
+                      </RadioGroup.Option>
+                    ))}
                   </div>
-
-                  <div>
-                    <label
-                      htmlFor="postal-code"
-                      className="block text-sm font-bold text-gray-700"
+                  <div className="flex">
+                    <span
+                      className="flex flex-1/2 items-center mt-5 space-x-1 cursor-pointer text-gray-400 hover:text-gray-500"
+                      onClick={openNewAddressForm}
                     >
-                      Code Postal
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        name="postal-code"
-                        id="postal-code"
-                        autoComplete="postal-code"
-                        className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
-                      />
-                    </div>
+                      <PlusCircleIcon className="w-7 h-7 " />
+                      <p>ajouter une nouvelle adresse</p>
+                    </span>
                   </div>
-
-                  <div className="sm:col-span-2">
-                    <label
-                      htmlFor="phone"
-                      className="block text-sm font-bold text-gray-700"
-                    >
-                      Téléphone
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        name="phone"
-                        id="phone"
-                        autoComplete="tel"
-                        className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
-                      />
-                    </div>
-                  </div>
-                </div>
+                </RadioGroup>
               </div>
 
               <div className="mt-10 border-t border-gray-200 pt-10">
                 <RadioGroup
-                  value={selectedDeliveryMethod}
-                  onChange={setSelectedDeliveryMethod}
+                  value={selectedCarrier}
+                  onChange={setSelectedCarrier}
                 >
                   <RadioGroup.Label className="text-lg font-bold text-gray-900">
                     Méthode de livraison
                   </RadioGroup.Label>
 
                   <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                    {deliveryMethods.map((deliveryMethod) => (
+                    {carriers.map((carrier) => (
                       <RadioGroup.Option
-                        key={deliveryMethod.id}
-                        value={deliveryMethod}
+                        key={carrier.id_carrier}
+                        value={carrier}
                         className={({ checked, active }) =>
                           classNames(
                             checked ? "border-transparent" : "border-gray-300",
                             active ? "ring-2 ring-secondary" : "",
-                            "relative bg-white border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none"
+                            "relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none"
                           )
                         }
                       >
@@ -343,19 +329,13 @@ function Checkout() {
                                   as="span"
                                   className="block text-sm font-bold text-gray-900"
                                 >
-                                  {deliveryMethod.title}
+                                  {carrier.name}
                                 </RadioGroup.Label>
                                 <RadioGroup.Description
                                   as="span"
                                   className="mt-1 flex items-center text-sm text-gray-500"
                                 >
-                                  {deliveryMethod.turnaround}
-                                </RadioGroup.Description>
-                                <RadioGroup.Description
-                                  as="span"
-                                  className="mt-6 text-sm font-bold text-gray-900"
-                                >
-                                  {deliveryMethod.price}
+                                  {carrier.delay}
                                 </RadioGroup.Description>
                               </span>
                             </span>
@@ -371,7 +351,7 @@ function Checkout() {
                                 checked
                                   ? "border-secondary"
                                   : "border-transparent",
-                                "absolute -inset-px rounded-lg pointer-events-none"
+                                "absolute -inset-px pointer-events-none"
                               )}
                               aria-hidden="true"
                             />
@@ -383,37 +363,32 @@ function Checkout() {
                 </RadioGroup>
               </div>
 
-              {/* Payment */}
               <div className="mt-10 border-t border-gray-200 pt-10">
                 <h2 className="text-lg font-bold text-gray-900">Paiement</h2>
 
                 <fieldset className="mt-4">
                   <legend className="sr-only">Type de Paiement</legend>
                   <div className="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
-                    {paymentMethods.map((paymentMethod, paymentMethodIdx) => (
+                    {paymentMethods.map((paymentMethod) => (
                       <div key={paymentMethod.id} className="flex items-center">
-                        {paymentMethodIdx === 0 ? (
-                          <input
-                            id={paymentMethod.id}
-                            name="payment-type"
-                            type="radio"
-                            defaultChecked
-                            className="focus:ring-secondary h-4 w-4 text-secondary border-gray-300"
-                          />
-                        ) : (
-                          <input
-                            id={paymentMethod.id}
-                            name="payment-type"
-                            type="radio"
-                            className="focus:ring-secondary h-4 w-4 text-secondary border-gray-300"
-                          />
-                        )}
+                        <input
+                          id={paymentMethod.id}
+                          name="payment-type"
+                          type="radio"
+                          checked={
+                            paymentMethod.id === selectedPaymentMethod?.id
+                          }
+                          onChange={() =>
+                            setSelectedPaymentMethod(paymentMethod)
+                          }
+                          className="focus:ring-0 h-4 w-4 text-secondary"
+                        />
 
                         <label
                           htmlFor={paymentMethod.id}
                           className="ml-3 block text-sm font-bold text-gray-700"
                         >
-                          {paymentMethod.title}
+                          {paymentMethod.name}
                         </label>
                       </div>
                     ))}
@@ -497,103 +472,8 @@ function Checkout() {
             </div>
 
             {/* Order summary */}
-            <div className="mt-10 lg:mt-0">
-              <h2 className="text-lg font-bold text-gray-900">
-                Récapitulatif de la commande
-              </h2>
-
-              <div className="mt-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                <h3 className="sr-only">Articles dans votre panier</h3>
-                <ul role="list" className="divide-y divide-gray-200">
-                  {products.map((product) => (
-                    <li key={product.id} className="flex py-6 px-4 sm:px-6">
-                      <div className="ml-6 flex-1 flex flex-col">
-                        <div className="flex">
-                          <div className="min-w-0 flex-1">
-                            <h4 className="text-sm">
-                              <a
-                                href={product.href}
-                                className="text-xl text-black font-londrina"
-                              >
-                                {product.name}
-                              </a>
-                            </h4>
-                            <p className="text-sm text-black">{product.slug}</p>
-                          </div>
-
-                          <div className="ml-4 flex-shrink-0 flow-root">
-                            <button
-                              type="button"
-                              className="-m-2.5 bg-white p-2.5 flex items-center justify-center text-gray-400 hover:text-gray-500"
-                            >
-                              <span className="sr-only">Supprimer</span>
-                              <TrashIcon
-                                className="h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="flex-1 pt-2 flex items-end justify-between">
-                          <p className="text-2xl font-medium text-gray-900 font-londrina">
-                            {product.price}
-                          </p>
-
-                          <div className="ml-4">
-                            <label htmlFor="quantity" className="sr-only">
-                              Quantité
-                            </label>
-                            <select
-                              id="quantity"
-                              name="quantity"
-                              className="rounded-md border border-gray-300 text-base font-bold text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary sm:text-sm"
-                            >
-                              <option value={1}>1</option>
-                              <option value={2}>2</option>
-                              <option value={3}>3</option>
-                              <option value={4}>4</option>
-                              <option value={5}>5</option>
-                              <option value={6}>6</option>
-                              <option value={7}>7</option>
-                              <option value={8}>8</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <dl className="border-t border-gray-200 py-6 px-4 space-y-6 sm:px-6">
-                  <div className="flex items-center justify-between">
-                    <dt className="text-sm">Sous total</dt>
-                    <dd className="text-sm font-bold text-gray-900">$64.00</dd>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <dt className="text-sm">Expédition</dt>
-                    <dd className="text-sm font-bold text-gray-900">$5.00</dd>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <dt className="text-sm">Taxes</dt>
-                    <dd className="text-sm font-bold text-gray-900">$5.52</dd>
-                  </div>
-                  <div className="flex items-center justify-between border-t border-gray-200 pt-6">
-                    <dt className="text-base font-bold">Total</dt>
-                    <dd className="text-base font-bold text-gray-900">
-                      $75.52
-                    </dd>
-                  </div>
-                </dl>
-
-                <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-                  <button
-                    type="submit"
-                    className="w-full bg-black rounded-md shadow-sm py-3 px-4 text-base font-bold text-white hover:font-bold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-secondary"
-                  >
-                    Confirmer la commande
-                  </button>
-                </div>
-              </div>
+            <div className="relative mt-10 lg:mt-0">
+              <CheckoutSummary />
             </div>
           </form>
         </div>

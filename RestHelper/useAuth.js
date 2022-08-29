@@ -20,6 +20,7 @@ function useAuthProvider() {
   const router = useRouter();
   const [user, setUser] = useState({});
   const [cart, setCart] = useState({});
+  const [offers, setOffers] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const login = async ({ email, password }) => {
@@ -41,7 +42,6 @@ function useAuthProvider() {
         .then((response) => {
           if (response?.results?.succes && response?.results?.code === 200) {
             setUser(response?.results?.data?.customer);
-            // setCart(response?.results?.data?.cart);
             if (typeof window !== "undefined") {
               localStorage.setItem(
                 "local_data",
@@ -56,8 +56,6 @@ function useAuthProvider() {
         })
         .catch((error) => console.log("error", error));
     }
-
-    // return { ...user, ...cart };
   };
 
   const getCart = async (cartId) => {
@@ -74,14 +72,41 @@ function useAuthProvider() {
 
     if (result?.code == 200 && result?.success && result?.cart) {
       setCart(result?.cart);
+      setOffers(result?.offers);
       return true;
     }
     return false;
   };
 
+  const removeProduct = async (idProduct) => {
+    var requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        cart_id: user?.id_cart,
+        product_id: idProduct,
+      }),
+    };
+
+    return await fetch(Urls.deleteFromCart, requestOptions)
+      .then((response) => response?.json())
+      .then((result) => {
+        if (result?.code == 200 && result?.succes && result?.cart) {
+          setCart(result?.cart);
+          return true;
+        }
+        return false;
+      })
+      .catch((error) => console.log("error", error));
+  };
+
   const register = ({ email, password }) => {
     return {};
   };
+
   const logout = () => {
     return {};
   };
@@ -100,10 +125,12 @@ function useAuthProvider() {
     user,
     getUserLocal,
     getCart,
+    removeProduct,
     login,
     register,
     logout,
     cart,
+    offers,
     setCart,
     setUser,
     isLoaded,

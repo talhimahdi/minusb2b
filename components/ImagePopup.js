@@ -3,7 +3,13 @@ import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/outline";
 import { XCircleIcon } from "@heroicons/react/solid";
 
-export default function ImagePopup({ isOpen, setIsOpen }) {
+export default function ImagePopup({
+  isOpen,
+  setIsOpen,
+  image_url,
+  title,
+  description,
+}) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setIsOpen}>
@@ -51,7 +57,7 @@ export default function ImagePopup({ isOpen, setIsOpen }) {
                   <div className="flex flex-col sm:flex-row items-start justify-center sm:space-x-10">
                     <div className="min-w-[250px] min-h-[250px] max-w-[300px] max-h-[300px] mx-auto flex flex-auto  justify-center">
                       <img
-                        src="/images/popupimg.png"
+                        src={image_url}
                         className="object-center object-fill"
                       />
                     </div>
@@ -60,21 +66,11 @@ export default function ImagePopup({ isOpen, setIsOpen }) {
                         as="h3"
                         className="leading-none text-center text-2xl md:text-3xl text-black font-londrina"
                       >
-                        Minus, ça fait du lien
+                        {title}
                       </Dialog.Title>
                       <div className="mt-5">
                         <p className="leading-tight text-lg text-black font-semibold tracking-wide text-justify">
-                          Vestibulum ante ipsum primis in faucibus orci luctus
-                          et ultrices posuere cubilia Curae; Donec velit neque,
-                          auctor sit amet aliquam vel, ullamcorper sit amet
-                          ligula. Vestibulum ante ipsum primis in faucibus orci
-                          luctus et ultrices posuere cubilia Curae; Donec velit
-                          neque, auctor sit amet aliquam vel, ullamcorper sit
-                          amet ligula. Praesent sapien massa, convallis a
-                          pellentesque nec, egestas non nisi. Proin eget tortor
-                          risus. Vestibulum ac diam sit amet quam vehicula
-                          elementum sed sit amet dui. Cras ultricies ligula sed
-                          magna dictum porta.
+                          {description}
                         </p>
                       </div>
                     </div>
