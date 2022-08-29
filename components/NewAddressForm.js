@@ -173,7 +173,7 @@ export default function NewAddressForm({
                         htmlFor="apartment"
                         className="block text-sm font-bold text-gray-700"
                       >
-                        Complément d'adresse
+                        Complément d&aposadresse
                       </label>
                       <div className="mt-1">
                         <input
