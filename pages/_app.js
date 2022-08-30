@@ -9,20 +9,25 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const auth = useAuth();
 
-  useEffect(
-    () => async () => {
-      console.log("useEffect _app");
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      // const localData = auth?.getUserLocal();
-      // if (localData) {
-      //   auth?.setUser(localData?.customer);
-      // } else {
-      //   console.log("useEffect else _app");
-      //   router.push("/connexion");
-      // }
-    },
-    []
-  );
+  useEffect(() => {
+    console.log("useEffect called");
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // useEffect(
+  //   () => async () => {
+  //     console.log("useEffect _app");
+  //     const localData = auth?.getUserLocal();
+  //     if (localData) {
+  //       auth?.setUser(localData?.customer);
+  //     } else {
+  //       console.log("useEffect else _app");
+  //       router.push("/connexion");
+  //     }
+  //   },
+  //   []
+  // );
 
   return (
     <AuthProvider>
