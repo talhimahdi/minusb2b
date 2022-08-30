@@ -20,12 +20,12 @@ export default function RegisterForm() {
       <form className="space-y-8">
         <div className="space-y-6 sm:space-y-5">
           <div className="flex flex-col items-center">
-          <div className="flex items-center md:items-end mb-5 space-x-2">
-            <p className="font-semibold">Vous avez déjà un compte ?</p>
-            <Link href={"/connexion"}>
-              <a className="underline font-semibold">Connectez-vous !</a>
-            </Link>
-          </div>
+            <div className="flex items-center md:items-end mb-5 space-x-2">
+              <p className="font-semibold">Vous avez déjà un compte ?</p>
+              <Link href={"/connexion"}>
+                <a className="underline font-semibold">Connectez-vous !</a>
+              </Link>
+            </div>
             <h3 className="uppercase leading-6 text-gray-900 font-bold text-3xl mb-4 w-80  text-center font-londrina">
               Vous...
             </h3>
@@ -129,9 +129,11 @@ export default function RegisterForm() {
                 Quel genre de boutique avez-vous ?
               </label>
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
-                <select id="boutique-type" 
+                <select
+                  id="boutique-type"
                   className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
-                  name="boutique-type">
+                  name="boutique-type"
+                >
                   <option>Concept/déco</option>
                   <option>Musée</option>
                   <option>Collab</option>
@@ -190,7 +192,7 @@ export default function RegisterForm() {
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <HomeIcon className="h-5 w-5 text-secondary" />
                 <input
-                  id="adress-colement"
+                  id="adress"
                   name="adress-colement"
                   type="text"
                   placeholder="Numéro et rue"
@@ -297,15 +299,14 @@ export default function RegisterForm() {
           </div>
         </div>
 
-
-          <div className="flex items-center justify-center">
-            <button
-              type="button"
-              className="uppercase justify-center items-center w-60 h-10 px-10 border border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none"
-            >
-              Je crée mon compte
-            </button>
-          </div>
+        <div className="flex items-center justify-center">
+          <button
+            type="button"
+            className="uppercase justify-center items-center w-60 h-10 px-10 border border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none"
+          >
+            Je crée mon compte
+          </button>
+        </div>
       </form>
     </div>
   );
