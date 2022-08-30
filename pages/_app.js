@@ -11,16 +11,18 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(
     () => async () => {
+      console.log("useEffect _app");
       const localData = auth?.getUserLocal();
       if (localData) {
         auth?.setUser(localData?.customer);
       } else {
+        console.log("useEffect else _app");
         router.push("/connexion");
       }
     },
     []
   );
-  //  test
+
   return (
     <AuthProvider>
       <Layout>

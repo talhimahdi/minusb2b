@@ -61,12 +61,14 @@ function Products(/*{ productsList }*/) {
 
   useEffect(
     () => async () => {
+      console.log("useEffect products");
       if (auth?.user?.id) {
         await getSlides();
         await getProducts();
         await auth?.getCart(auth?.user?.id_cart);
         setRenderUi(true);
       } else {
+        console.log("useEffect else products");
         router.push("/connexion");
       }
     },
