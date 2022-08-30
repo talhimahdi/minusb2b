@@ -59,8 +59,8 @@ function Products(/*{ productsList }*/) {
     }
   };
 
-  useEffect(
-    () => async () => {
+  useEffect(() => {
+    const init = async () => {
       console.log("useEffect products");
       if (auth?.user?.id) {
         await getSlides();
@@ -71,9 +71,9 @@ function Products(/*{ productsList }*/) {
         console.log("useEffect else products");
         router.push("/connexion");
       }
-    },
-    [router]
-  );
+    };
+    init();
+  }, []);
 
   return (
     <>

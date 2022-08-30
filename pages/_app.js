@@ -9,33 +9,17 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const auth = useAuth();
 
-  // useEffect(() => {
-  //   console.log("useEffect called");
-
-  //   const localData = auth?.getUserLocal();
-  //   if (localData) {
-  //     auth?.setUser(localData?.customer);
-  //   } else {
-  //     console.log("useEffect else _app");
-  //     router.push("/connexion");
-  //   }
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   useEffect(() => {
-    const test = async () => {
-      console.log("useEffect _app");
+    const init = async () => {
       const localData = auth?.getUserLocal();
       if (localData) {
         auth?.setUser(localData?.customer);
       } else {
-        console.log("useEffect else _app");
         router.push("/connexion");
       }
     };
 
-    test();
+    init();
   }, []);
 
   return (
