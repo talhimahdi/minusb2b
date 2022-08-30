@@ -146,8 +146,8 @@ function Checkout() {
       .catch((error) => console.log("error", error));
   };
 
-  useEffect(
-    () => async () => {
+  useEffect(() => {
+    const init = async () => {
       if (auth?.user?.id) {
         await getAddresses();
         await getCarriers();
@@ -155,9 +155,9 @@ function Checkout() {
       } else {
         router.push("/connexion");
       }
-    },
-    []
-  );
+    };
+    init();
+  }, []);
 
   return (
     <div className="bg-white">
