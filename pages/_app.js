@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(
     () => async () => {
       console.log("useEffect _app");
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       // const localData = auth?.getUserLocal();
       // if (localData) {
       //   auth?.setUser(localData?.customer);
