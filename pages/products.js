@@ -70,7 +70,7 @@ function Products(/*{ productsList }*/) {
         router.push("/connexion");
       }
     },
-    []
+    [router]
   );
 
   return (
