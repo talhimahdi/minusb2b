@@ -117,7 +117,6 @@ export default function Footer() {
                 <div className="flex mt-1 sm:mt-0 flex-1 md:w-full shadow-sm focus:outline-none h-10 px-3 bg-white items-center">
                   <MailIcon className="h-5 w-5 mr-2 text-secondary" />
                   <input
-                    id="email"
                     name="email"
                     type="email"
                     placeholder="Votre email"

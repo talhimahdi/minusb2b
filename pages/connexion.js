@@ -21,7 +21,6 @@ export default function Connexion() {
     const result = await auth?.login({ email, password });
 
     setErrorMessage(result?.message);
-    console.log(result);
   };
 
   return (

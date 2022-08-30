@@ -6,7 +6,7 @@ const ws_key = "PXZQ3KBZJSQYLTXDT7F8U5L9EBZ6T3SX";
 const output_format = "JSON";
 
 // const baseUrl = "http://localhost:8888/prestaboutique/api/";
-const baseUrl = "http://minus-produits.prismatic.digital/api/";
+const baseUrl = "https://minus-produits.prismatic.digital/api/";
 const Urls = {
   // register: baseUrl + "register",
   login:

@@ -7,7 +7,6 @@ import "swiper/css";
 import ImagePopup from "./ImagePopup";
 
 function CoverThumbnails({ slides }) {
-  console.log(slides);
   const [open, setOpen] = useState(false);
   return (
     <div className=" h-48 md:h-56">
