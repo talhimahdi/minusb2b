@@ -16,7 +16,7 @@ function AddToCart({
   btnText = "",
   setModalOpen,
   modalTitle = "",
-  setModalTitle,
+  setModalTitle = null,
 }) {
   const [quantity, setQuantity] = useState(defaultQuantity);
   const [btnVisibleState, setBtnVisibleState] = useState(btnVisible);
@@ -46,7 +46,7 @@ function AddToCart({
           if (!btnVisible) {
             setBtnVisibleState(false);
           }
-          setModalTitle(modalTitle);
+          setModalTitle && setModalTitle(modalTitle);
           setModalOpen(true);
         }
       })

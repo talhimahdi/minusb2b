@@ -28,7 +28,6 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
           leaveTo="opacity-0"
         >
           <div>
-            <div className="fixed inset-0 bg-white bg-opacity-90 transition-opacity" />
             {modalOpen && (
               <ResponseModal
                 title={"Produit ajouté avec succes!"}
@@ -37,6 +36,7 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
                 setModalOpen={setModalOpen}
               />
             )}
+            <div className="fixed inset-0 bg-white bg-opacity-90 transition-opacity" />
           </div>
         </Transition.Child>
 
@@ -55,7 +55,7 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
                 className="relative bg-white p-3 sm:p-4 text-left overflow-hidden 
               transform transition-all sm:max-w-7xl mx-auto shadow-[0px_2px_7px_rgba(0,_0,_0,_0.14)]"
               >
-                <div>
+                <div className="relative">
                   <div className="absolute top-0 right-0 pt-4 pr-4">
                     <button
                       type="button"
@@ -69,7 +69,7 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
                       />
                     </button>
                   </div>
-                  <div className="CONTENT flex space-x-5">
+                  <div className="CONTENT flex flex-col md:flex-row space-y-5 md:space-x-5">
                     <div className="bg-white">
                       {/*<img
                         src={product.images[0].src}
@@ -99,7 +99,7 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
                       </Swiper>
                     </div>
                     <div className="flex-1 flex flex-col w-full justify-between">
-                      <div>
+                      <div className="space-y-5">
                         <div className="space-y-1">
                           <h3 className="leading-none text-3xl text-black">
                             <Link href={"#"}>
@@ -124,7 +124,7 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
                         </div>
                       </div>
 
-                      <div className="sm:mt-10 flex items-center justify-center sm:justify-start">
+                      <div className="mt-10 flex items-center justify-center sm:justify-start">
                         <AddToCart
                           max={150}
                           min={1}

@@ -7,6 +7,7 @@ import BottomCart from "../components/BottomCart";
 import Cart from "../components/Cart";
 import { Urls } from "../configs/configs";
 import { useAuth } from "../RestHelper/useAuth";
+import Loader from "../components/Loader";
 
 function Products(/*{ productsList }*/) {
   const router = useRouter();
@@ -17,6 +18,7 @@ function Products(/*{ productsList }*/) {
   const [pageNumber, setPageNumber] = useState(0);
   const [limit, setLimit] = useState(10);
   const [renderUi, setRenderUi] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const getSlides = async () => {
     var requestOptions = {
@@ -54,7 +56,13 @@ function Products(/*{ productsList }*/) {
       .catch((error) => console.log("error", error));
 
     if (result?.results?.code == 200 && result?.results?.data) {
-      setProducts((prev) => [...prev, ...result?.results?.data]);
+      setProducts((prev) => [
+        ...prev,
+        ...result?.results?.data?.filter((item) =>
+          prev.find((element) => element.id === item.id) ? false : true
+        ),
+      ]);
+
       setPageNumber((prev) => prev + 1);
     }
   };
@@ -62,6 +70,7 @@ function Products(/*{ productsList }*/) {
   useEffect(() => {
     const init = async () => {
       if (auth?.user?.id) {
+        setLoading(true);
         await getSlides();
         await getProducts();
         await auth?.getCart(auth?.user?.id_cart);
@@ -69,6 +78,7 @@ function Products(/*{ productsList }*/) {
       } else {
         router.push("/connexion");
       }
+      setLoading(false);
     };
     init();
   }, []);
@@ -76,7 +86,9 @@ function Products(/*{ productsList }*/) {
   return (
     <>
       {
-        /*renderUi && */ <div className="py-5">
+        /*renderUi && */
+        <div className="py-5">
+          <Loader isVisible={isLoading} />
           <CoverThumbnails slides={slides} />
           <ProductList products={products} getProducts={getProducts} />
           {openCart && (

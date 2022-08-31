@@ -21,6 +21,7 @@ import CheckoutSummary from "../components/CheckoutSummary";
 import { Urls } from "../configs/configs";
 import { useRouter } from "next/router";
 import NewAddressForm from "../components/NewAddressForm";
+import Loader from "../components/Loader";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -37,12 +38,14 @@ function Checkout() {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState({});
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const openNewAddressForm = () => {
     setIsFormOpen(true);
   };
 
   const addAddress = async (addressInfos) => {
+    setLoading(true);
     addressInfos.id_customer = auth?.user?.id;
     var requestOptions = {
       method: "POST",
@@ -66,10 +69,12 @@ function Checkout() {
     } else {
       console.log("error!!!");
     }
+    setLoading(false);
   };
 
   const removeAddress = async (idAddress) => {
     if (!confirm("voulez vous vraiment supprimer l'adresse?")) return;
+    setLoading(true);
     var requestOptions = {
       method: "GET",
     };
@@ -91,6 +96,7 @@ function Checkout() {
     } else {
       console.log("error!!!");
     }
+    setLoading(false);
   };
 
   const getAddresses = async () => {
@@ -149,18 +155,21 @@ function Checkout() {
   useEffect(() => {
     const init = async () => {
       if (auth?.user?.id) {
+        setLoading(true);
         await getAddresses();
         await getCarriers();
         await getPaymentMethods();
       } else {
         router.push("/connexion");
       }
+      setLoading(false);
     };
     init();
   }, []);
 
   return (
     <div className="bg-white">
+      <Loader isVisible={isLoading} />
       <NewAddressForm
         open={isFormOpen}
         setOpen={setIsFormOpen}
