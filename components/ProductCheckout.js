@@ -28,7 +28,7 @@ function ProductCheckout({ product, currency_symbol, removeProduct }) {
 
       <div className="flex-1 pt-2 flex items-end justify-between">
         <p className="text-2xl font-medium text-gray-900 font-londrina">
-          {product.price} {currency_symbol}
+          {parseFloat(product?.price).toFixed(2)} {currency_symbol}
         </p>
 
         <div className="ml-4">
