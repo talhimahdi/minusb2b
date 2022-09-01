@@ -25,7 +25,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
     firstname: "Mahdi",
     lastname: "Talhi",
     email: "test.email+1@gmail.com",
-    other: "genre",
+    other: "Concept/déco",
     company: "my company",
     address1: "my address 1",
     address2: "my address 2",

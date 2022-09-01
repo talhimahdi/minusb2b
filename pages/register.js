@@ -8,7 +8,7 @@ import RegisterForm from "../components/RegisterForm";
 import { Urls } from "../configs/configs";
 import Loader from "../components/Loader";
 
-export default function Connexion() {
+export default function Register() {
   const router = useRouter();
   const auth = useAuth();
   const [renderUi, setRenderUi] = useState(false);
