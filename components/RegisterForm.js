@@ -21,10 +21,10 @@ export default function RegisterForm({ onRegister, errorMessage }) {
   const [isLoading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
   const [form, setForm] = useState({
-    passwd: "123456x",
+    passwd: "123456",
     firstname: "Mahdi",
     lastname: "Talhi",
-    email: "talhi.mahdi.1+@gmail.com",
+    email: "test.email+1@gmail.com",
     other: "genre",
     company: "my company",
     address1: "my address 1",
