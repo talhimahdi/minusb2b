@@ -155,8 +155,8 @@ function CheckoutSummary() {
 
         <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
           <button
-            type="submit"
-            className="w-full bg-black shadow-sm py-3 px-4 text-base font-bold text-white hover:font-bold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50"
+            className="w-full bg-black shadow-sm py-3 px-4 text-base font-bold text-white hover:font-bold focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-offset-gray-50"
+            onClick={(e) => e.preventDefault()}
           >
             Confirmer la commande
           </button>

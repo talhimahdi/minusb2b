@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Urls } from "../configs/configs";
+import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 export default function ActionCard({ onLogin, errorMessage = "" }) {
   const [loginForm, setLoginForm] = useState({
@@ -85,9 +86,6 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                       />
                     </div>
                   </div>
-                  <div>
-                    <p>{errorMessage}</p>
-                  </div>
 
                   <div className="flex flex-col items-center mb-5 md:mb-0">
                     <p>Pas encore de compte ?</p>
@@ -104,6 +102,12 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                       Suivant
                     </button>
                   </div>
+                  {errorMessage != "" && (
+                    <div className="flex items-center space-x-2 text-secondary">
+                      <ExclamationCircleIcon className="h-5 w-5" />
+                      <p>{errorMessage}</p>
+                    </div>
+                  )}
                 </form>
               </div>
             </div>

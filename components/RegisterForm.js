@@ -1,5 +1,7 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Urls } from "../configs/configs";
+import Loader from "../components/Loader";
 
 import {
   MailIcon,
@@ -12,11 +14,57 @@ import {
   GlobeIcon,
   PhoneIcon,
   InboxIcon,
+  ExclamationCircleIcon,
 } from "@heroicons/react/solid";
 
-export default function RegisterForm() {
+export default function RegisterForm({ onRegister, errorMessage }) {
+  const [isLoading, setLoading] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [form, setForm] = useState({
+    passwd: "123456x",
+    firstname: "Mahdi",
+    lastname: "Talhi",
+    email: "talhi.mahdi.1+@gmail.com",
+    other: "genre",
+    company: "my company",
+    address1: "my address 1",
+    address2: "my address 2",
+    id_country: "8",
+    vat_number: "FR12345678901",
+    city: "Paris",
+    postcode: "20330",
+    phone: "+212566443322",
+  });
+
+  const getCountries = async () => {
+    var requestOptions = {
+      method: "GET",
+    };
+
+    const result = await fetch(Urls.getCountries, requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        return data?.results;
+      })
+      .catch((error) => console.log("error", error));
+
+    if (result?.code == 200 && result?.succes && result?.countries) {
+      setCountries(result?.countries);
+    }
+  };
+
+  useEffect(() => {
+    const init = async () => {
+      setLoading(true);
+      await getCountries();
+      setLoading(false);
+    };
+    init();
+  }, []);
+
   return (
     <div className="bg-primary max-w-lg mx-auto my-10 px-4 py-8 sm:px-6 lg:px-8">
+      <Loader isVisible={isLoading} />
       <form className="space-y-8">
         <div className="space-y-6 sm:space-y-5">
           <div className="flex flex-col items-center">
@@ -43,10 +91,15 @@ export default function RegisterForm() {
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <UserIcon className="h-5 w-5 text-secondary" />
                   <input
-                    id="first-name"
-                    name="first-name"
                     type="text"
                     placeholder="Jules"
+                    value={form.firstname}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        firstname: e.target.value,
+                      })
+                    }
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
                 </div>
@@ -62,9 +115,14 @@ export default function RegisterForm() {
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <UserIcon className="h-5 w-5 text-secondary" />
                   <input
-                    id="last-name"
-                    name="last-name"
                     type="text"
+                    value={form.lastname}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        lastname: e.target.value,
+                      })
+                    }
                     placeholder="Verne"
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
@@ -82,10 +140,14 @@ export default function RegisterForm() {
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <MailIcon className="h-5 w-5 text-secondary" />
                 <input
-                  id="email"
-                  name="email"
                   type="email"
-                  autoComplete="email"
+                  value={form.email}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      email: e.target.value,
+                    })
+                  }
                   placeholder="jules.verne@email.fr"
                   className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                 />
@@ -102,9 +164,14 @@ export default function RegisterForm() {
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <LockClosedIcon className="h-5 w-5 text-secondary" />
                 <input
-                  id="password"
-                  name="password"
                   type="password"
+                  value={form.passwd}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      passwd: e.target.value,
+                    })
+                  }
                   placeholder="Minimum 8 caractères"
                   className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                 />
@@ -130,15 +197,20 @@ export default function RegisterForm() {
               </label>
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <select
-                  id="boutique-type"
                   className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
-                  name="boutique-type"
+                  value={form.other}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      other: e.target.value,
+                    })
+                  }
                 >
-                  <option>Concept/déco</option>
-                  <option>Musée</option>
-                  <option>Collab</option>
-                  <option>Librairie</option>
-                  <option>Jouets</option>
+                  <option value={"Concept/déco"}>Concept/déco</option>
+                  <option value={"Musée"}>Musée</option>
+                  <option value={"Collab"}>Collab</option>
+                  <option value={"Librairie"}>Librairie</option>
+                  <option value={"Jouets"}>Jouets</option>
                 </select>
               </div>
             </div>
@@ -153,10 +225,15 @@ export default function RegisterForm() {
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <UserIcon className="h-5 w-5 text-secondary" />
                   <input
-                    id="societe"
-                    name="societe"
                     type="text"
                     placeholder="Nom entreprise"
+                    value={form.company}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        company: e.target.value,
+                      })
+                    }
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
                 </div>
@@ -172,10 +249,15 @@ export default function RegisterForm() {
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <UserIcon className="h-5 w-5 text-secondary" />
                   <input
-                    id="numero-tva"
-                    name="numero-tva"
                     type="text"
                     placeholder="FR..."
+                    value={form.vat_number}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        vat_number: e.target.value,
+                      })
+                    }
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
                 </div>
@@ -192,10 +274,15 @@ export default function RegisterForm() {
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <HomeIcon className="h-5 w-5 text-secondary" />
                 <input
-                  id="adress"
-                  name="adress-colement"
                   type="text"
                   placeholder="Numéro et rue"
+                  value={form.address1}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      address1: e.target.value,
+                    })
+                  }
                   className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                 />
               </div>
@@ -205,15 +292,20 @@ export default function RegisterForm() {
                 htmlFor="email"
                 className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
               >
-                Complément d’adresse
+                Complément adresse
               </label>
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <InformationCircleIcon className="h-5 w-5 text-secondary" />
                 <input
-                  id="adress-colement"
-                  name="adress-colement"
                   type="text"
                   placeholder="Étages, code d’accès..."
+                  value={form.address2}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      address2: e.target.value,
+                    })
+                  }
                   className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                 />
               </div>
@@ -229,10 +321,15 @@ export default function RegisterForm() {
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <InboxIcon className="h-5 w-5 text-secondary" />
                   <input
-                    id="code-postal"
-                    name="code-postal"
                     type="text"
                     placeholder="80000"
+                    value={form.postcode}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        postcode: e.target.value,
+                      })
+                    }
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
                 </div>
@@ -248,10 +345,15 @@ export default function RegisterForm() {
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <HomeIcon className="h-5 w-5 text-secondary" />
                   <input
-                    id="ville"
-                    name="ville"
                     type="text"
                     placeholder="Amiens"
+                    value={form.city}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        city: e.target.value,
+                      })
+                    }
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
                 </div>
@@ -265,15 +367,37 @@ export default function RegisterForm() {
                 >
                   Pays
                 </label>
-                <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
+                <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm pl-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <GlobeIcon className="h-5 w-5 text-secondary" />
-                  <input
-                    id="pays"
-                    name="pays"
+                  <select
+                    value={form.id_country}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        id_country: e.target.value,
+                      })
+                    }
+                    className="block w-full border-none shadow-sm focus:ring-0  sm:text-sm"
+                  >
+                    <option value={0}>Selectionner un pays</option>
+                    {countries?.map((country) => (
+                      <option key={country?.id} value={country?.id}>
+                        {country?.name}
+                      </option>
+                    ))}
+                  </select>
+                  {/* <input
                     type="text"
                     placeholder="France"
+                    value={form.id_country}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        id_country: e.target.value,
+                      })
+                    }
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
-                  />
+                  /> */}
                 </div>
               </div>
 
@@ -287,10 +411,15 @@ export default function RegisterForm() {
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <PhoneIcon className="h-5 w-5 text-secondary" />
                   <input
-                    id="telephone"
-                    name="telephone"
                     type="text"
                     placeholder="+33 01 ..."
+                    value={form.phone}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        phone: e.target.value,
+                      })
+                    }
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
                 </div>
@@ -303,10 +432,17 @@ export default function RegisterForm() {
           <button
             type="button"
             className="uppercase justify-center items-center w-60 h-10 px-10 border border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none"
+            onClick={async () => await onRegister(form)}
           >
             Je crée mon compte
           </button>
         </div>
+        {errorMessage != "" && (
+          <div className="flex items-center space-x-2 text-secondary">
+            <ExclamationCircleIcon className="h-5 w-5" />
+            <p>{errorMessage}</p>
+          </div>
+        )}
       </form>
     </div>
   );

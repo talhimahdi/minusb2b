@@ -8,30 +8,41 @@ const output_format = "JSON";
 // const baseUrl = "http://localhost:8888/prestaboutique/api/";
 const baseUrl = "https://minus-produits.prismatic.digital/api/";
 const Urls = {
-  // register: baseUrl + "register",
+  register:
+    baseUrl +
+    `restapi/register?output_format=${output_format}&ws_key=${ws_key}`,
+
   login:
     baseUrl + `restapi/login?output_format=${output_format}&ws_key=${ws_key}`,
+
   // logout: baseUrl + "logout",
+
   productList: (page, limit) =>
     baseUrl +
     `restapi/products?output_format=${output_format}&ws_key=${ws_key}&limit=${
       page * limit
     },${limit}&sort=id_ASC`,
+
   getCart: (cartId) =>
     baseUrl +
     `restapi/getCart/${cartId}?output_format=${output_format}&ws_key=${ws_key}`,
+
   addToCart:
     baseUrl +
     `restapi/addToCart?output_format=${output_format}&ws_key=${ws_key}`,
+
   deleteFromCart:
     baseUrl +
     `restapi/deleteFromCart?output_format=${output_format}&ws_key=${ws_key}`,
+
   getAddresses: (id_customer) =>
     baseUrl +
     `restapi/getAddresses?output_format=${output_format}&ws_key=${ws_key}&display=full&filter[id_customer]=${id_customer}`,
+
   addNewAddress:
     baseUrl +
     `restapi/addNewAddress?output_format=${output_format}&ws_key=${ws_key}`,
+
   deleteAddress: (idAddress) =>
     baseUrl +
     `restapi/deleteAddress/${idAddress}?output_format=${output_format}&ws_key=${ws_key}`,
@@ -39,15 +50,22 @@ const Urls = {
   getPaymentMethods:
     baseUrl +
     `restapi/getPaymentMethods?output_format=${output_format}&ws_key=${ws_key}`,
+
   getCarriers:
     baseUrl +
     `restapi/getCarriers?output_format=${output_format}&ws_key=${ws_key}`,
+
   getPaymentMethods:
     baseUrl +
     `restapi/getPaymentMethods?output_format=${output_format}&ws_key=${ws_key}`,
+
   getSlider:
     baseUrl +
     `restapi/getSlider?output_format=${output_format}&ws_key=${ws_key}`,
+
+  getCountries:
+    baseUrl +
+    `restapi/getCountries?output_format=${output_format}&ws_key=${ws_key}`,
 };
 
 export { Urls, salt };
