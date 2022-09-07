@@ -4,6 +4,8 @@ import ActionCard from "../components/ActionCard";
 import Cover from "../components/Cover";
 import Infos from "../components/Infos";
 import { useAuth } from "../RestHelper/useAuth";
+import localStorageX from "../configs/localStorage";
+import Header from "../components/Header";
 
 export default function Connexion() {
   const router = useRouter();
@@ -12,7 +14,7 @@ export default function Connexion() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    if (auth?.getUserLocal()) {
+    if (localStorageX.isConnected()) {
       router.push("/products");
     } else setRenderUi(true);
   }, []);
@@ -25,6 +27,7 @@ export default function Connexion() {
 
   return (
     <div>
+      <Header isConnexion={true} />
       {renderUi ? (
         <div className="max-w-7xl mx-auto mt-10 py-5 px-4 sm:px-6 lg:px-8">
           <Cover />

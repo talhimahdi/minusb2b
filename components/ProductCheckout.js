@@ -3,6 +3,7 @@ import React from "react";
 import AddToCart from "./AddToCart";
 
 function ProductCheckout({ product, currency_symbol, removeProduct }) {
+  console.log(product);
   return (
     <div className="flex-1 flex flex-col">
       <div className="flex">
@@ -28,7 +29,8 @@ function ProductCheckout({ product, currency_symbol, removeProduct }) {
 
       <div className="flex-1 pt-2 flex items-end justify-between">
         <p className="text-2xl font-medium text-gray-900 font-londrina">
-          {parseFloat(product?.price).toFixed(2)} {currency_symbol}
+          {/* {parseFloat(product?.price).toFixed(2)} {currency_symbol} */}
+          {product?.formatted_total}
         </p>
 
         <div className="ml-4">

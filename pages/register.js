@@ -7,6 +7,8 @@ import { useAuth } from "../RestHelper/useAuth";
 import RegisterForm from "../components/RegisterForm";
 import { Urls } from "../configs/configs";
 import Loader from "../components/Loader";
+import localStorageX from "../configs/localStorage";
+import Header from "../components/Header";
 
 export default function Register() {
   const router = useRouter();
@@ -16,8 +18,8 @@ export default function Register() {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (auth?.getUserLocal()) {
-      router.push("/connexion");
+    if (localStorageX.isConnected()) {
+      router.push("/products");
     } else setRenderUi(true);
   }, []);
 
@@ -47,15 +49,9 @@ export default function Register() {
     setLoading(false);
   };
 
-  // const onLogin = async ({ email, password }) => {
-  //   const result = await auth?.login({ email, password });
-
-  //   setErrorMessage(result?.message);
-  //   console.log(result);
-  // };
-
   return (
     <div>
+      <Header isConnexion={true} />
       <Loader isVisible={isLoading} />
       {renderUi ? (
         <div className="max-w-7xl mx-auto mt-10 py-5 px-4 sm:px-6 lg:px-8">

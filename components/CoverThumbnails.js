@@ -9,7 +9,7 @@ import ImagePopup from "./ImagePopup";
 function CoverThumbnails({ slides }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className=" h-48 md:h-56">
+    <div className="bg-white h-48 md:h-56">
       <Swiper
         className="max-w-7xl mx-auto h-full w-full px-3 md:px-0 z-0"
         spaceBetween={10}

@@ -9,24 +9,51 @@ import { Urls } from "../configs/configs";
 import { useAuth } from "../RestHelper/useAuth";
 import Loader from "../components/Loader";
 
+import localStorageX from "../configs/localStorage";
+import Header from "../components/Header";
+
 function Products(/*{ productsList }*/) {
   const router = useRouter();
   const auth = useAuth();
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [slides, setSlides] = useState({});
   const [openCart, setOpenCart] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [limit, setLimit] = useState(10);
+  const [idCategorySearch, setIdCategorySearch] = useState(0);
+  const [term, setTerm] = useState("");
   const [renderUi, setRenderUi] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [isButtonSpin, setIsButtonSpin] = useState(false);
+
+  const getCategories = async () => {
+    var requestOptions = {
+      method: "GET",
+    };
+
+    const result = await fetch("/api/categories", requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        if (data?.results?.code == 200 && data?.results?.succes) {
+          return data?.results;
+        } else {
+          console.log("Error!!");
+        }
+      })
+      .catch((error) => console.log("error", error));
+
+    if (result?.categories) {
+      setCategories(result.categories);
+    }
+  };
 
   const getSlides = async () => {
     var requestOptions = {
       method: "GET",
     };
 
-    const url = Urls.getSlider;
-    const result = await fetch(url, requestOptions)
+    const result = await fetch("/api/slider", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
@@ -42,70 +69,99 @@ function Products(/*{ productsList }*/) {
     }
   };
 
-  const getProducts = async () => {
+  const getProducts = async (isSearch = false) => {
+    setIsButtonSpin(true);
+    setPageNumber((prev) => prev + 1);
+    if (isSearch) {
+      setPageNumber(0);
+    }
+
     var requestOptions = {
-      method: "GET",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pageNumber: isSearch ? 0 : pageNumber,
+        limit,
+        idCategorySearch,
+        term,
+      }),
     };
 
-    const url = Urls.productList(pageNumber, limit);
-    const result = await fetch(url, requestOptions)
+    const result = await fetch("/api/products", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         return data;
       })
       .catch((error) => console.log("error", error));
 
-    if (result?.results?.code == 200 && result?.results?.data) {
-      setProducts((prev) => [
-        ...prev,
-        ...result?.results?.data?.filter((item) =>
-          prev.find((element) => element.id === item.id) ? false : true
-        ),
-      ]);
+    if (result?.results?.code == 200 && result?.results?.products) {
+      if (isSearch || pageNumber == 0) {
+        setProducts(result?.results?.products);
+      } else {
+        setProducts((prev) => [
+          ...prev,
+          ...result?.results?.products?.filter((item) =>
+            prev.find((element) => element.id === item.id) ? false : true
+          ),
+        ]);
+      }
 
-      setPageNumber((prev) => prev + 1);
+      setIsButtonSpin(false);
     }
+
+    return result?.results?.products?.length;
   };
 
   useEffect(() => {
     const init = async () => {
       if (auth?.user?.id) {
         setLoading(true);
+        await getCategories();
         await getSlides();
         await getProducts();
         await auth?.getCart(auth?.user?.id_cart);
         setRenderUi(true);
-      } else {
-        router.push("/connexion");
       }
       setLoading(false);
     };
     init();
-  }, []);
+  }, [auth?.user]);
 
   return (
     <>
-      {
-        /*renderUi && */
-        <div className="py-5">
-          <Loader isVisible={isLoading} />
-          <CoverThumbnails slides={slides} />
-          <ProductList products={products} getProducts={getProducts} />
-          {openCart && (
+      <Loader isVisible={isLoading} />
+      {renderUi && (
+        <div>
+          <Header />
+          <div className="pt-0 py-5">
+            <CoverThumbnails slides={slides} />
+            <ProductList
+              products={products}
+              categories={categories}
+              getProducts={getProducts}
+              isLoading={isButtonSpin}
+              idCategorySearch={idCategorySearch}
+              onCategoryChange={setIdCategorySearch}
+              term={term}
+              onChangeTerm={setTerm}
+            />
             <Cart
               open={openCart}
               close={() => setOpenCart(false)}
               cart={auth?.cart}
               setOpenCart={setOpenCart}
             />
-          )}
-          <BottomCart
-            passerCommande={() => {
-              if (auth?.cart?.products_count > 0) setOpenCart(true);
-            }}
-          />
+            <BottomCart
+              onOpenCart={() => {
+                if (auth?.cart?.products_count > 0) setOpenCart(true);
+              }}
+            />
+          </div>
         </div>
-      }
+      )}
     </>
   );
 }

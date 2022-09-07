@@ -1,29 +1,26 @@
+import React, { useEffect } from "react";
 import Cover from "../components/Cover";
 import RegisterForm from "../components/RegisterForm";
 import Infos from "../components/Infos";
+import localStorageX from "../configs/localStorage";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (localStorageX.isConnected()) {
+      router.push("/products");
+    } else {
+      router.push("/connexion");
+    }
+  }, []);
+
   return (
     <>
-      <Cover />
+      {/* <Cover />
       <Infos />
-      <RegisterForm />
+      <RegisterForm /> */}
     </>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   var requestOptions = {
-//     method: 'GET',
-//     redirect: 'follow'
-//   };
-
-//   fetch("https://rest.binshops.com/rest/featuredproducts", requestOptions)
-//     .then(response => response.text())
-//     .then(result => console.log(result))
-//     .catch(error => console.log('error', error));
-
-//   return {
-//     props: {}, // will be passed to the page component as props
-//   }
-// }

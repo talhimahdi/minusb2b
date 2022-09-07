@@ -68,7 +68,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
       <form className="space-y-8">
         <div className="space-y-6 sm:space-y-5">
           <div className="flex flex-col items-center">
-            <div className="flex items-center md:items-end mb-5 space-x-2">
+            <div className="flex items-center md:items-end mb-12 space-x-2">
               <p className="font-semibold">Vous avez déjà un compte ?</p>
               <Link href={"/connexion"}>
                 <a className="underline font-semibold">Connectez-vous !</a>

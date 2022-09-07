@@ -24,6 +24,7 @@ function Cart({ open, close, setOpenCart }) {
     const result = await auth?.removeProduct(idProduct);
 
     if (result) {
+      // console.log(auth?.cart);
       if (auth?.cart?.products_count == 0) {
         setOpenCart(false);
       }
@@ -44,10 +45,10 @@ function Cart({ open, close, setOpenCart }) {
             <div className="pointer-events-none fixed inset-y-0 left-0 right-0 flex max-w-full">
               <Transition.Child
                 as={"div"}
-                enter="transform transition ease-in-out duration-300"
+                enter="transform transition ease-in-out duration-500"
                 enterFrom="translate-y-full"
                 enterTo="translate-y-0"
-                leave="transform transition ease-in-out duration-300"
+                leave="transform transition ease-in-out duration-500"
                 leaveFrom="translate-y-0"
                 leaveTo="translate-y-full"
               >
@@ -327,8 +328,9 @@ function Cart({ open, close, setOpenCart }) {
                                   <div className="flex flex-col">
                                     <div className="text-black space-x-2">
                                       <span className="text-2xl font-londrina">
-                                        {parseFloat(product?.price).toFixed(2) +
-                                          auth?.cart?.currency_symbol}
+                                        {/* {parseFloat(product?.price).toFixed(2) +
+                                          auth?.cart?.currency_symbol} */}
+                                        {product?.formatted_price}
                                       </span>
                                       <span className="text-lg">HT</span>
                                     </div>
@@ -456,8 +458,9 @@ function Cart({ open, close, setOpenCart }) {
                                   <div className="col-span-2">
                                     <div className="text-black space-x-2">
                                       <span className="text-2xl font-londrina">
-                                        {parseFloat(product?.price).toFixed(2) +
-                                          auth?.cart?.currency_symbol}
+                                        {/* {parseFloat(product?.price).toFixed(2) +
+                                          auth?.cart?.currency_symbol} */}
+                                        {product?.formatted_price}
                                       </span>
                                       <span className="text-lg">HT</span>
                                     </div>

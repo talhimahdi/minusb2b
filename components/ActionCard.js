@@ -39,7 +39,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   </Link>
                 </button>
               </div>
-              <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+              <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md  border-black border-t-2 pt-5">
                 <form className="space-y-4" action="#" method="POST">
                   <div>
                     <label
@@ -141,14 +141,6 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                 >
                   JE TÉLÉCHARGE LE CATALOGUE
                 </button>
-              </div>
-              <div>
-                <h3 className="uppercase mt-8 text-xl text-gray-900 font-londrina text-center">
-                  DÉJÀ INSCRIT ?
-                </h3>
-                <p className="text-base text-black text-center">
-                  Connectez-vous
-                </p>
               </div>
             </div>
           </div>

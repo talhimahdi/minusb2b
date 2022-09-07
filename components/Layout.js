@@ -15,7 +15,7 @@ export default function Layout({ children }) {
       </Head>
       <main>
         <TopNavbar />
-        <Header />
+        {/* <Header /> */}
         {children}
       </main>
       <Footer />

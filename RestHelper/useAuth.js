@@ -1,6 +1,7 @@
 // Hook (use-auth.js)
 import React, { useState, useContext, createContext, useEffect } from "react";
 import { Urls, salt } from "../configs/configs";
+import localStorageX from "../configs/localStorage";
 import { useRouter } from "next/router";
 
 const AuthContext = createContext();
@@ -23,31 +24,35 @@ function useAuthProvider() {
   const [offers, setOffers] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  useEffect(() => {
+    if (localStorageX.isConnected()) {
+      setUser(localStorageX.get("local_data").customer);
+    } else {
+      router.push("/connexion");
+    }
+  }, []);
+
   const login = async ({ email, password }) => {
     if (email != "" && password != "") {
       var requestOptions = {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
         },
-        body: new URLSearchParams({
+        body: JSON.stringify({
           email: email,
           password: password,
         }),
       };
 
-      return await fetch(Urls.login, requestOptions)
+      return await fetch("/api/login", requestOptions)
         .then((response) => response?.json())
         .then((response) => {
           if (response?.results?.succes && response?.results?.code === 200) {
             setUser(response?.results?.data?.customer);
-            if (typeof window !== "undefined") {
-              localStorage.setItem(
-                "local_data",
-                encrypt(response?.results?.data, salt)
-              );
-            }
+
+            localStorageX.add("local_data", response?.results?.data);
             router.push("/products");
           } else {
             console.log("Error: " + response?.results?.message);
@@ -60,10 +65,15 @@ function useAuthProvider() {
 
   const getCart = async (cartId) => {
     var requestOptions = {
-      method: "GET",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ cartId: cartId }),
     };
 
-    const result = await fetch(Urls.getCart(cartId), requestOptions)
+    const result = await fetch("/api/cart", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         return data;
@@ -111,29 +121,40 @@ function useAuthProvider() {
     return {};
   };
 
-  const getUserLocal = () => {
-    if (typeof window !== "undefined" && localStorage.length > 0) {
-      const localData = decrypt(localStorage.getItem("local_data"), salt);
-      setUser(localData?.customer);
-      return localData;
-    }
+  // const getUserLocal = () => {
+  //   // if (typeof window !== "undefined" && localStorage.length > 0) {
+  //   // const localData = decrypt(localStorage.getItem("local_data"), salt);
+  //   const localData = localStorageX.get("local_data");
+
+  //   // setUser(localData?.customer);
+  //   return localData;
+  //   // }
+  //   // return false;
+  // };
+
+  // Return the user object and auth methods
+
+  const isConnected = () => {
+    if (localStorageX.get("local_data")) return true;
     return false;
   };
 
-  // Return the user object and auth methods
   return {
     user,
-    getUserLocal,
+    //getUserLocal,
     getCart,
     removeProduct,
     login,
     register,
     logout,
+    isConnected,
     cart,
     offers,
     setCart,
     setUser,
     isLoaded,
+    decrypt,
+    salt,
   };
 }
 
