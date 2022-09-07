@@ -36,7 +36,7 @@ export default function Header({ isCheckout = false, isConnexion = false }) {
               </div>
 
               {/* Logo */}
-              <Link href={"/"}>
+              <Link href="/">
                 <a className="flex-none relative w-36 h-16 md:w-48 md:h-20">
                   {/* <Image
                   src="/logo-minus-pro.svg"
@@ -79,7 +79,7 @@ export default function Header({ isCheckout = false, isConnexion = false }) {
           <nav aria-label="Top" className="max-w-7xl mx-auto px-4 py-5">
             <div className="flex items-center justify-between">
               {/* Logo */}
-              <Link href={"/"}>
+              <Link href="/">
                 <a className="flex-none relative w-36 h-16 md:w-48 md:h-20">
                   {/* <Image
                   src="/logo-minus-pro.svg"
@@ -97,10 +97,7 @@ export default function Header({ isCheckout = false, isConnexion = false }) {
               <div className="flex items-center justify-end space-x-0 md:space-x-6">
                 {/* Produits */}
                 <Link href="/products">
-                  <a
-                    href="/products"
-                    className="p-2 flex items-center text-black space-x-2"
-                  >
+                  <a className="p-2 flex items-center text-black space-x-2">
                     <span className="w-5 h-5">
                       <img
                         src={"/images/icons/books.svg"}
@@ -115,18 +112,17 @@ export default function Header({ isCheckout = false, isConnexion = false }) {
                 </Link>
 
                 {/* Cart */}
-                <a
-                  href="#"
-                  className="p-2 flex items-center text-black space-x-2"
-                >
-                  <ShoppingCartIcon
-                    className="flex-shrink-0 h-6 w-6"
-                    aria-hidden="true"
-                  />
-                  <span className="hidden md:block uppercase font-bold">
-                    panier
-                  </span>
-                </a>
+                <Link href="#">
+                  <a className="p-2 flex items-center text-black space-x-2">
+                    <ShoppingCartIcon
+                      className="flex-shrink-0 h-6 w-6"
+                      aria-hidden="true"
+                    />
+                    <span className="hidden md:block uppercase font-bold">
+                      panier
+                    </span>
+                  </a>
+                </Link>
               </div>
             </div>
           </nav>
@@ -158,7 +154,7 @@ export default function Header({ isCheckout = false, isConnexion = false }) {
             </div>
 
             {/* Logo */}
-            <Link href={"/"}>
+            <Link href="/">
               <a className="flex-none relative w-36 h-16 md:w-48 md:h-20">
                 {/* <Image
                 src="/logo-minus-pro.svg"
