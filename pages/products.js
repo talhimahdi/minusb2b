@@ -117,6 +117,15 @@ function Products(/*{ productsList }*/) {
 
   useEffect(() => {
     const init = async () => {
+      if (!localStorageX.isConnected()) {
+        router.push("/connexion");
+      }
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
       if (auth?.user?.id) {
         setLoading(true);
         await getCategories();

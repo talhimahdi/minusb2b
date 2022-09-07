@@ -46,7 +46,9 @@ function useAuthProvider() {
         }),
       };
 
-      return await fetch("/api/login", requestOptions)
+      const baseUrl = location.protocol + "//" + location.host;
+
+      return await fetch(baseUrl + "/api/login", requestOptions)
         .then((response) => response?.json())
         .then((response) => {
           if (response?.results?.succes && response?.results?.code === 200) {
