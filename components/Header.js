@@ -53,19 +53,18 @@ export default function Header({ isCheckout = false, isConnexion = false }) {
 
               <div className="flex items-center justify-end space-x-0 md:space-x-6">
                 {/* Produits */}
-                <a
-                  href="/products"
-                  className="p-2 flex items-center text-black space-x-2"
-                >
-                  <span className="w-5 h-5">
-                    <img
-                      src={"/images/icons/books.svg"}
-                      alt=""
-                      className="relative object-fill"
-                    />
-                  </span>
-                  <span className="uppercase font-bold">Produits</span>
-                </a>
+                <Link href="/products">
+                  <a className="p-2 flex items-center text-black space-x-2">
+                    <span className="w-5 h-5">
+                      <img
+                        src={"/images/icons/books.svg"}
+                        alt=""
+                        className="relative object-fill"
+                      />
+                    </span>
+                    <span className="uppercase font-bold">Produits</span>
+                  </a>
+                </Link>
               </div>
             </div>
           </nav>
@@ -97,21 +96,23 @@ export default function Header({ isCheckout = false, isConnexion = false }) {
 
               <div className="flex items-center justify-end space-x-0 md:space-x-6">
                 {/* Produits */}
-                <a
-                  href="/products"
-                  className="p-2 flex items-center text-black space-x-2"
-                >
-                  <span className="w-5 h-5">
-                    <img
-                      src={"/images/icons/books.svg"}
-                      alt=""
-                      className="relative object-fill"
-                    />
-                  </span>
-                  <span className="hidden md:block uppercase font-bold">
-                    Produits
-                  </span>
-                </a>
+                <Link href="/products">
+                  <a
+                    href="/products"
+                    className="p-2 flex items-center text-black space-x-2"
+                  >
+                    <span className="w-5 h-5">
+                      <img
+                        src={"/images/icons/books.svg"}
+                        alt=""
+                        className="relative object-fill"
+                      />
+                    </span>
+                    <span className="hidden md:block uppercase font-bold">
+                      Produits
+                    </span>
+                  </a>
+                </Link>
 
                 {/* Cart */}
                 <a
@@ -174,46 +175,43 @@ export default function Header({ isCheckout = false, isConnexion = false }) {
 
             <div className="flex items-center justify-end space-x-0 md:space-x-6">
               {/* Produits */}
-              <a
-                href="/products"
-                className="p-2 flex items-center text-black space-x-2"
-              >
-                <span className="w-5 h-5">
-                  <img
-                    src={"/images/icons/books.svg"}
-                    alt=""
-                    className="relative object-fill"
-                  />
-                </span>
-                <span className="hidden md:block uppercase font-bold">
-                  Produits
-                </span>
-              </a>
+              <Link href="/products">
+                <a className="p-2 flex items-center text-black space-x-2">
+                  <span className="w-5 h-5">
+                    <img
+                      src={"/images/icons/books.svg"}
+                      alt=""
+                      className="relative object-fill"
+                    />
+                  </span>
+                  <span className="hidden md:block uppercase font-bold">
+                    Produits
+                  </span>
+                </a>
+              </Link>
 
               {/* Account */}
-              <a
-                href="#"
-                className="p-2 flex items-center text-black space-x-2"
-              >
-                <UserIcon className="w-6 h-6" aria-hidden="true" />
-                <span className="hidden md:block uppercase font-bold">
-                  Compte
-                </span>
-              </a>
+              <Link href="#">
+                <a className="p-2 flex items-center text-black space-x-2">
+                  <UserIcon className="w-6 h-6" aria-hidden="true" />
+                  <span className="hidden md:block uppercase font-bold">
+                    Compte
+                  </span>
+                </a>
+              </Link>
 
               {/* Cart */}
-              <a
-                href="#"
-                className="p-2 flex items-center text-black space-x-2"
-              >
-                <ShoppingCartIcon
-                  className="flex-shrink-0 h-6 w-6"
-                  aria-hidden="true"
-                />
-                <span className="hidden md:block uppercase font-bold">
-                  panier
-                </span>
-              </a>
+              <Link href="#">
+                <a className="p-2 flex items-center text-black space-x-2">
+                  <ShoppingCartIcon
+                    className="flex-shrink-0 h-6 w-6"
+                    aria-hidden="true"
+                  />
+                  <span className="hidden md:block uppercase font-bold">
+                    panier
+                  </span>
+                </a>
+              </Link>
             </div>
           </div>
         </nav>
