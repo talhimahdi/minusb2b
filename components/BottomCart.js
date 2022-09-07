@@ -3,9 +3,11 @@ import { ChevronUpIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useAuth } from "../RestHelper/useAuth";
 import ProgressBar from "./ProgressBar";
+import { useRouter } from "next/router";
 
 function BottomCart({ onOpenCart }) {
   const auth = useAuth();
+  const router = useRouter();
 
   return (
     <div className="fixed left-0 right-0 bottom-0 h-auto py-6 px-3 md:px-5 bg-white shadow-lg shadow-black drop-shadow-2xl">
@@ -21,9 +23,9 @@ function BottomCart({ onOpenCart }) {
           ))}
         </div>
         <div className="flex-1">
-          <div className="flex md:flex-row space-x-2">
+          <div className="flex md:flex-row space-x-2 cursor-pointer">
             <div
-              className="flex flex-col flex-1 md:items-end justify-center md:mb-0 cursor-pointer"
+              className="flex flex-col flex-1 md:items-end justify-center md:mb-0"
               onClick={onOpenCart}
             >
               <div className="flex space-x-1">
@@ -37,18 +39,14 @@ function BottomCart({ onOpenCart }) {
               </a>
             </div>
             <div className="flex items-center justify-center md:justify-end">
-              <Link href={"/checkout"}>
-                <a className="uppercase items-center align-baseline px-10 py-4 border h-full border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none">
-                  Passer commande
-                </a>
-              </Link>
-              {/* <button
-                onClick={onOpenCart}
-                type="button"
-                className="uppercase justify-center items-center px-10 py-4  border border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none"
+              <div
+                className="uppercase items-center align-baseline px-10 py-4 border h-full border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none"
+                onClick={() =>
+                  auth?.cart?.products_count > 0 && router.push("/checkout")
+                }
               >
                 Passer commande
-              </button> */}
+              </div>
             </div>
           </div>
         </div>

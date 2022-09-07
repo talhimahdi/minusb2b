@@ -24,6 +24,8 @@ import NewAddressForm from "../components/NewAddressForm";
 import Loader from "../components/Loader";
 import Header from "../components/Header";
 
+import localStorageX from "../configs/localStorage";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -152,6 +154,24 @@ function Checkout() {
       })
       .catch((error) => console.log("error", error));
   };
+
+  useEffect(() => {
+    const init = async () => {
+      if (!localStorageX.isConnected()) {
+        router.push("/connexion");
+      }
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      if (auth?.cart?.products_count < 1) {
+        router.push("/products");
+      }
+    };
+    init();
+  }, [auth?.cart]);
 
   useEffect(() => {
     const init = async () => {

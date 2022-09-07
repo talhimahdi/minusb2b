@@ -3,7 +3,6 @@ import React from "react";
 import AddToCart from "./AddToCart";
 
 function ProductCheckout({ product, currency_symbol, removeProduct }) {
-  console.log(product);
   return (
     <div className="flex-1 flex flex-col">
       <div className="flex">

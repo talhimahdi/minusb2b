@@ -12,9 +12,9 @@ function CheckoutSummary() {
     const result = await auth?.removeProduct(idProduct);
 
     if (result) {
-      if (auth?.cart?.products_count == 0) {
-        setOpenCart(false);
-      }
+      // if (auth?.cart?.products_count == 0) {
+      //   setOpenCart(false);
+      // }
       setModalTitle("Produit supprimé avec succes!");
       setModalOpen(true);
     }

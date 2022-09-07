@@ -121,7 +121,7 @@ export default function Footer() {
                     type="email"
                     placeholder="Votre email"
                     autoComplete="email"
-                    className="block w-full focus:outline-none"
+                    className="block w-full focus:outline-none ring-0 outline-none border-0"
                   />
                   <a href="#">
                     <ChevronRightIcon className="h-5 w-5 text-black" />
