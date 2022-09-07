@@ -24,7 +24,7 @@ function Cart({ open, close, setOpenCart }) {
     const result = await auth?.removeProduct(idProduct);
 
     if (result) {
-      // console.log(auth?.cart);
+      console.log(auth?.cart?.products_count);
       if (auth?.cart?.products_count == 0) {
         setOpenCart(false);
       }
@@ -32,6 +32,15 @@ function Cart({ open, close, setOpenCart }) {
       setModalOpen(true);
     }
   };
+
+  useEffect(() => {
+    const init = async () => {
+      if (auth?.cart?.products_count < 1) {
+        setOpenCart(false);
+      }
+    };
+    init();
+  }, [auth?.cart]);
 
   return (
     <>
