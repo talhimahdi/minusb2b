@@ -48,6 +48,9 @@ function AddToCart({
           }
           setModalTitle && setModalTitle(modalTitle);
           setModalOpen(true);
+        } else {
+          setModalTitle && setModalTitle(result?.message);
+          setModalOpen(true);
         }
       })
       .catch((error) => console.log("error", error));

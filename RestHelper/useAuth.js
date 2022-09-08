@@ -22,7 +22,6 @@ function useAuthProvider() {
   const [user, setUser] = useState({});
   const [cart, setCart] = useState({});
   const [offers, setOffers] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (localStorageX.isConnected()) {
@@ -123,57 +122,15 @@ function useAuthProvider() {
     return {};
   };
 
-  // const getUserLocal = () => {
-  //   // if (typeof window !== "undefined" && localStorage.length > 0) {
-  //   // const localData = decrypt(localStorage.getItem("local_data"), salt);
-  //   const localData = localStorageX.get("local_data");
-
-  //   // setUser(localData?.customer);
-  //   return localData;
-  //   // }
-  //   // return false;
-  // };
-
-  // Return the user object and auth methods
-
-  const isConnected = () => {
-    if (localStorageX.get("local_data")) return true;
-    return false;
-  };
-
   return {
     user,
-    //getUserLocal,
     getCart,
+    setCart,
     removeProduct,
     login,
     register,
     logout,
-    isConnected,
     cart,
     offers,
-    setCart,
-    setUser,
-    isLoaded,
-    decrypt,
-    salt,
   };
-}
-
-function encrypt(o, salt) {
-  o = JSON.stringify(o).split("");
-  for (var i = 0, l = o.length; i < l; i++)
-    if (o[i] == "{") o[i] = "}";
-    else if (o[i] == "}") o[i] = "{";
-  return encodeURI(salt + o.join(""));
-}
-
-function decrypt(o, salt) {
-  o = decodeURI(o);
-  if (salt && o.indexOf(salt) != 0) return false;
-  o = o.substring(salt.length).split("");
-  for (var i = 0, l = o.length; i < l; i++)
-    if (o[i] == "{") o[i] = "}";
-    else if (o[i] == "}") o[i] = "{";
-  return JSON.parse(o.join(""));
 }

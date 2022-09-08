@@ -21,7 +21,7 @@ function SingleProductList({ product }) {
             setModalOpen={setModalOpen}
           />
         )}
-        {/* <Example /> */}.
+        {/* <Example /> */}
         <div className="bg-white p-5 shadow-[0px_2px_7px_rgba(0,_0,_0,_0.14)] select-none">
           <div className="flex flex-col sm:flex-row items-start sm:items-center sm:space-x-5 space-y-5 sm:space-y-0">
             <div className="flex space-x-5 sm:items-center">
