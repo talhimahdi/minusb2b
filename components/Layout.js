@@ -14,8 +14,8 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <TopNavbar pageName={"Connexion"} />
-        <Header pageName={"Connexion"} />
+        <TopNavbar pageName={children?.type?.name} />
+        <Header pageName={children?.type?.name} />
         {children}
       </main>
       <Footer withMargin={children?.type?.name == "Products" ? true : false} />
