@@ -31,10 +31,10 @@ export default function Register() {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ form: form }),
     };
 
-    const result = await fetch(Urls.register, requestOptions)
+    const result = await fetch("/api/register", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         return data?.results;
@@ -51,7 +51,6 @@ export default function Register() {
 
   return (
     <div>
-      <Header isConnexion={true} />
       <Loader isVisible={isLoading} />
       {renderUi ? (
         <div className="max-w-7xl mx-auto mt-10 py-5 px-4 sm:px-6 lg:px-8">

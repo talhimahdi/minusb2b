@@ -1,7 +1,7 @@
-import Urls from "./configs";
+import Urls from "../configs";
 
 export default async function handler(req, res) {
-  const { email, password } = req.body;
+  const { addressInfos } = req.body;
 
   var requestOptions = {
     method: "POST",
@@ -9,13 +9,10 @@ export default async function handler(req, res) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
+    body: JSON.stringify(addressInfos),
   };
 
-  const result = await fetch(Urls.login, requestOptions)
+  const result = await fetch(Urls.addNewAddress, requestOptions)
     .then((response) => response?.json())
     .then((data) => data)
     .catch((error) => {

@@ -41,7 +41,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
       method: "GET",
     };
 
-    const result = await fetch(Urls.getCountries, requestOptions)
+    const result = await fetch("/api/countries", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         return data?.results;
@@ -55,6 +55,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
 
   useEffect(() => {
     const init = async () => {
+      console.log("register");
       setLoading(true);
       await getCountries();
       setLoading(false);

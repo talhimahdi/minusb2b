@@ -27,7 +27,6 @@ export default function Connexion() {
 
   return (
     <div>
-      <Header isConnexion={true} />
       {renderUi ? (
         <div className="max-w-7xl mx-auto mt-10 py-5 px-4 sm:px-6 lg:px-8">
           <Cover />

@@ -45,25 +45,21 @@ function Cart({ open, close, setOpenCart }) {
   return (
     <>
       <Transition.Root show={open} as={"div"}>
-        <Dialog
-          as="div"
-          className="absolute top-0 right-0 bottom-0 left-0 h-full w-full z-50"
-          onClose={close}
-        >
-          <div className="absolute inset-0 top-0 right-0 left-0 bottom-0">
-            <div className="pointer-events-none fixed inset-y-0 left-0 right-0 flex max-w-full">
+        <Dialog as="div" className="" onClose={close}>
+          <div className="">
+            <div className="pointer-events-none fixed top-40 md:top-44 bottom-0 left-0 right-0 flex max-w-full">
               <Transition.Child
                 as={"div"}
                 enter="transform transition ease-in-out duration-500"
                 enterFrom="translate-y-full"
-                enterTo="translate-y-0"
+                enterTo="translate-y-0 "
                 leave="transform transition ease-in-out duration-500"
                 leaveFrom="translate-y-0"
                 leaveTo="translate-y-full"
               >
-                <Dialog.Panel className="pointer-events-auto h-full w-screen ">
+                <Dialog.Panel className="pointer-events-auto h-full w-screen overflow-y-hidden">
                   <div className="flex h-full flex-col bg-white">
-                    <div className="HEADER">
+                    <div className="HEADER hidden">
                       <TopNavbar />
                       <nav
                         aria-label="Top"
@@ -151,7 +147,7 @@ function Cart({ open, close, setOpenCart }) {
                         setModalOpen={setModalOpen}
                       />
                     )}
-                    {/* New Layout */}
+                    {/* Mobile Layout */}
                     <div className="block md:hidden overflow-x-hidden overflow-y-auto bg-white">
                       <div className="flex flex-col p-5 space-y-14">
                         <div className="space-y-6">
@@ -394,8 +390,8 @@ function Cart({ open, close, setOpenCart }) {
                         </div>
                       </div>
                     </div>
-                    {/* End New Layout */}
-                    <div className="hidden md:block relative p-5 md:p-0 md:pt-12 flex-1 overflow-x-hidden overflow-y-auto">
+                    {/* End Mobile Layout */}
+                    <div className="hidden md:block relative p-5 flex-1 overflow-x-hidden overflow-y-auto">
                       <div className="pb-24 space-y-5 md:max-w-7xl mx-auto">
                         <div className="flex flex-col md:flex-row items-end">
                           <div className="block flex-1 w-full h-full space-y-2">

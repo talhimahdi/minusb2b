@@ -63,3 +63,11 @@
 .swiper-pagination-bullet-active {
   background-color: #252525 !important;
 }
+
+.swiper {
+  z-index: 0 !important;
+} 
+
+.swiper-wrapper {
+  z-index: 0 !important;
+}

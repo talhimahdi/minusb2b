@@ -56,9 +56,9 @@ function Checkout() {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(addressInfos),
+      body: JSON.stringify({ addressInfos }),
     };
-    const result = await fetch(Urls.addNewAddress, requestOptions)
+    const result = await fetch("/api/addresses/add", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         return data?.results;
@@ -75,13 +75,18 @@ function Checkout() {
     setLoading(false);
   };
 
-  const removeAddress = async (idAddress) => {
+  const removeAddress = async (addressId) => {
     if (!confirm("voulez vous vraiment supprimer l'adresse?")) return;
     setLoading(true);
     var requestOptions = {
-      method: "GET",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ addressId: addressId }),
     };
-    const result = await fetch(Urls.deleteAddress(idAddress), requestOptions)
+    const result = await fetch("/api/addresses/delete", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         return data?.results;
@@ -89,13 +94,7 @@ function Checkout() {
       .catch((error) => console.log("error", error));
 
     if (result?.code == 200 && result?.succes) {
-      /*const result = */ getAddresses();
-
-      // GET ADDRESSES
-
-      // setAddresses([...addresses, result?.new_address]);
-      // setSelectedAddress(result?.new_address);
-      // setIsFormOpen(false);
+      getAddresses();
     } else {
       console.log("error!!!");
     }
@@ -104,10 +103,15 @@ function Checkout() {
 
   const getAddresses = async () => {
     var requestOptions = {
-      method: "GET",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ customerId: auth?.user?.id }),
     };
 
-    await fetch(Urls.getAddresses(auth?.user?.id), requestOptions)
+    await fetch("/api/addresses/get", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
@@ -126,7 +130,7 @@ function Checkout() {
       method: "GET",
     };
 
-    await fetch(Urls.getCarriers, requestOptions)
+    await fetch("/api/carriers", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
@@ -143,7 +147,7 @@ function Checkout() {
       method: "GET",
     };
 
-    await fetch(Urls.getPaymentMethods, requestOptions)
+    await fetch("/api/paymentMethods", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
@@ -192,7 +196,6 @@ function Checkout() {
 
   return (
     <>
-      <Header isCheckout={true} />
       <div className="bg-white">
         <Loader isVisible={isLoading} />
         <NewAddressForm

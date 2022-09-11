@@ -11,7 +11,7 @@ function AddToCart({
   max = 100,
   min = 1,
   idProduct,
-  defaultQuantity = 0,
+  defaultQuantity = 1,
   btnVisible = true,
   btnText = "",
   setModalOpen,
@@ -29,16 +29,16 @@ function AddToCart({
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
-      body: new URLSearchParams({
-        cart_id: auth?.user?.id_cart,
-        product_id: idProduct,
-        qty: quantity,
+      body: JSON.stringify({
+        cartId: auth?.user?.id_cart,
+        productId: idProduct,
+        quantity: quantity,
       }),
     };
 
-    await fetch(Urls.addToCart, requestOptions)
+    await fetch("/api/cart/add", requestOptions)
       .then((response) => response?.json())
       .then((result) => {
         if (result?.code == 200 && result?.succes && result?.cart) {

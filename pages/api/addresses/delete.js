@@ -1,16 +1,13 @@
-import Urls from "./configs";
+import Urls from "../configs";
 
 export default async function handler(req, res) {
-  const { pageNumber, limit, idCategorySearch = "", term = "" } = req.body;
+  const { addressId } = req.body;
 
   var requestOptions = {
     method: "GET",
   };
 
-  const result = await fetch(
-    Urls.productList(pageNumber, limit, idCategorySearch, term),
-    requestOptions
-  )
+  const result = await fetch(Urls.deleteAddress(addressId), requestOptions)
     .then((response) => response?.json())
     .then((data) => data)
     .catch((error) => {

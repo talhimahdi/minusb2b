@@ -1,9 +1,16 @@
 import Image from "next/image";
 import { MailIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
-export default function Footer() {
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
+export default function Footer({ withMargin }) {
   return (
-    <footer className="bg-primary mb-28" aria-labelledby="footer-heading">
+    <footer
+      className={classNames(withMargin ? "mb-28" : "", "bg-primary")}
+      aria-labelledby="footer-heading"
+    >
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>

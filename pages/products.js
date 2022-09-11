@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { withRouter } from "next/router";
 import Image from "next/image";
 import CoverThumbnails from "../components/CoverThumbnails";
 import ProductList from "../components/ProductList";
@@ -18,7 +19,7 @@ function Products(/*{ productsList }*/) {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [slides, setSlides] = useState({});
-  const [openCart, setOpenCart] = useState(false);
+  // const [openCart, setOpenCart] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [limit, setLimit] = useState(10);
   const [idCategorySearch, setIdCategorySearch] = useState(0);
@@ -128,6 +129,7 @@ function Products(/*{ productsList }*/) {
     const init = async () => {
       if (auth?.user?.id) {
         setLoading(true);
+        auth?.setOpenCart(false);
         await getCategories();
         await getSlides();
         await getProducts();
@@ -137,38 +139,39 @@ function Products(/*{ productsList }*/) {
       setLoading(false);
     };
     init();
+
+    if (router.query.cart && router.query.cart == "open") {
+      auth?.setOpenCart(true);
+    }
   }, [auth?.user]);
 
   return (
     <>
       <Loader isVisible={isLoading} />
       {renderUi && (
-        <div>
-          <Header />
-          <div className="pt-0 py-5">
-            <CoverThumbnails slides={slides} />
-            <ProductList
-              products={products}
-              categories={categories}
-              getProducts={getProducts}
-              isLoading={isButtonSpin}
-              idCategorySearch={idCategorySearch}
-              onCategoryChange={setIdCategorySearch}
-              term={term}
-              onChangeTerm={setTerm}
-            />
-            <Cart
-              open={openCart}
-              close={() => setOpenCart(false)}
-              cart={auth?.cart}
-              setOpenCart={setOpenCart}
-            />
-            <BottomCart
-              onOpenCart={() => {
-                if (auth?.cart?.products_count > 0) setOpenCart(true);
-              }}
-            />
-          </div>
+        <div className="mt-52 pt-0 py-5">
+          <CoverThumbnails slides={slides} />
+          <ProductList
+            products={products}
+            categories={categories}
+            getProducts={getProducts}
+            isLoading={isButtonSpin}
+            idCategorySearch={idCategorySearch}
+            onCategoryChange={setIdCategorySearch}
+            term={term}
+            onChangeTerm={setTerm}
+          />
+          <Cart
+            open={auth?.openCart}
+            close={() => auth?.setOpenCart(false)}
+            cart={auth?.cart}
+            setOpenCart={auth?.setOpenCart}
+          />
+          <BottomCart
+            onOpenCart={() => {
+              if (auth?.cart?.products_count > 0) auth?.setOpenCart(true);
+            }}
+          />
         </div>
       )}
     </>

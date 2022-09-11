@@ -39,7 +39,15 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   </Link>
                 </button>
               </div>
-              <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md  border-black border-t-2 pt-5">
+              <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md space-y-5 border-black border-t-2 pt-5">
+                <div>
+                  <h3 className="uppercase text-xl text-gray-900 font-londrina text-center">
+                    Déjà inscrit ?
+                  </h3>
+                  <p className="mt-3 text-base text-black text-center">
+                    Connectez-vous avec votre email et mot de passe.
+                  </p>
+                </div>
                 <form className="space-y-4" action="#" method="POST">
                   <div>
                     <label
@@ -53,7 +61,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                         onChange={(e) =>
                           setLoginForm({ ...loginForm, email: e.target.value })
                         }
-                        name="email"
+                        id="email"
                         type="email"
                         autoComplete="email"
                         required
@@ -78,7 +86,6 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                           })
                         }
                         id="password"
-                        name="password"
                         type="password"
                         autoComplete="current-password"
                         required

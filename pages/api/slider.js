@@ -1,26 +1,19 @@
-export default function handler(req, res) {
-  const getProducts = async () => {
-    var requestOptions = {
-      method: "GET",
-    };
+import Urls from "./configs";
 
-    const url =
-      process.env.BASE_URL +
-      `restapi/getSlider?output_format=JSON&ws_key=${process.env.WS_KEY}`;
-
-    return await fetch(url, requestOptions)
-      .then((response) => response?.json())
-      .then((data) => {
-        return data;
-      })
-      .catch((error) => {
-        console.log("error", error);
-        return {
-          success: false,
-          message: "ERROR!",
-        };
-      });
+export default async function handler(req, res) {
+  var requestOptions = {
+    method: "GET",
   };
 
-  getProducts().then((data) => res.status(200).json(data));
+  const result = await fetch(Urls.getSlider, requestOptions)
+    .then((response) => response?.json())
+    .then((data) => data)
+    .catch((error) => {
+      return {
+        success: false,
+        message: "ERROR!",
+      };
+    });
+
+  res.status(200).json(result);
 }

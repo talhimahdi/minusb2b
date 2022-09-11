@@ -1,7 +1,17 @@
 import Link from "next/link";
-export default function TopNavbar() {
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
+export default function TopNavbar({ pageName }) {
   return (
-    <div className=" bg-primary">
+    <div
+      className={classNames(
+        pageName == "Products" ? "fixed" : "",
+        "left-0 top-0 right-0 bg-primary z-10"
+      )}
+    >
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-3">
         <div className="flex items-center justify-between flex-wrap">
           <div className="flex-1">

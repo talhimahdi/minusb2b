@@ -1,7 +1,9 @@
 import Urls from "./configs";
 
 export default async function handler(req, res) {
-  const { email, password } = req.body;
+  const { form } = req.body;
+
+  console.log(form);
 
   var requestOptions = {
     method: "POST",
@@ -9,13 +11,10 @@ export default async function handler(req, res) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
+    body: JSON.stringify(form),
   };
 
-  const result = await fetch(Urls.login, requestOptions)
+  const result = await fetch(Urls.register, requestOptions)
     .then((response) => response?.json())
     .then((data) => data)
     .catch((error) => {

@@ -1,7 +1,7 @@
-import Urls from "./configs";
+import Urls from "../configs";
 
 export default async function handler(req, res) {
-  const { email, password } = req.body;
+  const { cartId, productId } = req.body;
 
   var requestOptions = {
     method: "POST",
@@ -10,12 +10,12 @@ export default async function handler(req, res) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: email,
-      password: password,
+      cart_id: cartId,
+      product_id: productId,
     }),
   };
 
-  const result = await fetch(Urls.login, requestOptions)
+  const result = await fetch(Urls.deleteFromCart, requestOptions)
     .then((response) => response?.json())
     .then((data) => data)
     .catch((error) => {

@@ -11,7 +11,7 @@ function CoverThumbnails({ slides }) {
   return (
     <div className="bg-white h-48 md:h-56">
       <Swiper
-        className="max-w-7xl mx-auto h-full w-full px-3 md:px-0 z-0"
+        className="relative max-w-7xl mx-auto h-full w-full px-3 md:px-0"
         spaceBetween={10}
         slidesPerView={3}
         // onSlideChange={() => console.log("slide change")}

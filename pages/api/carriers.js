@@ -1,21 +1,11 @@
 import Urls from "./configs";
 
 export default async function handler(req, res) {
-  const { email, password } = req.body;
-
   var requestOptions = {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
+    method: "GET",
   };
 
-  const result = await fetch(Urls.login, requestOptions)
+  const result = await fetch(Urls.getCarriers, requestOptions)
     .then((response) => response?.json())
     .then((data) => data)
     .catch((error) => {

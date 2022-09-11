@@ -23,6 +23,8 @@ function useAuthProvider() {
   const [cart, setCart] = useState({});
   const [offers, setOffers] = useState([]);
 
+  const [openCart, setOpenCart] = useState(false);
+
   useEffect(() => {
     if (localStorageX.isConnected()) {
       setUser(localStorageX.get("local_data").customer);
@@ -74,7 +76,7 @@ function useAuthProvider() {
       body: JSON.stringify({ cartId: cartId }),
     };
 
-    const result = await fetch("/api/cart", requestOptions)
+    const result = await fetch("/api/cart/get", requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         return data;
@@ -94,15 +96,15 @@ function useAuthProvider() {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
-      body: new URLSearchParams({
-        cart_id: user?.id_cart,
-        product_id: idProduct,
+      body: JSON.stringify({
+        cartId: user?.id_cart,
+        productId: idProduct,
       }),
     };
 
-    return await fetch(Urls.deleteFromCart, requestOptions)
+    return await fetch("/api/cart/delete", requestOptions)
       .then((response) => response?.json())
       .then((result) => {
         if (result?.code == 200 && result?.succes && result?.cart) {
@@ -132,5 +134,7 @@ function useAuthProvider() {
     logout,
     cart,
     offers,
+    openCart,
+    setOpenCart,
   };
 }
