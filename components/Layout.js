@@ -17,16 +17,16 @@ export default function Layout({ children }) {
       </Head>
       <main>
         <TopNavbar
-          pageName={children?.type?.name.length > 1 && children?.type?.name}
+          pageName={children?.type?.name?.length > 1 ? children?.type?.name : "Connexion"}
         />
         <Header
-          pageName={children?.type?.name.length > 1 && children?.type?.name}
+          pageName={children?.type?.name?.length > 1 ? children?.type?.name : "Connexion"}
         />
         {children}
       </main>
       <Footer
         withMargin={
-          children?.type?.name.length > 1 && children?.type?.name == "Products"
+          children?.type?.name?.length > 1 ? children?.type?.name == "Products"
             ? true
             : false
         }
