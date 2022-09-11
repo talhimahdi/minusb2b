@@ -5,7 +5,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 export default function Layout({ children }) {
-  console.log(children?.type?.name);
+  console.log(children?.type);
+  console.log(children);
   return (
     <div>
       <Head>
@@ -17,6 +18,8 @@ export default function Layout({ children }) {
       <main>
         <TopNavbar pageName={children?.type?.name} />
         <Header pageName={children?.type?.name} />
+
+        {children?.type?.name}
         {children}
       </main>
       <Footer withMargin={children?.type?.name == "Products" ? true : false} />
