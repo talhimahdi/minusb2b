@@ -20,8 +20,6 @@ export default function Layout({ children }) {
         <main>
           <TopNavbar pageName={children?.type?.name} />
           <Header pageName={children?.type?.name} />
-
-          {children?.type?.name}
           {children}
         </main>
         <Footer
