@@ -14,11 +14,11 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <TopNavbar pageName={children.type.name} />
-        <Header pageName={children.type.name} />
+        <TopNavbar pageName={children?.type?.name} />
+        <Header pageName={children?.type?.name} />
         {children}
       </main>
-      <Footer withMargin={children.type.name == "Products" ? true : false} />
+      <Footer withMargin={children?.type?.name == "Products" ? true : false} />
     </div>
   );
 }
