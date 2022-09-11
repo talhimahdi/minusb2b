@@ -4,8 +4,10 @@ import TopNavbar from "./TopNavbar";
 import Header from "./Header";
 import Footer from "./Footer";
 
+import { useRouter } from "next/router";
+
 export default function Layout({ children }) {
-  console.log(children?.type);
+  const router = useRouter();
 
   return (
     <div>
@@ -16,29 +18,11 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <TopNavbar
-          pageName={
-            children?.type?.name?.length > 1
-              ? children?.type?.name
-              : "Connexion"
-          }
-        />
-        <Header
-          pageName={
-            children?.type?.name?.length > 1
-              ? children?.type?.name
-              : "Connexion"
-          }
-        />
+        <TopNavbar pageName={router.pathname} />
+        <Header pageName={router.pathname} />
         {children}
       </main>
-      <Footer
-        withMargin={
-          children?.type?.name?.length > 1 && children?.type?.name == "Products"
-            ? true
-            : false
-        }
-      />
+      <Footer withMargin={router.pathname == "/products" ? true : false} />
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function TopNavbar({ pageName }) {
   return (
     <div
       className={classNames(
-        pageName == "Products" ? "fixed" : "",
+        pageName == "/products" ? "fixed" : "",
         "left-0 top-0 right-0 bg-primary z-10"
       )}
     >

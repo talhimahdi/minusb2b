@@ -14,8 +14,8 @@ export default function Header({ pageName }) {
   const router = useRouter();
 
   switch (pageName) {
-    case "Register":
-    case "Connexion":
+    case "/register":
+    case "/connexion":
       return (
         <div className="bg-white pb-5">
           <header className="relative">
@@ -83,7 +83,7 @@ export default function Header({ pageName }) {
       );
       break;
 
-    case "Checkout":
+    case "/checkout":
       return (
         <div className="bg-white pb-5">
           <header className="relative">
