@@ -8,7 +8,7 @@ export default function Layout({ children }) {
   console.log(children?.type);
   console.log(children);
 
-  if (children?.type?.name != "o") {
+  if (children?.type?.name.length > 1) {
     return (
       <div>
         <Head>
