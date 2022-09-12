@@ -10,15 +10,15 @@ export default function NewAddressForm({
 }) {
   const [addressForm, setAddressForm] = useState({
     id_country: 1,
-    alias: "My home address",
-    company: "My company",
-    lastname: "Talhi",
-    firstname: "Mahdi",
-    address1: "Donec sollicitudin molestie malesuada.",
-    address2: "Nulla porttitor accumsan tincidunt.",
-    city: "Casablanca",
-    postcode: "20333",
-    phone: "+212522334455",
+    alias: "",
+    company: "",
+    lastname: "",
+    firstname: "",
+    address1: "",
+    address2: "",
+    city: "",
+    postcode: "",
+    phone: "",
   });
   const cancelButtonRef = useRef(null);
   return (

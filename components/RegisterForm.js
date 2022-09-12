@@ -21,19 +21,19 @@ export default function RegisterForm({ onRegister, errorMessage }) {
   const [isLoading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
   const [form, setForm] = useState({
-    passwd: "123456",
-    firstname: "Mahdi",
-    lastname: "Talhi",
-    email: "test.email+1@gmail.com",
+    passwd: "",
+    firstname: "",
+    lastname: "",
+    email: "",
     other: "Concept/déco",
-    company: "my company",
-    address1: "my address 1",
-    address2: "my address 2",
-    id_country: "8",
-    vat_number: "FR12345678901",
-    city: "Paris",
-    postcode: "20330",
-    phone: "+212566443322",
+    company: "",
+    address1: "",
+    address2: "",
+    id_country: "",
+    vat_number: "",
+    city: "",
+    postcode: "",
+    phone: "",
   });
 
   const getCountries = async () => {
