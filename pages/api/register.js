@@ -3,8 +3,6 @@ import Urls from "./configs";
 export default async function handler(req, res) {
   const { form } = req.body;
 
-  console.log(form);
-
   var requestOptions = {
     method: "POST",
     headers: {

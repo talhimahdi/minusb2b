@@ -29,7 +29,9 @@ function useAuthProvider() {
     if (localStorageX.isConnected()) {
       setUser(localStorageX.get("local_data").customer);
     } else {
-      router.push("/connexion");
+      const withoutConnexion = ["/connexion", "/register"];
+      if (!withoutConnexion.includes(router?.pathname))
+        router.push("/connexion");
     }
   }, []);
 

@@ -9,18 +9,20 @@ function BottomCart({ onOpenCart }) {
   const auth = useAuth();
   const router = useRouter();
 
+  const offer = auth?.offers[0];
+
   return (
     <div className="fixed left-0 right-0 bottom-0 h-auto py-6 px-3 md:px-5 bg-white shadow-lg shadow-black drop-shadow-2xl">
       <div className="max-w-7xl mx-auto flex items-center ">
         <div className="hidden md:block flex-1 h-full space-y-2">
-          {auth?.offers?.map((offer) => (
-            <ProgressBar
-              key={offer?.title + offer?.amount}
-              title={offer?.title}
-              amount={auth?.cart?.totals?.total?.amount}
-              total={offer?.amount}
-            />
-          ))}
+          {/* {auth?.offers?.map((offer) => ( */}
+          <ProgressBar
+            key={offer?.title + offer?.amount}
+            title={offer?.title}
+            amount={auth?.cart?.totals?.total?.amount}
+            total={offer?.amount}
+          />
+          {/* ))} */}
         </div>
         <div className="flex-1">
           <div className="flex md:flex-row space-x-2 cursor-pointer">

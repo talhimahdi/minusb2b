@@ -13,7 +13,10 @@ export default function Header({ pageName }) {
   const auth = useAuth();
   const router = useRouter();
 
+  // console.log(router);
+
   switch (pageName) {
+    case "/404":
     case "/register":
     case "/connexion":
       return (

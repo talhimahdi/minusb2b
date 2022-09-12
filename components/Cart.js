@@ -20,6 +20,8 @@ function Cart({ open, close, setOpenCart }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
 
+  const offer = auth?.offers[0];
+
   const removeProduct = async (idProduct) => {
     const result = await auth?.removeProduct(idProduct);
 
@@ -152,14 +154,14 @@ function Cart({ open, close, setOpenCart }) {
                       <div className="flex flex-col p-5 space-y-14">
                         <div className="space-y-6">
                           <div className="space-y-2">
-                            {auth?.offers?.map((offer) => (
-                              <ProgressBar
-                                key={offer?.title + offer?.amount}
-                                title={offer?.title}
-                                amount={auth?.cart?.totals?.total?.amount}
-                                total={offer?.amount}
-                              />
-                            ))}
+                            {/* {auth?.offers?.map((offer) => ( */}
+                            <ProgressBar
+                              key={offer?.title + offer?.amount}
+                              title={offer?.title}
+                              amount={auth?.cart?.totals?.total?.amount}
+                              total={offer?.amount}
+                            />
+                            {/* ))} */}
                           </div>
                           <section
                             aria-labelledby="summary-heading"
@@ -395,14 +397,14 @@ function Cart({ open, close, setOpenCart }) {
                       <div className="pb-24 space-y-5 md:max-w-7xl mx-auto">
                         <div className="flex flex-col md:flex-row items-end">
                           <div className="block flex-1 w-full h-full space-y-2">
-                            {auth?.offers?.map((offer) => (
-                              <ProgressBar
-                                key={offer?.title + offer?.amount}
-                                title={offer?.title}
-                                amount={auth?.cart?.totals?.total?.amount}
-                                total={offer?.amount}
-                              />
-                            ))}
+                            {/* {auth?.offers?.map((offer) => ( */}
+                            <ProgressBar
+                              key={offer?.title + offer?.amount}
+                              title={offer?.title}
+                              amount={auth?.cart?.totals?.total?.amount}
+                              total={offer?.amount}
+                            />
+                            {/* ))} */}
                           </div>
                           <div className="flex-1 h-full">
                             <div className="h-full">
