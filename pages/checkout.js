@@ -204,12 +204,12 @@ function Checkout() {
           countries={countries}
           addAddress={addAddress}
         />
-        <main className="max-w-7xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+        <main className="max-w-7xl mx-auto md:pt-16 pb-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto lg:max-w-none">
             <h1 className="sr-only">Checkout</h1>
 
-            <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
-              <div>
+            <form className="grid md:grid-cols-2 gap-x-12">
+              <div className="order-2 md:order-1">
                 <div>
                   <h2 className="text-lg font-bold text-gray-900">
                     Informations de contact
@@ -522,7 +522,7 @@ function Checkout() {
               </div>
 
               {/* Order summary */}
-              <div className="mt-10 lg:mt-0">
+              <div className="mt-10 lg:mt-0 order-1">
                 <CheckoutSummary />
               </div>
             </form>
