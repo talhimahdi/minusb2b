@@ -49,8 +49,8 @@ function ProductList({
     <div className="bg-primary pt-20 -mt-20 -mb-10">
       <div className="max-w-sm  mx-5 md:mx-auto md:max-w-7xl my-5 py-5">
         {/* Filter */}
-        <div className="flex flex-0.5 items-center space-x-5">
-          <div className="flex mt-1 sm:mt-0  shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
+        <div className="flex flex-col md:flex-row flex-0.5 items-end space-y-3  md:space-x-5 mb-5">
+          <div className="flex mt-1 sm:mt-0  shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center w-full md:w-auto">
             <SearchIcon className="h-5 w-5 text-secondary" />
             <input
               onChange={(e) => {
@@ -61,7 +61,7 @@ function ProductList({
               className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
             />
           </div>
-          <div className="flex mt-1 sm:mt-0 shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
+          <div className="flex mt-1 sm:mt-0 shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center w-full  md:w-auto">
             <select
               value={idCategorySearch}
               onChange={(e) => onCategoryChange(e.target.value)}
@@ -79,7 +79,8 @@ function ProductList({
           <div>
             <button
               type="submit"
-              className=" bg-black shadow-sm py-2 px-4 text-base font-bold text-white hover:font-bold focus:outline-none focus:ring-0"
+              className=" bg-black shadow-sm py-2 px-4 text-base font-bold text-white hover:font-bold focus:outline-none 
+              focus:ring-0"
               onClick={onSearch}
             >
               <div className="flex items-center space-x-2">
