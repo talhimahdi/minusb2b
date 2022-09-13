@@ -208,7 +208,7 @@ function Checkout() {
           <div className="max-w-2xl mx-auto lg:max-w-none">
             <h1 className="sr-only">Checkout</h1>
 
-            <form className="grid md:grid-cols-2 gap-x-12">
+            <form className="grid md:grid-cols-2 gap-x-12 gap-y-12">
               <div className="order-2 md:order-1">
                 <div>
                   <h2 className="text-lg font-bold text-gray-900">
