@@ -15,6 +15,7 @@ function ProductList({
 }) {
   const [isEmptyResult, setEmptyResult] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const [showReset, setShowReset] = useState(false);
 
   const getMoreProducts = async () => {
     const result = await getProducts();
@@ -32,17 +33,33 @@ function ProductList({
     let result;
     if (idCategorySearch != 0 || term != "") {
       result = await getProducts(true);
+      setShowReset(true);
     } else {
       result = await getProducts();
+      setShowReset(false);
     }
 
-    if (result == 0) {
+    if (result < 10) {
       setEmptyResult(true);
     } else {
       setEmptyResult(false);
     }
 
     setIsSearching(false);
+  };
+
+  const onReset = async () => {
+    onCategoryChange("0");
+    onChangeTerm("");
+
+    const result = await getProducts(false, true);
+
+    setShowReset(false);
+    if (result < 10) {
+      setEmptyResult(true);
+    } else {
+      setEmptyResult(false);
+    }
   };
 
   return (
@@ -56,6 +73,7 @@ function ProductList({
               onChange={(e) => {
                 onChangeTerm(e.target.value);
               }}
+              value={term}
               type="text"
               placeholder="recherche"
               className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
@@ -76,7 +94,7 @@ function ProductList({
               ))}
             </select>
           </div>
-          <div>
+          <div className=" flex space-x-2">
             <button
               type="submit"
               className=" bg-black shadow-sm py-2 px-4 text-base font-bold text-white hover:font-bold focus:outline-none 
@@ -106,6 +124,17 @@ function ProductList({
                 <p>Rechercher</p>
               </div>
             </button>
+            {showReset && (
+              <div
+                className=" text-black underline cursor-pointer shadow-sm py-2 px-4 text-base font-bold  hover:font-bold focus:outline-none 
+              focus:ring-0"
+                onClick={onReset}
+              >
+                <div className="flex items-center space-x-2">
+                  <p>Réinitialiser</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         {products?.length < 1 ? (

@@ -64,7 +64,7 @@ export default function ImagePopup({
                     <div className="mt-12 sm:mt-0 text-start">
                       <Dialog.Title
                         as="h3"
-                        className="leading-none text-center text-2xl md:text-3xl text-black font-londrina"
+                        className="leading-none text-2xl md:text-3xl text-black font-londrina"
                       >
                         {title}
                       </Dialog.Title>

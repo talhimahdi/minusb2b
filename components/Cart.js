@@ -306,7 +306,7 @@ function Cart({ open, close, setOpenCart }) {
                                     />
                                   </div>
                                   <div className="space-y-1 justify-self-start">
-                                    <h3 className="leading-none text-start text-2xl text-black font-londrina overflow-hidden">
+                                    <h3 className="text-start text-xl text-black overflow-hidden">
                                       <a href="#" className="">
                                         {product?.name.length > 27
                                           ? product?.name
@@ -334,7 +334,7 @@ function Cart({ open, close, setOpenCart }) {
                                 <div className="flex space-x-5">
                                   <div className="flex flex-col">
                                     <div className="text-black space-x-2">
-                                      <span className="text-2xl font-londrina">
+                                      <span className="text-xl font-londrina">
                                         {/* {parseFloat(product?.price).toFixed(2) +
                                           auth?.cart?.currency_symbol} */}
                                         {product?.formatted_price}
@@ -342,7 +342,7 @@ function Cart({ open, close, setOpenCart }) {
                                       <span className="text-lg">HT</span>
                                     </div>
                                     <div className="text-black space-x-2">
-                                      <span className="text-2xl font-londrina">
+                                      <span className="text-xl font-londrina">
                                         {parseFloat(
                                           product?.product_taxe
                                         ).toFixed(2) +
@@ -355,14 +355,14 @@ function Cart({ open, close, setOpenCart }) {
                                   </div>
                                   <div className="flex flex-col">
                                     <div className="text-black space-x-2">
-                                      <span className="text-2xl font-londrina">
+                                      <span className="text-xl font-londrina">
                                         {product?.total +
                                           auth?.cart?.currency_symbol}
                                       </span>
                                       <span className="text-lg">HT</span>
                                     </div>
                                     <div className="text-black space-x-2">
-                                      <span className="text-2xl font-londrina">
+                                      <span className="text-xl font-londrina">
                                         {parseFloat(
                                           product?.cart_quantity *
                                             product?.product_taxe
@@ -370,7 +370,7 @@ function Cart({ open, close, setOpenCart }) {
                                           auth?.cart?.currency_symbol}
                                       </span>
                                       <span className="text-lg">
-                                        {product?.tax_name}
+                                        {product?.tax_name}cc
                                       </span>
                                     </div>
                                   </div>
@@ -447,7 +447,7 @@ function Cart({ open, close, setOpenCart }) {
                                         className="w-16 h-16 rounded-sm object-center object-cover "
                                       />
                                       <div className="space-y-1">
-                                        <h3 className="leading-none text-start text-2xl text-black font-londrina overflow-hidden">
+                                        <h3 className="text-start text-xl text-black overflow-hidden">
                                           <a href="#" className="">
                                             {product?.name.length > 27
                                               ? product?.name
@@ -464,7 +464,7 @@ function Cart({ open, close, setOpenCart }) {
                                   </div>
                                   <div className="col-span-2">
                                     <div className="text-black space-x-2">
-                                      <span className="text-2xl font-londrina">
+                                      <span className="text-xl font-londrina">
                                         {/* {parseFloat(product?.price).toFixed(2) +
                                           auth?.cart?.currency_symbol} */}
                                         {product?.formatted_price}
@@ -472,7 +472,7 @@ function Cart({ open, close, setOpenCart }) {
                                       <span className="text-lg">HT</span>
                                     </div>
                                     <div className="text-black space-x-2">
-                                      <span className="text-2xl font-londrina">
+                                      <span className="text-xl font-londrina">
                                         {parseFloat(
                                           product?.product_taxe
                                         ).toFixed(2) +
@@ -501,14 +501,14 @@ function Cart({ open, close, setOpenCart }) {
                                   </div>
                                   <div className="col-span-2 ">
                                     <div className="text-black space-x-2">
-                                      <span className="text-2xl font-londrina">
+                                      <span className="text-xl font-londrina">
                                         {product?.total +
                                           auth?.cart?.currency_symbol}
                                       </span>
                                       <span className="text-lg">HT</span>
                                     </div>
                                     <div className="text-black space-x-2">
-                                      <span className="text-2xl font-londrina">
+                                      <span className="text-xl font-londrina">
                                         {parseFloat(
                                           product?.cart_quantity *
                                             product?.product_taxe

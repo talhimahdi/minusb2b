@@ -6,9 +6,11 @@ function ProductCheckout({ product, currency_symbol, removeProduct }) {
   return (
     <div className="flex-1 flex flex-col">
       <div className="flex">
-        <div className="min-w-0 flex-1">
-          <h4 className="text-xl text-black font-londrina">{product.name}</h4>
-          <p className="text-sm text-black">{product.legend}</p>
+        <div className="min-w-0 flex-1 space-y-1">
+          <h4 className="text-xl text-black">{product.name}</h4>
+          <h2 className="leading-none text-gray-700 text-sm">
+            {product.display_categorie}
+          </h2>
         </div>
 
         <div className="ml-4 flex-shrink-0 flow-root">
@@ -27,7 +29,7 @@ function ProductCheckout({ product, currency_symbol, removeProduct }) {
       </div>
 
       <div className="flex-1 pt-2 flex items-end justify-between">
-        <p className="text-2xl font-medium text-gray-900 font-londrina">
+        <p className="text-xl font-medium text-gray-900 font-londrina">
           {/* {parseFloat(product?.price).toFixed(2)} {currency_symbol} */}
           {product?.formatted_total}
         </p>

@@ -19,6 +19,7 @@ function Products(/*{ productsList }*/) {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [slides, setSlides] = useState({});
+  const [slides_, setSlides_] = useState({});
   // const [openCart, setOpenCart] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -67,14 +68,16 @@ function Products(/*{ productsList }*/) {
 
     if (result?.slides) {
       setSlides(result.slides);
+      setSlides_(result.slides_);
     }
   };
 
-  const getProducts = async (isSearch = false) => {
+  const getProducts = async (isSearch = false, reset = false) => {
     setIsButtonSpin(true);
-    setPageNumber((prev) => prev + 1);
     if (isSearch) {
       setPageNumber(0);
+    } else {
+      setPageNumber((prev) => prev + 1);
     }
 
     var requestOptions = {
@@ -84,10 +87,10 @@ function Products(/*{ productsList }*/) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        pageNumber: isSearch ? 0 : pageNumber,
+        pageNumber: isSearch || reset ? 0 : pageNumber,
         limit,
-        idCategorySearch,
-        term,
+        idCategorySearch: reset ? 0 : idCategorySearch,
+        term: reset ? "" : term,
       }),
     };
 
@@ -150,7 +153,7 @@ function Products(/*{ productsList }*/) {
       <Loader isVisible={isLoading} />
       {renderUi && (
         <div className="mt-52 pt-0 py-5">
-          <CoverThumbnails slides={slides} />
+          <CoverThumbnails slides={slides} slides_={slides_} />
           <ProductList
             products={products}
             categories={categories}
