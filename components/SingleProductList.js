@@ -36,9 +36,21 @@ function SingleProductList({ product }) {
                 />
               </div>
               <div className="TITLE flex flex-col items-start space-y-2 md:min-w-[250px] md:max-w-[250px]">
-                <span className="inline-flex items-center px-2.5 py-0.5 text-md bg-secondary text-white font-londrina tracking-wider">
-                  nouveau
-                </span>
+                {productState?.quantity != 0 ? (
+                  <span className="inline-flex items-center px-2.5 py-0.5 text-md bg-secondary text-white font-londrina tracking-wider">
+                    nouveau
+                  </span>
+                ) : (
+                  <>
+                    <span className="inline-flex items-center px-2.5 py-0.5 text-md bg-secondary text-white font-londrina tracking-wider">
+                      réapprovisionnement
+                    </span>
+                    <span className="leading-none text-gray-500 text-sm pb-3">
+                      {productState?.available_later}
+                    </span>
+                  </>
+                )}
+
                 <div className="space-y-2">
                   <h3 className="text-lg text-black leading-6">
                     {productState?.name?.length > 65
