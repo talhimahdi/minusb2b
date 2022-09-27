@@ -52,7 +52,7 @@ export default function PaymentResult() {
     orderCancel();
     return (
       <div className="flex justify-center items-center h-72 font-londrina text-2xl">
-        <div>paiement n'a pas été réalisée</div>
+        <div>paiement n&apos;a pas été réalisée</div>
         <div
           className=" text-black underline cursor-pointer shadow-sm py-2 px-4 text-base font-bold  hover:font-bold focus:outline-none 
               focus:ring-0"
