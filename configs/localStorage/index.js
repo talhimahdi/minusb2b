@@ -4,7 +4,7 @@ const salt = "KB9VMZW 15USVQ CR98RPM 7JBZB 4XKP6Q5";
 if (typeof window !== "undefined") {
   console.log(window.location.hostname);
   if (
-    window.location.hostname == "vercel" ||
+    window.location.hostname == "minusb2b.vercel.app" ||
     window.location.hostname == "localhost"
   )
     Storage = window.localStorage;
