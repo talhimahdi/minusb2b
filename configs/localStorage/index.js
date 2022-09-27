@@ -1,8 +1,13 @@
 let Storage;
 const salt = "KB9VMZW 15USVQ CR98RPM 7JBZB 4XKP6Q5";
 
-if (typeof window !== "undefined" && window.localStorage) {
-  Storage = window.localStorage;
+if (typeof window !== "undefined") {
+  console.log(window.location.hostname);
+  if (
+    window.location.hostname == "vercel" ||
+    window.location.hostname == "localhost"
+  )
+    Storage = window.localStorage;
 }
 
 let prefix = "ps_";

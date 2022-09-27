@@ -259,6 +259,9 @@ function Checkout() {
       if (router?.query?.payment_succes == "1")
         router.push("/paymentResult/?succes=true");
       if (router?.query?.payment_succes == "0") {
+        setPayplugPaymentUrl(
+          "/paymentResult?succes=false&orderId=" + router?.query?.order_id
+        );
         router.push(
           "/paymentResult?succes=false&orderId=" + router?.query?.order_id
         );
