@@ -5,7 +5,10 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Footer({ withMargin }) {
+export default function Footer({ pageName, withMargin }) {
+  if (pageName == "/paymentResult") {
+    return <></>;
+  }
   return (
     <footer
       className={classNames(withMargin ? "mb-28" : "", "bg-primary")}

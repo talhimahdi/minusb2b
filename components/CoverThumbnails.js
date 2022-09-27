@@ -6,14 +6,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import ImagePopup from "./ImagePopup";
 
-function CoverThumbnails({ slides, slides_ }) {
+function CoverThumbnails({ slides_ }) {
   const [slide1open, setSlide1Open] = useState(false);
   const [slide2open, setSlide2Open] = useState(false);
   const [slide3open, setSlide3Open] = useState(false);
 
   const renderSlide = (numSlide) => {
-    // console.log(slides_["slide_" + numSlide + "_type"]);
-
     switch (slides_["slide_" + numSlide + "_type"]) {
       case "image":
         return (
@@ -69,15 +67,6 @@ function CoverThumbnails({ slides, slides_ }) {
     }
   };
 
-  //   {
-  //     "slide_1_type": "image",
-  //     "slide_1_image_url": "http://minus-produits.prismatic.digital/modules/minus_slider/views/img/slides/2c51617b9f41d56096d24dd1b70cf17e.png",
-  //     "slide_1_lien": false,
-  //     "slide_1_popup_image_url": false,
-  //     "slide_1_popup_title": false,
-  //     "slide_1_popup_desc": false,
-  // }
-
   return (
     <div className="bg-white h-48 md:h-56">
       <Swiper
@@ -101,30 +90,7 @@ function CoverThumbnails({ slides, slides_ }) {
         {renderSlide(1)}
         {renderSlide(2)}
         {renderSlide(3)}
-        {/* <SwiperSlide className="h-full shadow-[0px_2px_7px_rgba(0,_0,_0,_0.14)]">
-          <img src={slides.image_1_url} alt="" className="object-fill" />
-        </SwiperSlide>
-
-        <SwiperSlide className="h-full shadow-[0px_2px_7px_rgba(0,_0,_0,_0.14)] cursor-pointer">
-          <a href={slides.image_2_link} target={"_blank"} rel="noreferrer">
-            <img src={slides.image_2_url} alt="" className="object-fill" />
-          </a>
-        </SwiperSlide>
-
-        <SwiperSlide
-          className="h-full shadow-[0px_2px_7px_rgba(0,_0,_0,_0.14)] cursor-pointer"
-          onClick={() => setOpen(true)}
-        >
-          <img src={slides.image_3_url} alt="" className="object-fill" />
-        </SwiperSlide> */}
       </Swiper>
-      {/* <ImagePopup
-        isOpen={open}
-        setIsOpen={setOpen}
-        image_url={slides.image_3_popup_img_url}
-        title={slides.image_3_popup_title}
-        description={slides.image_3_popup_desc}
-      /> */}
 
       <ImagePopup
         isOpen={slide1open}

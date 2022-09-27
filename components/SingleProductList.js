@@ -37,9 +37,14 @@ function SingleProductList({ product }) {
               </div>
               <div className="TITLE flex flex-col items-start space-y-2 md:min-w-[250px] md:max-w-[250px]">
                 {productState?.quantity != 0 ? (
-                  <span className="inline-flex items-center px-2.5 py-0.5 text-md bg-secondary text-white font-londrina tracking-wider">
-                    nouveau
-                  </span>
+                  productState?.new ? (
+                    <span className="inline-flex items-center px-2.5 py-0.5 text-md bg-secondary text-white font-londrina tracking-wider">
+                      nouveau
+                      {productState?.new}
+                    </span>
+                  ) : (
+                    <></>
+                  )
                 ) : (
                   <>
                     <span className="inline-flex items-center px-2.5 py-0.5 text-md bg-secondary text-white font-londrina tracking-wider">

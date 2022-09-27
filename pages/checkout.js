@@ -25,6 +25,7 @@ import Loader from "../components/Loader";
 import Header from "../components/Header";
 
 import localStorageX from "../configs/localStorage";
+import PaymentPopup from "../components/PaymentPopup";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -42,6 +43,56 @@ function Checkout() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState({});
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [paymentPopupOpen, setPaymentPopupOpen] = useState(false);
+
+  const [payplugPaymentUrl, setPayplugPaymentUrl] = useState("");
+  const [paymentInfos, setPaymentInfos] = useState({
+    address: selectedAddress,
+    carrier: selectedCarrier,
+    paymentMethod: selectedPaymentMethod,
+  });
+
+  const conformCommande = async () => {
+    // console.log(paymentInfos);
+
+    var requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cartId: auth?.user?.id_cart,
+        carrierId: paymentInfos?.carrier.id_carrier,
+        addressDeliveryId: paymentInfos?.address.id,
+        addressInvoiceId: paymentInfos?.address.id,
+        moduleName: paymentInfos?.paymentMethod.module_name,
+      }),
+    };
+
+    await fetch("/api/payment", requestOptions)
+      .then((response) => response?.json())
+      .then((result) => {
+        if (result?.results?.payplug) {
+          setPayplugPaymentUrl(result?.results?.payplug?.payment_url);
+
+          setPaymentPopupOpen(true);
+        }
+
+        // if (result?.code == 200 && result?.succes && result?.cart) {
+        //   auth?.setCart(result?.cart);
+        //   if (!btnVisible) {
+        //     setBtnVisibleState(false);
+        //   }
+        //   setModalTitle && setModalTitle(modalTitle);
+        //   setModalOpen(true);
+        // } else {
+        //   setModalTitle && setModalTitle(result?.message);
+        //   setModalOpen(true);
+        // }
+      })
+      .catch((error) => console.log("error", error));
+  };
 
   const openNewAddressForm = () => {
     setIsFormOpen(true);
@@ -160,6 +211,14 @@ function Checkout() {
   };
 
   useEffect(() => {
+    setPaymentInfos({
+      address: selectedAddress,
+      carrier: selectedCarrier,
+      paymentMethod: selectedPaymentMethod,
+    });
+  }, [selectedAddress, selectedCarrier, selectedPaymentMethod]);
+
+  useEffect(() => {
     const init = async () => {
       if (!localStorageX.isConnected()) {
         router.push("/connexion");
@@ -194,8 +253,32 @@ function Checkout() {
     init();
   }, [auth?.user]);
 
+  useEffect(() => {
+    if (router?.query?.payment_succes) {
+      // console.log(router?.query);
+      if (router?.query?.payment_succes == "1")
+        router.push("/paymentResult/?succes=true");
+      if (router?.query?.payment_succes == "0") {
+        router.push(
+          "/paymentResult?succes=false&orderId=" + router?.query?.order_id
+        );
+      }
+
+      setPaymentPopupOpen(false);
+    }
+  }, [router]);
+
+  useEffect(() => {
+    console.log(paymentPopupOpen);
+  }, [paymentPopupOpen]);
+
   return (
     <>
+      <PaymentPopup
+        isOpen={paymentPopupOpen}
+        setIsOpen={setPaymentPopupOpen}
+        paymentUrl={payplugPaymentUrl}
+      />
       <div className="bg-white">
         <Loader isVisible={isLoading} />
         <NewAddressForm
@@ -225,8 +308,6 @@ function Checkout() {
                     <div className="mt-1">
                       <input
                         type="email"
-                        id="email-address"
-                        name="email-address"
                         autoComplete="email"
                         className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
                       />
@@ -449,7 +530,7 @@ function Checkout() {
 
               {/* Order summary */}
               <div className="mt-10 lg:mt-0 order-1">
-                <CheckoutSummary />
+                <CheckoutSummary onConformCommande={conformCommande} />
               </div>
             </form>
           </div>

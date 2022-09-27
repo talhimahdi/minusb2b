@@ -21,7 +21,10 @@ export default function Layout({ children }) {
         <Header pageName={router.pathname} />
         {children}
       </main>
-      <Footer withMargin={router.pathname == "/products" ? true : false} />
+      <Footer
+        pageName={router.pathname}
+        withMargin={router.pathname == "/products" ? true : false}
+      />
     </div>
   );
 }

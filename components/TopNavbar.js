@@ -5,6 +5,9 @@ function classNames(...classes) {
 }
 
 export default function TopNavbar({ pageName }) {
+  if (pageName == "/paymentResult") {
+    return <></>;
+  }
   return (
     <div
       className={classNames(

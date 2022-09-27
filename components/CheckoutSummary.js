@@ -3,7 +3,7 @@ import ProductCheckout from "./ProductCheckout";
 import { useAuth } from "../RestHelper/useAuth";
 import ResponseModal from "./ResponseModal";
 
-function CheckoutSummary() {
+function CheckoutSummary({ onConformCommande }) {
   const auth = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
@@ -156,7 +156,10 @@ function CheckoutSummary() {
         <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
           <button
             className="w-full bg-black shadow-sm py-3 px-4 text-base font-bold text-white hover:font-bold focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-offset-gray-50"
-            onClick={(e) => e.preventDefault()}
+            onClick={() => {
+              onConformCommande();
+            }}
+            type={"button"}
           >
             Confirmer la commande
           </button>

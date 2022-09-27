@@ -148,7 +148,7 @@ export default function Header({ pageName }) {
 
       break;
 
-    default:
+    case "/products":
       return (
         <div className="fixed left-0 top-10 md:top-12 right-0 bg-white pb-5 z-10">
           <header className="relative">
@@ -179,10 +179,10 @@ export default function Header({ pageName }) {
                 <Link href="/">
                   <a className="flex-none relative w-32 h-16 md:w-48 md:h-20">
                     {/* <Image
-                    src="/logo-minus-pro.svg"
-                    layout="fill"
-                    className="relative"
-                  /> */}
+                src="/logo-minus-pro.svg"
+                layout="fill"
+                className="relative"
+              /> */}
                     <img
                       src={"/logo-minus-pro.svg"}
                       alt=""
@@ -240,6 +240,9 @@ export default function Header({ pageName }) {
           </header>
         </div>
       );
+
+    default:
+      return <></>;
       break;
   }
 }
