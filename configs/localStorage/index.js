@@ -1,7 +1,7 @@
 let Storage;
 const salt = "KB9VMZW 15USVQ CR98RPM 7JBZB 4XKP6Q5";
 
-if (typeof window !== "undefined") {
+if (typeof window !== "undefined" && window.localStorage) {
   Storage = window.localStorage;
 }
 
