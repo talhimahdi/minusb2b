@@ -4,6 +4,8 @@ import TopNavbar from "./TopNavbar";
 import Header from "./Header";
 import Footer from "./Footer";
 
+import Script from "next/script";
+
 import { useRouter } from "next/router";
 
 export default function Layout({ children }) {
@@ -15,14 +17,14 @@ export default function Layout({ children }) {
         <meta content="upgrade-insecure-requests" />
         <meta name="description" content="Minus B2B" />
         <link rel="icon" href="/favicon.ico" />
-        {router?.pathname == "/checkout" && (
-          <script
-            type="text/javascript"
-            src="https://api.payplug.com/js/1/form.latest.js"
-          ></script>
-        )}
       </Head>
       <main>
+        {router?.pathname == "/checkout" && (
+          <Script
+            id="payplug-js"
+            src="https://api.payplug.com/js/1/form.latest.js"
+          />
+        )}
         <TopNavbar pageName={router.pathname} />
         <Header pageName={router.pathname} />
         {children}
