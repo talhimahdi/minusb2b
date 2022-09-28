@@ -16,16 +16,12 @@ import {
 } from "@heroicons/react/outline";
 import { CheckCircleIcon, TrashIcon } from "@heroicons/react/solid";
 import { useAuth } from "../RestHelper/useAuth";
-import ProductCheckout from "../components/ProductCheckout";
 import CheckoutSummary from "../components/CheckoutSummary";
-import { Urls } from "../configs/configs";
 import { useRouter } from "next/router";
 import NewAddressForm from "../components/NewAddressForm";
 import Loader from "../components/Loader";
-import Header from "../components/Header";
 
 import localStorageX from "../configs/localStorage";
-import PaymentPopup from "../components/PaymentPopup";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -43,9 +39,7 @@ function Checkout() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState({});
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [paymentPopupOpen, setPaymentPopupOpen] = useState(false);
 
-  const [payplugPaymentUrl, setPayplugPaymentUrl] = useState("");
   const [paymentInfos, setPaymentInfos] = useState({
     address: selectedAddress,
     carrier: selectedCarrier,
@@ -74,22 +68,8 @@ function Checkout() {
       .then((response) => response?.json())
       .then((result) => {
         if (result?.results?.payplug) {
-          setPayplugPaymentUrl(result?.results?.payplug?.payment_url);
-
-          setPaymentPopupOpen(true);
+          Payplug.showPayment(result?.results?.payplug?.payment_url);
         }
-
-        // if (result?.code == 200 && result?.succes && result?.cart) {
-        //   auth?.setCart(result?.cart);
-        //   if (!btnVisible) {
-        //     setBtnVisibleState(false);
-        //   }
-        //   setModalTitle && setModalTitle(modalTitle);
-        //   setModalOpen(true);
-        // } else {
-        //   setModalTitle && setModalTitle(result?.message);
-        //   setModalOpen(true);
-        // }
       })
       .catch((error) => console.log("error", error));
   };
@@ -253,35 +233,8 @@ function Checkout() {
     init();
   }, [auth?.user]);
 
-  useEffect(() => {
-    if (router?.query?.payment_succes) {
-      // console.log(router?.query);
-      if (router?.query?.payment_succes == "1")
-        router.push("/paymentResult/?succes=true");
-      if (router?.query?.payment_succes == "0") {
-        setPayplugPaymentUrl(
-          "/paymentResult?succes=false&orderId=" + router?.query?.order_id
-        );
-        router.push(
-          "/paymentResult?succes=false&orderId=" + router?.query?.order_id
-        );
-      }
-
-      setPaymentPopupOpen(false);
-    }
-  }, [router]);
-
-  useEffect(() => {
-    console.log(paymentPopupOpen);
-  }, [paymentPopupOpen]);
-
   return (
     <>
-      <PaymentPopup
-        isOpen={paymentPopupOpen}
-        setIsOpen={setPaymentPopupOpen}
-        paymentUrl={payplugPaymentUrl}
-      />
       <div className="bg-white">
         <Loader isVisible={isLoading} />
         <NewAddressForm

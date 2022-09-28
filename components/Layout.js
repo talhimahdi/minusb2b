@@ -15,6 +15,12 @@ export default function Layout({ children }) {
         <meta content="upgrade-insecure-requests" />
         <meta name="description" content="Minus B2B" />
         <link rel="icon" href="/favicon.ico" />
+        {router?.pathname == "/checkout" && (
+          <script
+            type="text/javascript"
+            src="https://api.payplug.com/js/1/form.latest.js"
+          ></script>
+        )}
       </Head>
       <main>
         <TopNavbar pageName={router.pathname} />
