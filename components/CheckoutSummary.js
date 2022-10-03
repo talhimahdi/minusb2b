@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import ProductCheckout from "./ProductCheckout";
 import { useAuth } from "../RestHelper/useAuth";
 import ResponseModal from "./ResponseModal";
+import Paypal from "./Paypal";
 
-function CheckoutSummary({ onConformCommande }) {
+function CheckoutSummary({ onConfirmCommande, showConfirmButton }) {
   const auth = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
@@ -154,15 +155,19 @@ function CheckoutSummary({ onConformCommande }) {
         </section>
 
         <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-          <button
-            className="w-full bg-black shadow-sm py-3 px-4 text-base font-bold text-white hover:font-bold focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-offset-gray-50"
-            onClick={() => {
-              onConformCommande();
-            }}
-            type={"button"}
-          >
-            Confirmer la commande
-          </button>
+          {showConfirmButton ? (
+            <button
+              className="w-full bg-black shadow-sm py-3 px-4 text-xl font-extrabold text-white hover:font-bold focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-offset-gray-50"
+              onClick={() => {
+                onConfirmCommande();
+              }}
+              type={"button"}
+            >
+              Confirmer la commande
+            </button>
+          ) : (
+            <Paypal onApproveCommande={onConfirmCommande} />
+          )}
         </div>
       </div>
     </div>

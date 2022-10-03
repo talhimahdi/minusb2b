@@ -26,7 +26,6 @@ function Cart({ open, close, setOpenCart }) {
     const result = await auth?.removeProduct(idProduct);
 
     if (result) {
-      console.log(auth?.cart?.products_count);
       if (auth?.cart?.products_count == 0) {
         setOpenCart(false);
       }

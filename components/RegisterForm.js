@@ -55,7 +55,6 @@ export default function RegisterForm({ onRegister, errorMessage }) {
 
   useEffect(() => {
     const init = async () => {
-      console.log("register");
       setLoading(true);
       await getCountries();
       setLoading(false);

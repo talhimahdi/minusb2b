@@ -25,6 +25,14 @@ export default function Layout({ children }) {
             src="https://api.payplug.com/js/1/form.latest.js"
           />
         )}
+        {router?.pathname == "/checkout" && (
+          <Script
+            defer={true}
+            id="paypal-js"
+            src="https://www.paypal.com/sdk/js?client-id=AWuJwlISDKqKqfbu19iyHYf6UFPdgHsw2bC7_gCQLqSLKA7w9JK2EykvHzMMtLAU5xRL29ukemBHfaau&currency=EUR"
+            strategy="beforeInteractive"
+          />
+        )}
         <TopNavbar pageName={router.pathname} />
         <Header pageName={router.pathname} />
         {children}

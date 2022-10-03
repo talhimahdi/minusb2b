@@ -1,19 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
-import {
-  Dialog,
-  Popover,
-  RadioGroup,
-  Tab,
-  Transition,
-} from "@headlessui/react";
-import {
-  MenuIcon,
-  QuestionMarkCircleIcon,
-  SearchIcon,
-  ShoppingBagIcon,
-  XIcon,
-  PlusCircleIcon,
-} from "@heroicons/react/outline";
+import { RadioGroup } from "@headlessui/react";
+import { PlusCircleIcon } from "@heroicons/react/outline";
 import { CheckCircleIcon, TrashIcon } from "@heroicons/react/solid";
 import { useAuth } from "../RestHelper/useAuth";
 import CheckoutSummary from "../components/CheckoutSummary";
@@ -39,16 +26,41 @@ function Checkout() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState({});
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [showPaypalButton, setShowPaypalButton] = useState(false);
 
-  const [paymentInfos, setPaymentInfos] = useState({
-    address: selectedAddress,
-    carrier: selectedCarrier,
-    paymentMethod: selectedPaymentMethod,
-  });
+  useEffect(() => {
+    const init = async () => {
+      if (!localStorageX.isConnected()) {
+        router.push("/connexion");
+      }
+    };
+    init();
+  }, []);
 
-  const conformCommande = async () => {
-    // console.log(paymentInfos);
+  useEffect(() => {
+    const init = async () => {
+      if (auth?.user?.id) {
+        setLoading(true);
+        await getAddresses();
+        await getCarriers();
+        await auth?.getCart(auth?.user?.id_cart);
+        await getPaymentMethods();
+      }
+      setLoading(false);
+    };
+    init();
+  }, [auth?.user]);
 
+  useEffect(() => {
+    const init = async () => {
+      if (auth?.cart?.products_count < 1) {
+        router.push("/products");
+      }
+    };
+    init();
+  }, [auth?.cart]);
+
+  const confirmCommande = async () => {
     var requestOptions = {
       method: "POST",
       headers: {
@@ -57,16 +69,17 @@ function Checkout() {
       },
       body: JSON.stringify({
         cartId: auth?.user?.id_cart,
-        carrierId: paymentInfos?.carrier.id_carrier,
-        addressDeliveryId: paymentInfos?.address.id,
-        addressInvoiceId: paymentInfos?.address.id,
-        moduleName: paymentInfos?.paymentMethod.module_name,
+        carrierId: selectedCarrier?.id_carrier,
+        addressDeliveryId: selectedAddress?.id,
+        addressInvoiceId: selectedAddress?.id,
+        moduleName: selectedPaymentMethod?.module_name,
       }),
     };
 
     await fetch("/api/payment", requestOptions)
       .then((response) => response?.json())
       .then((result) => {
+        console.log(result);
         if (result?.results?.payplug) {
           Payplug.showPayment(result?.results?.payplug?.payment_url);
         }
@@ -190,49 +203,6 @@ function Checkout() {
       .catch((error) => console.log("error", error));
   };
 
-  useEffect(() => {
-    setPaymentInfos({
-      address: selectedAddress,
-      carrier: selectedCarrier,
-      paymentMethod: selectedPaymentMethod,
-    });
-  }, [selectedAddress, selectedCarrier, selectedPaymentMethod]);
-
-  useEffect(() => {
-    const init = async () => {
-      if (!localStorageX.isConnected()) {
-        router.push("/connexion");
-      }
-    };
-    init();
-  }, []);
-
-  useEffect(() => {
-    const init = async () => {
-      if (auth?.cart?.products_count < 1) {
-        router.push("/products");
-      }
-    };
-    init();
-  }, [auth?.cart]);
-
-  useEffect(() => {
-    const init = async () => {
-      if (auth?.user?.id) {
-        setLoading(true);
-        await getAddresses();
-        await getCarriers();
-        await auth?.getCart(auth?.user?.id_cart);
-        await getPaymentMethods();
-      }
-      // else {
-      //   router.push("/connexion");
-      // }
-      setLoading(false);
-    };
-    init();
-  }, [auth?.user]);
-
   return (
     <>
       <div className="bg-white">
@@ -283,22 +253,6 @@ function Checkout() {
                     </RadioGroup.Label>
 
                     <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                      {/* {addresses?.map((address) => (
-                      <div key={address.id}>
-                        <RadioGroup.Option
-                          value={address}
-                          className={({ checked, active }) =>
-                            classNames(
-                              checked
-                                ? "border-transparent"
-                                : "border-gray-300",
-                              active ? "ring-2 ring-secondary" : "",
-                              "relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none"
-                            )
-                          }
-                        ></RadioGroup.Option>
-                      </div>
-                    ))} */}
                       {addresses?.map((address) => (
                         <RadioGroup.Option
                           key={address.id}
@@ -465,9 +419,14 @@ function Checkout() {
                             checked={
                               paymentMethod.id === selectedPaymentMethod?.id
                             }
-                            onChange={() =>
-                              setSelectedPaymentMethod(paymentMethod)
-                            }
+                            onChange={(e) => {
+                              if (paymentMethod.module_name == "paypal") {
+                                setShowPaypalButton(true);
+                              } else {
+                                setShowPaypalButton(false);
+                              }
+                              setSelectedPaymentMethod(paymentMethod);
+                            }}
                             className="focus:ring-0 h-4 w-4 text-secondary"
                           />
 
@@ -486,7 +445,11 @@ function Checkout() {
 
               {/* Order summary */}
               <div className="mt-10 lg:mt-0 order-1">
-                <CheckoutSummary onConformCommande={conformCommande} />
+                <CheckoutSummary
+                  onConfirmCommande={confirmCommande}
+                  showConfirmButton={!showPaypalButton}
+                  rr={selectedPaymentMethod}
+                />
               </div>
             </form>
           </div>
