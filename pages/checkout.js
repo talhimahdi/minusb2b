@@ -37,19 +37,45 @@ function Checkout() {
     init();
   }, []);
 
+  // useEffect(() => {
+  //   const init = async () => {
+  //     if (auth?.user?.id) {
+  //       setLoading(true);
+  //       const result = await updateCart();
+
+  //       if (result) {
+  //         await auth?.getCart(auth?.user?.id_cart);
+  //       }
+  //     }
+  //     setLoading(false);
+  //   };
+  //   init();
+  // }, [selectedCarrier]);
+
   useEffect(() => {
     const init = async () => {
       if (auth?.user?.id) {
         setLoading(true);
-        await getAddresses();
-        await getCarriers();
         await auth?.getCart(auth?.user?.id_cart);
+        // await getAddresses();
+        // await getCarriers();
         await getPaymentMethods();
       }
       setLoading(false);
     };
     init();
   }, [auth?.user]);
+
+  useEffect(() => {
+    const init = async () => {
+      if (auth?.user?.id) {
+        await getAddresses();
+        await getCarriers();
+      }
+      setLoading(false);
+    };
+    init();
+  }, [auth?.cart]);
 
   useEffect(() => {
     const init = async () => {
@@ -60,7 +86,34 @@ function Checkout() {
     init();
   }, [auth?.cart]);
 
+  const updateCart = async (id_carrier) => {
+    var requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cartId: auth?.user?.id_cart,
+        carrierId: id_carrier,
+        addressId: selectedAddress?.id,
+      }),
+    };
+    const result = await fetch("/api/cart/update", requestOptions)
+      .then((response) => response?.json())
+      .then((data) => data)
+      .catch((error) => console.log("error", error));
+
+    if (result?.code == 200 && result?.succes) {
+      await auth?.getCart(auth?.user?.id_cart);
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const confirmCommande = async () => {
+    setLoading(true);
     var requestOptions = {
       method: "POST",
       headers: {
@@ -79,9 +132,27 @@ function Checkout() {
     await fetch("/api/payment", requestOptions)
       .then((response) => response?.json())
       .then((result) => {
-        console.log(result);
+        if (result?.results?.newCartId) {
+          console.log(result?.results);
+          auth?.setUser({
+            ...auth?.user,
+            id_cart: result?.results?.newCartId,
+          });
+          auth?.editLocalStorage({
+            ...auth?.user,
+            id_cart: result?.results?.newCartId,
+          });
+        }
+
         if (result?.results?.payplug) {
           Payplug.showPayment(result?.results?.payplug?.payment_url);
+        } else {
+          console.log(result?.results);
+          setLoading(false);
+
+          router.replace(
+            `/confirmation-commande/${result?.results?.order?.reference}`
+          );
         }
       })
       .catch((error) => console.log("error", error));
@@ -159,11 +230,21 @@ function Checkout() {
       .then((response) => response?.json())
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
-          // return data?.results;
           setAddresses(data?.results?.addresses);
           setCountries(data?.results?.countries);
-          data?.results?.addresses.length > 0 &&
+
+          if (
+            data?.results?.addresses.length > 0 &&
+            auth?.cart?.id_address_delivery > 0
+          ) {
+            setSelectedAddress(
+              data?.results?.addresses.find(
+                (address) => address.id === auth?.cart?.id_address_delivery
+              )
+            );
+          } else {
             setSelectedAddress(data?.results?.addresses[0]);
+          }
         }
       })
       .catch((error) => console.log("error", error));
@@ -179,8 +260,19 @@ function Checkout() {
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
           setCarriers(data?.results?.carriers);
-          data?.results?.carriers.length > 0 &&
+
+          if (
+            data?.results?.carriers.length > 0 &&
+            auth?.cart?.id_carrier > 0
+          ) {
+            setSelectedCarrier(
+              data?.results?.carriers.find(
+                (carrier) => carrier.id_carrier === auth?.cart?.id_carrier
+              )
+            );
+          } else {
             setSelectedCarrier(data?.results?.carriers[0]);
+          }
         }
       })
       .catch((error) => console.log("error", error));
@@ -347,6 +439,7 @@ function Checkout() {
                     <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                       {carriers.map((carrier) => (
                         <RadioGroup.Option
+                          onClick={() => updateCart(carrier.id_carrier)}
                           key={carrier.id_carrier}
                           value={carrier}
                           className={({ checked, active }) =>

@@ -123,11 +123,17 @@ function useAuthProvider() {
   };
 
   const logout = () => {
-    return {};
+    localStorageX.clear();
+    router.push("/connexion");
+  };
+
+  const editLocalStorage = (data) => {
+    localStorageX.edit("local_data", data);
   };
 
   return {
     user,
+    setUser,
     getCart,
     setCart,
     removeProduct,
@@ -138,5 +144,6 @@ function useAuthProvider() {
     offers,
     openCart,
     setOpenCart,
+    editLocalStorage,
   };
 }

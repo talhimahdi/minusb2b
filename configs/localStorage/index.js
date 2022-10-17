@@ -15,6 +15,12 @@ const localStorage = {
   add(key, value) {
     Storage.setItem(prefix + key, encrypt(value, salt));
   },
+  edit(key, value) {
+    const data = {
+      customer: value,
+    };
+    localStorage.add(key, data);
+  },
   get(key) {
     return Storage.getItem(prefix + key) !== null
       ? decrypt(Storage.getItem(prefix + key), salt)

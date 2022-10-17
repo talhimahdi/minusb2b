@@ -17,6 +17,7 @@ export default function Header({ pageName }) {
 
   switch (pageName) {
     case "/404":
+    case "/confirmation-commande/[ref]":
     case "/register":
     case "/connexion":
       return (

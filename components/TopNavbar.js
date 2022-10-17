@@ -1,10 +1,18 @@
 import Link from "next/link";
+import { useAuth } from "../RestHelper/useAuth";
+import {
+  LogoutIcon,
+  ChevronLeftIcon,
+  ShoppingCartIcon,
+} from "@heroicons/react/outline";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function TopNavbar({ pageName }) {
+  const auth = useAuth();
+
   if (pageName == "/paymentResult") {
     return <></>;
   }
@@ -26,7 +34,7 @@ export default function TopNavbar({ pageName }) {
             </p>
           </div>
 
-          <div className="flex-1 text-end sm:order-3 sm:ml-2">
+          <div className="flex-1 text-end sm:ml-2">
             <p className="font-medium text-secondary truncate">
               <span className="md:hidden">07 84 86 49 81</span>
               <span className="hidden md:inline">
@@ -34,6 +42,13 @@ export default function TopNavbar({ pageName }) {
               </span>
             </p>
           </div>
+          <LogoutIcon
+            className="w-6 h-6 ml-5 text-gray-800 cursor-pointer"
+            aria-hidden="true"
+            onClick={() => {
+              auth?.logout();
+            }}
+          />
         </div>
       </div>
     </div>

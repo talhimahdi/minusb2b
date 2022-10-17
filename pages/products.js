@@ -138,8 +138,8 @@ function Products(/*{ productsList }*/) {
         await getProducts();
         await auth?.getCart(auth?.user?.id_cart);
         setRenderUi(true);
+        setLoading(false);
       }
-      setLoading(false);
     };
     init();
 

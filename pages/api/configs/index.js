@@ -49,6 +49,10 @@ export default {
     process.env.BASE_URL +
     `deleteFromCart?output_format=JSON&ws_key=${process.env.WS_KEY}`,
 
+  updateCart:
+    process.env.BASE_URL +
+    `updateCart?output_format=JSON&ws_key=${process.env.WS_KEY}`,
+
   getCountries:
     process.env.BASE_URL +
     `getCountries?output_format=JSON&ws_key=${process.env.WS_KEY}`,
@@ -60,11 +64,12 @@ export default {
   payment:
     process.env.BASE_URL +
     `createOrder?output_format=JSON&ws_key=${process.env.WS_KEY}`,
+
   payplugCancel:
     process.env.BASE_URL +
     `payplug_cancel?output_format=JSON&ws_key=${process.env.WS_KEY}`,
 
-  // OLD URLS
-
-  //   // logout: baseUrl + "logout",
+  confirmationOrder:
+    process.env.BASE_URL +
+    `confirmationOrder?output_format=JSON&ws_key=${process.env.WS_KEY}`,
 };
