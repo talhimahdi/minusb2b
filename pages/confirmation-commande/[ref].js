@@ -90,7 +90,7 @@ export default function ConfirmationCommande() {
             <p className=" text-2xl font-bold">VOTRE COMMANDE EST CONFIRMÉE</p>
           </div>
           <p className=" text-base text-gray-500">
-            Un e-mail vous a été envoyé à l'adresse {customer?.email}.
+            Un e-mail vous a été envoyé à l&apos;adresse {customer?.email}.
           </p>
         </div>
 
