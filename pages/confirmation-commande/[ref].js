@@ -361,7 +361,7 @@ export default function ConfirmationCommande() {
                 </span>{" "}
               </p>
               <p className="f text-lg text-gray-500 ml-5">
-                payable à l'ordre de :{" "}
+                payable à l&apos;ordre de :{" "}
                 <span className=" font-bold text-black font-londrina">
                   {checkModuleInfo.CHEQUE_NAME}
                 </span>
@@ -373,7 +373,7 @@ export default function ConfirmationCommande() {
                 </span>
               </p>
               <p className="f text-lg text-gray-500 mt-5">
-                N'oubliez pas d'indiquer votre référence de commande{" "}
+                N&apos;oubliez pas d&apos;indiquer votre référence de commande{" "}
                 <span className=" font-bold text-black font-londrina">
                   {order?.reference}
                 </span>
@@ -402,7 +402,7 @@ export default function ConfirmationCommande() {
                 </span>{" "}
               </p>
               <p className="f text-lg text-gray-500 ml-5">
-                à l'ordre de :{" "}
+                à l&apos;ordre de :{" "}
                 <span className=" font-bold text-black font-londrina">
                   {lcrModuleInfo.LCR_BANK_WIRE_OWNER}
                 </span>
@@ -449,7 +449,7 @@ export default function ConfirmationCommande() {
                 </span>{" "}
               </p>
               <p className="f text-lg text-gray-500 ml-5">
-                à l'ordre de :{" "}
+                à l&apos;ordre de :{" "}
                 <span className=" font-bold text-black font-londrina">
                   {bankTransferModuleInfo.BANK_WIRE_OWNER}
                 </span>
