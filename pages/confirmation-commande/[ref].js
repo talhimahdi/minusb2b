@@ -19,6 +19,9 @@ export default function ConfirmationCommande() {
   const [products, setProducts] = useState([]);
   const [customer, setCustomer] = useState({});
   const [carrier, setCarrier] = useState({});
+  const [lcrModuleInfo, setLcrModuleInfo] = useState({});
+  const [bankTransferModuleInfo, setBankTransferModuleInfo] = useState({});
+  const [checkModuleInfo, setCheckModuleInfo] = useState({});
 
   useEffect(() => {
     const init = async () => {
@@ -57,10 +60,21 @@ export default function ConfirmationCommande() {
       .then((response) => response?.json())
       .then((result) => {
         if (result?.succes) {
+          console.log(result);
           setProducts(result?.order_products);
           setOrder(result?.order);
           setCustomer(result?.customer);
           setCarrier(result?.carrier);
+
+          if (result?.lcr_module_info) {
+            setLcrModuleInfo(result?.lcr_module_info);
+          }
+          if (result?.bank_transfer_module_info) {
+            setBankTransferModuleInfo(result?.bank_transfer_module_info);
+          }
+          if (result?.check_module_info) {
+            setCheckModuleInfo(result?.check_module_info);
+          }
 
           if (result?.newCartId) {
             auth?.setUser({
@@ -74,7 +88,6 @@ export default function ConfirmationCommande() {
           }
         } else {
           router.push("/");
-          console.log(result?.succes);
         }
       })
       .catch((error) => console.log("error", error));
@@ -86,7 +99,7 @@ export default function ConfirmationCommande() {
       <div className="md:max-w-6xl mx-auto my-5 space-y-5">
         <div className=" bg-primary px-7 py-5 space-y-2">
           <div className="flex items-center space-x-2">
-            <CheckIcon className="w-6 h-6 text-secondary" />
+            <CheckIcon className=" w-12 h-12 md:w-6 md:h-6 text-secondary" />
             <p className=" text-2xl font-bold">VOTRE COMMANDE EST CONFIRMÉE</p>
           </div>
           <p className=" text-base text-gray-500">
@@ -105,7 +118,7 @@ export default function ConfirmationCommande() {
                     </p>
                   </div>
 
-                  <div className=" lg:col-span-6 ">
+                  <div className="hidden md:block lg:col-span-6 ">
                     <dl className="grid grid-cols-3 gap-x-6 text-sm">
                       <div>
                         <dt className="text-lg font-bold text-gray-900 text-center">
@@ -135,9 +148,7 @@ export default function ConfirmationCommande() {
                     <div className="sm:flex lg:col-span-6">
                       <div className="aspect-w-1 aspect-h-1 w-full flex-shrink-0 overflow-hidden rounded-lg sm:aspect-none sm:h-32 sm:w-32">
                         <img
-                          src={
-                            "https://tailwindui.com/img/ecommerce-images/confirmation-page-03-product-01.jpg"
-                          }
+                          src={product.image_cover}
                           alt={"imageAlt"}
                           className="h-full w-full object-cover object-center sm:h-full sm:w-full"
                         />
@@ -155,7 +166,25 @@ export default function ConfirmationCommande() {
                         </p> */}
                       </div>
                     </div>
-
+                    <div className="block md:hidden lg:col-span-6 mt-5">
+                      <dl className="grid grid-cols-3 text-sm ">
+                        <div className="">
+                          <dt className="text-sm font-bold text-gray-500 text-center">
+                            PRIX UNITAIRE
+                          </dt>
+                        </div>
+                        <div className="">
+                          <dt className="text-sm font-bold text-gray-500 text-center">
+                            QUANTITÉ
+                          </dt>
+                        </div>
+                        <div className="">
+                          <dt className="text-sm font-bold text-gray-500 text-center">
+                            TOTAL PRODUITS
+                          </dt>
+                        </div>
+                      </dl>
+                    </div>
                     <div className="mt-6 lg:col-span-6 lg:mt-0">
                       <dl className="grid grid-cols-3 gap-x-6 text-sm">
                         <div className="">
@@ -315,6 +344,142 @@ export default function ConfirmationCommande() {
             </div>
           </div>
         </div>
+
+        {checkModuleInfo?.CHEQUE_NAME && (
+          <div className=" bg-primary px-7 py-5 space-y-2">
+            <div>
+              <p className="f text-lg text-gray-500">
+                Votre commande sur MinusB2B a bien été enregistrée.
+              </p>
+              <p className="f text-lg text-gray-500">
+                Veuillez nous envoyer un chèque avec :{" "}
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                Montant du règlement :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {parseFloat(order?.total_paid).toFixed(2)} €
+                </span>{" "}
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                payable à l'ordre de :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {checkModuleInfo.CHEQUE_NAME}
+                </span>
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                à envoyer à :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {checkModuleInfo.CHEQUE_ADDRESS}
+                </span>
+              </p>
+              <p className="f text-lg text-gray-500 mt-5">
+                N'oubliez pas d'indiquer votre référence de commande{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {order?.reference}
+                </span>
+                .
+              </p>
+              <p className="hidden text-lg">
+                Un e-mail contenant ces informations vous a été envoyé. Votre
+                commande vous sera envoyée dès réception du paiement.
+              </p>
+            </div>
+          </div>
+        )}
+        {lcrModuleInfo?.LCR_BANK_WIRE_OWNER && (
+          <div className=" bg-primary px-7 py-5 space-y-2">
+            <div>
+              <p className="f text-lg text-gray-500">
+                Votre commande sur Presta Boutique a bien été enregistrée.
+              </p>
+              <p className="f text-lg text-gray-500">
+                Veuillez nous envoyer un virement bancaire :{" "}
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                Montant :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {parseFloat(order?.total_paid).toFixed(2)} €
+                </span>{" "}
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                à l'ordre de :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {lcrModuleInfo.LCR_BANK_WIRE_OWNER}
+                </span>
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                Veuillez inclure ces informations :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {lcrModuleInfo.LCR_BANK_WIRE_DETAILS}
+                </span>
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                à cette banque :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {lcrModuleInfo.LCR_BANK_WIRE_ADDRESS}
+                </span>
+              </p>
+              <p className="f text-lg text-gray-500 mt-5">
+                Veuillez préciser votre numéro de commande{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {order?.reference}
+                </span>{" "}
+                dans la description du virement.
+              </p>
+              <p className="hidden text-lg">
+                Un e-mail contenant ces informations vous a été envoyé. Votre
+                commande vous sera envoyée dès réception du paiement.
+              </p>
+            </div>
+          </div>
+        )}
+        {bankTransferModuleInfo?.BANK_WIRE_OWNER && (
+          <div className=" bg-primary px-7 py-5 space-y-2">
+            <div>
+              <p className="f text-lg text-gray-500">
+                Votre commande sur Presta Boutique a bien été enregistrée.
+              </p>
+              <p className="f text-lg text-gray-500">
+                Veuillez nous envoyer un virement bancaire :{" "}
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                Montant :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {parseFloat(order?.total_paid).toFixed(2)} €
+                </span>{" "}
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                à l'ordre de :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {bankTransferModuleInfo.BANK_WIRE_OWNER}
+                </span>
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                Veuillez inclure ces informations :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {bankTransferModuleInfo.BANK_WIRE_DETAILS}
+                </span>
+              </p>
+              <p className="f text-lg text-gray-500 ml-5">
+                à cette banque :{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {bankTransferModuleInfo.BANK_WIRE_ADDRESS}
+                </span>
+              </p>
+              <p className="f text-lg text-gray-500 mt-5">
+                Veuillez préciser votre numéro de commande{" "}
+                <span className=" font-bold text-black font-londrina">
+                  {order?.reference}
+                </span>{" "}
+                dans la description du virement.
+              </p>
+              <p className="hidden text-lg">
+                Un e-mail contenant ces informations vous a été envoyé. Votre
+                commande vous sera envoyée dès réception du paiement.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
