@@ -29,8 +29,6 @@ function Products(/*{ productsList }*/) {
   const [isLoading, setLoading] = useState(false);
   const [isButtonSpin, setIsButtonSpin] = useState(false);
 
-  console.log(process.env.BASE_URL);
-
   const getCategories = async () => {
     var requestOptions = {
       method: "GET",

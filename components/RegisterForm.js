@@ -25,7 +25,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
     firstname: "",
     lastname: "",
     email: "",
-    other: "Concept/déco",
+    famille: "choisissez un genre",
     company: "",
     address1: "",
     address2: "",
@@ -198,19 +198,33 @@ export default function RegisterForm({ onRegister, errorMessage }) {
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <select
                   className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
-                  value={form.other}
+                  value={form.famille}
                   onChange={(e) =>
                     setForm({
                       ...form,
-                      other: e.target.value,
+                      famille: e.target.value,
                     })
                   }
                 >
-                  <option value={"Concept/déco"}>Concept/déco</option>
-                  <option value={"Musée"}>Musée</option>
-                  <option value={"Collab"}>Collab</option>
-                  <option value={"Librairie"}>Librairie</option>
+                  <option value={"Concept store"}>Concept store</option>
+                  <option value={"Boutique déco"}>Boutique déco</option>
+                  <option value={"Librairie généraliste"}>
+                    Librairie généraliste
+                  </option>
+                  <option value={"Librairie Jeunesse"}>
+                    Librairie Jeunesse
+                  </option>
+                  <option value={"Papeterie"}>Papeterie</option>
                   <option value={"Jouets"}>Jouets</option>
+                  <option value={"Distribution spécialée"}>
+                    Distribution spécialée
+                  </option>
+                  <option value={"Site"}>Site</option>
+                  <option value={"Presse"}>Presse</option>
+                  <option value={"Magasin bio"}>Magasin bio</option>
+                  <option value={"Distributeur"}>Distributeur</option>
+                  <option value={"Collab"}>Collab</option>
+                  <option value={"Boutique de musée"}>Boutique de musée</option>
                 </select>
               </div>
             </div>
