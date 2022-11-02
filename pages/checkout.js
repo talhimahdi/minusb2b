@@ -280,7 +280,14 @@ function Checkout() {
 
   const getPaymentMethods = async () => {
     var requestOptions = {
-      method: "GET",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        customerId: auth?.user?.id,
+      }),
     };
 
     await fetch("/api/paymentMethods", requestOptions)
@@ -499,7 +506,8 @@ function Checkout() {
 
                   <fieldset className="mt-4">
                     <legend className="sr-only">Type de Paiement</legend>
-                    <div className="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+                    {/* space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10 */}
+                    <div className="grid grid-cols-4 gap-3">
                       {paymentMethods.map((paymentMethod) => (
                         <div
                           key={paymentMethod.id}
@@ -525,7 +533,7 @@ function Checkout() {
 
                           <label
                             htmlFor={paymentMethod.id}
-                            className="ml-3 block text-sm font-bold text-gray-700"
+                            className="ml-2 block text-sm font-bold text-gray-700"
                           >
                             {paymentMethod.name}
                           </label>
