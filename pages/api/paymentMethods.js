@@ -1,8 +1,16 @@
 import Urls from "./configs";
 
 export default async function handler(req, res) {
+  const { customerId } = req.body;
   var requestOptions = {
-    method: "GET",
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id_customer: customerId,
+    }),
   };
 
   const result = await fetch(Urls.getPaymentMethods, requestOptions)
