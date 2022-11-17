@@ -29,7 +29,7 @@ export default function Header({ pageName }) {
             >
               <div className="flex items-center justify-between">
                 <div className="h-full flex space-x-8">
-                  <Link href="#">
+                  <Link href="https://www.minus-editions.fr/">
                     <a className="flex items-center text-sm font-medium text-black hover:text-gray-800">
                       <span className="flex">
                         <ChevronLeftIcon
@@ -156,7 +156,7 @@ export default function Header({ pageName }) {
             <nav aria-label="Top" className="max-w-7xl mx-auto py-5">
               <div className="flex items-center justify-between">
                 <div className="h-full flex space-x-8">
-                  <Link href="#">
+                  <Link href="https://www.minus-editions.fr/">
                     <a className="flex items-center text-sm font-medium text-black hover:text-gray-800">
                       <span className="flex">
                         <ChevronLeftIcon

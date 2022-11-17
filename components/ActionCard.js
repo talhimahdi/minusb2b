@@ -32,7 +32,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
               <div className="flex justify-center md:justify-end mt-8">
                 <button
                   type="button"
-                  className="uppercase justify-center items-center w-60 h-10 border border-gray-300 shadow-sm text-sm  text-white bg-black focus:outline-none"
+                  className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md text-white bg-black focus:outline-none"
                 >
                   <Link href={"/register"}>
                     <a>Je crée mon compte</a>
@@ -104,7 +104,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                     <button
                       onClick={() => /*setOnLogin(true)*/ onLogin(loginForm)}
                       type="button"
-                      className="uppercase justify-center items-center w-60 h-10 px-10 border border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none"
+                      className="uppercase justify-center items-center w-60 h-10 px-10 shadow-sm text-md font-medium text-white bg-black focus:outline-none"
                     >
                       Suivant
                     </button>
@@ -144,7 +144,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
               <div className="flex justify-center md:justify-end mt-8">
                 <button
                   type="button"
-                  className="uppercase justify-center items-center w-60 h-10 border border-gray-300 shadow-sm text-sm  text-white bg-black focus:outline-none"
+                  className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md  text-white bg-black focus:outline-none"
                 >
                   JE TÉLÉCHARGE LE CATALOGUE
                 </button>
@@ -172,7 +172,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
               <div className="flex justify-center md:justify-end mt-8">
                 <button
                   type="button"
-                  className="uppercase justify-center items-center w-60 h-10 border border-gray-300 shadow-sm text-sm  text-white bg-black focus:outline-none"
+                  className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md text-white bg-black focus:outline-none"
                 >
                   JE COMMANDE SUR ANKORSTORE
                 </button>

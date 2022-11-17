@@ -97,7 +97,7 @@ function ProductList({
           <div className=" flex space-x-2">
             <button
               type="submit"
-              className=" bg-black shadow-sm py-2 px-4 text-base font-bold text-white hover:font-bold focus:outline-none 
+              className=" bg-black shadow-sm py-2 px-4 text-md font-bold text-white hover:font-bold focus:outline-none 
               focus:ring-0"
               onClick={onSearch}
             >

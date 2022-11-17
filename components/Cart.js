@@ -409,7 +409,7 @@ function Cart({ open, close, setOpenCart }) {
                             <div className="h-full">
                               <div className="flex items-center justify-center md:justify-end h-full">
                                 <Link href={"/checkout"}>
-                                  <a className="flex uppercase items-center align-baseline px-10 py-2 border h-full border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none">
+                                  <a className="flex uppercase items-center align-baseline px-10 py-2 h-full shadow-sm text-md font-medium  text-white bg-black focus:outline-none">
                                     Passer commande
                                   </a>
                                 </Link>

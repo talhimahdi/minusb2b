@@ -42,7 +42,7 @@ function BottomCart({ onOpenCart }) {
             </div>
             <div className="flex items-center justify-center md:justify-end">
               <div
-                className="uppercase items-center align-baseline px-10 py-4 border h-full border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none"
+                className="uppercase items-center align-baseline px-10 py-4 h-full shadow-sm text-md font-medium  text-white bg-black focus:outline-none"
                 onClick={() =>
                   auth?.cart?.products_count > 0 && router.push("/checkout")
                 }
