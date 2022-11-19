@@ -322,24 +322,9 @@ function Checkout() {
                   <h2 className="text-lg font-bold text-gray-900">
                     Informations de contact
                   </h2>
-
-                  <div className="mt-4">
-                    <label
-                      htmlFor="email-address"
-                      className="block text-sm font-bold text-gray-700"
-                    >
-                      Adresse email
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="email"
-                        autoComplete="email"
-                        className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
-                      />
-                    </div>
-                  </div>
                 </div>
 
+                <hr className="mt-5" />
                 <div className="mt-3">
                   <RadioGroup
                     value={selectedAddress}
