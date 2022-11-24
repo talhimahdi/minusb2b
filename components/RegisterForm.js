@@ -25,11 +25,11 @@ export default function RegisterForm({ onRegister, errorMessage }) {
     firstname: "",
     lastname: "",
     email: "",
-    famille: "choisissez un genre",
+    famille: "Concept store",
     company: "",
     address1: "",
     address2: "",
-    id_country: "",
+    id_country: 8,
     vat_number: "",
     city: "",
     postcode: "",
@@ -393,25 +393,13 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                     }
                     className="block w-full border-none shadow-sm focus:ring-0  sm:text-sm"
                   >
-                    <option value={0}>Selectionner un pays</option>
+                    {/* <option value={0}>Selectionner un pays</option> */}
                     {countries?.map((country) => (
                       <option key={country?.id} value={country?.id}>
                         {country?.name}
                       </option>
                     ))}
                   </select>
-                  {/* <input
-                    type="text"
-                    placeholder="France"
-                    value={form.id_country}
-                    onChange={(e) =>
-                      setForm({
-                        ...form,
-                        id_country: e.target.value,
-                      })
-                    }
-                    className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
-                  /> */}
                 </div>
               </div>
 

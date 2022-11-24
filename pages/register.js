@@ -42,7 +42,8 @@ export default function Register() {
       .catch((error) => console.log("error", error));
 
     if (result?.code == 200 && result?.succes) {
-      router.push("/connexion");
+      // router.push("/connexion");
+      router.push("/page-attente");
     } else {
       setErrorMessage(result?.message);
     }

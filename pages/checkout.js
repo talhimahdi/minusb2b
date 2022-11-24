@@ -17,8 +17,12 @@ function classNames(...classes) {
 function Checkout() {
   const auth = useAuth();
   const router = useRouter();
-  const [selectedAddress, setSelectedAddress] = useState({});
-  const [addresses, setAddresses] = useState([]);
+  const [selectedAddressFacturation, setSelectedAddressFacturation] = useState(
+    {}
+  );
+  const [addressesFacturation, setAddressesFacturation] = useState([]);
+  const [selectedAddressLivraison, setSelectedAddressLivraison] = useState({});
+  const [addressesLivraison, setAddressesLivraison] = useState([]);
   const [countries, setCountries] = useState([]);
   const [carriers, setCarriers] = useState([]);
   const [selectedCarrier, setSelectedCarrier] = useState({});
@@ -27,6 +31,7 @@ function Checkout() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [showPaypalButton, setShowPaypalButton] = useState(false);
+  const [isOtherDeliveryAddress, setIsOtherDeliveryAddress] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -123,8 +128,10 @@ function Checkout() {
       body: JSON.stringify({
         cartId: auth?.user?.id_cart,
         carrierId: selectedCarrier?.id_carrier,
-        addressDeliveryId: selectedAddress?.id,
-        addressInvoiceId: selectedAddress?.id,
+        addressInvoiceId: selectedAddressFacturation?.id,
+        addressDeliveryId: isOtherDeliveryAddress
+          ? selectedAddressLivraison?.id
+          : selectedAddressFacturation?.id,
         moduleName: selectedPaymentMethod?.module_name,
       }),
     };
@@ -181,8 +188,9 @@ function Checkout() {
       .catch((error) => console.log("error", error));
 
     if (result?.code == 200 && result?.succes) {
-      setAddresses([...addresses, result?.new_address]);
-      setSelectedAddress(result?.new_address);
+      setAddressesFacturation([...addressesFacturation, result?.new_address]);
+      setAddressesLivraison([...addressesLivraison, result?.new_address]);
+      // setSelectedAddress(result?.new_address);
       setIsFormOpen(false);
     } else {
       console.log("error!!!");
@@ -230,20 +238,32 @@ function Checkout() {
       .then((response) => response?.json())
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
-          setAddresses(data?.results?.addresses);
+          setAddressesFacturation(data?.results?.addresses);
+          setAddressesLivraison(data?.results?.addresses);
           setCountries(data?.results?.countries);
 
           if (
             data?.results?.addresses.length > 0 &&
+            auth?.cart?.id_address_invoice > 0
+          ) {
+            setSelectedAddressFacturation(
+              data?.results?.addresses.find(
+                (address) => address.id === auth?.cart?.id_address_invoice
+              )
+            );
+          }
+          if (
+            data?.results?.addresses.length > 0 &&
             auth?.cart?.id_address_delivery > 0
           ) {
-            setSelectedAddress(
+            setSelectedAddressLivraison(
               data?.results?.addresses.find(
                 (address) => address.id === auth?.cart?.id_address_delivery
               )
             );
           } else {
-            setSelectedAddress(data?.results?.addresses[0]);
+            setSelectedAddressFacturation(data?.results?.addresses[0]);
+            setSelectedAddressLivraison(data?.results?.addresses[0]);
           }
         }
       })
@@ -327,17 +347,17 @@ function Checkout() {
                 <hr className="mt-5" />
                 <div className="mt-3">
                   <RadioGroup
-                    value={selectedAddress}
-                    onChange={setSelectedAddress}
+                    value={selectedAddressFacturation}
+                    onChange={setSelectedAddressFacturation}
                   >
                     <RadioGroup.Label className="text-lg font-bold text-gray-900">
                       <h2 className="text-lg font-bold text-gray-900">
-                        Adresses
+                        Adresse de facturation
                       </h2>
                     </RadioGroup.Label>
 
                     <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                      {addresses?.map((address) => (
+                      {addressesFacturation?.map((address) => (
                         <RadioGroup.Option
                           key={address.id}
                           value={address}
@@ -362,6 +382,12 @@ function Checkout() {
                                     ? address.alias
                                     : "Adresse par défaut"}
                                 </RadioGroup.Label>
+                                <RadioGroup.Label
+                                  as="span"
+                                  className="block text-md font-bold text-gray-900 my-3"
+                                >
+                                  {address.company}
+                                </RadioGroup.Label>
                                 <RadioGroup.Description
                                   as="span"
                                   className="mt-1 text-sm text-black space-y-1"
@@ -373,7 +399,7 @@ function Checkout() {
                                   <p>{address?.phone}</p>
                                 </RadioGroup.Description>
                                 <RadioGroup.Description>
-                                  <span className="flex items-end justify-start mt-4">
+                                  <span className="flex items-end justify-start mt-4 h-5">
                                     {address.can_delete && (
                                       <TrashIcon
                                         onClick={() =>
@@ -407,16 +433,129 @@ function Checkout() {
                         </RadioGroup.Option>
                       ))}
                     </div>
-                    <div className="flex">
-                      <span
-                        className="flex flex-1/2 items-center mt-5 space-x-1 cursor-pointer text-black hover:text-gray-500"
-                        onClick={openNewAddressForm}
-                      >
-                        <PlusCircleIcon className="w-6 h-6 " />
-                        <p>ajouter une nouvelle adresse</p>
-                      </span>
-                    </div>
                   </RadioGroup>
+                </div>
+
+                <div className="flex items-center my-4">
+                  <input
+                    onChange={(e) => {
+                      setIsOtherDeliveryAddress(e.target.checked);
+                    }}
+                    id="default-checkbox"
+                    type="checkbox"
+                    className="w-4 h-4 bg-secondary text-black ring-0  border-gray-300 focus:outline-none "
+                  />
+                  <label
+                    htmlFor="default-checkbox"
+                    className="ml-2  text-gray-900 "
+                  >
+                    <p>Je souhaite être livré à mon adresse de facturation</p>
+                  </label>
+                </div>
+
+                {isOtherDeliveryAddress && (
+                  <div className="mt-3">
+                    <RadioGroup
+                      value={selectedAddressLivraison}
+                      onChange={setSelectedAddressLivraison}
+                    >
+                      <RadioGroup.Label className="text-lg font-bold text-gray-900">
+                        <h2 className="text-lg font-bold text-gray-900">
+                          Adresse de livraison
+                        </h2>
+                      </RadioGroup.Label>
+
+                      <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                        {addressesLivraison?.map((address) => (
+                          <RadioGroup.Option
+                            key={address.id}
+                            value={address}
+                            className={({ checked, active }) =>
+                              classNames(
+                                checked
+                                  ? "border-transparent"
+                                  : "border-gray-300",
+                                active ? "ring-2 ring-secondary" : "",
+                                "relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none"
+                              )
+                            }
+                          >
+                            {({ checked, active }) => (
+                              <>
+                                <span className="flex-1 flex flex-col justify-between">
+                                  <RadioGroup.Label
+                                    as="span"
+                                    className="block text-lg font-bold text-gray-900"
+                                  >
+                                    {address.alias != "ACCOUNT_ADDRESS"
+                                      ? address.alias
+                                      : "Adresse par défaut"}
+                                  </RadioGroup.Label>
+                                  <RadioGroup.Label
+                                    as="span"
+                                    className="block text-md font-bold text-gray-900 my-3"
+                                  >
+                                    {address.company}
+                                  </RadioGroup.Label>
+                                  <RadioGroup.Description
+                                    as="span"
+                                    className="mt-1 text-sm text-black space-y-1"
+                                  >
+                                    <p>{address.address1}</p>
+                                    <p>{address.address2}</p>
+                                    <p>{address.country_name}</p>
+                                    <p>{address.city}</p>
+                                    <p>{address?.phone}</p>
+                                  </RadioGroup.Description>
+                                  <RadioGroup.Description>
+                                    <span className="flex items-end justify-start mt-4 h-5">
+                                      {address.can_delete && (
+                                        <TrashIcon
+                                          onClick={() =>
+                                            removeAddress(address.id)
+                                          }
+                                          className="h-5 w-5 text-secondary hover:text-red-500"
+                                          aria-hidden="true"
+                                        />
+                                      )}
+                                    </span>
+                                  </RadioGroup.Description>
+                                </span>
+                                {checked ? (
+                                  <CheckCircleIcon
+                                    className="h-5 w-5 text-secondary"
+                                    aria-hidden="true"
+                                  />
+                                ) : null}
+                                <span
+                                  className={classNames(
+                                    active ? "border" : "border-2",
+                                    checked
+                                      ? "border-secondary"
+                                      : "border-transparent",
+                                    "absolute -inset-px pointer-events-none"
+                                  )}
+                                  aria-hidden="true"
+                                />
+                              </>
+                            )}
+                          </RadioGroup.Option>
+                        ))}
+                      </div>
+                    </RadioGroup>
+                  </div>
+                )}
+
+                <div className="mt-5">
+                  <div className="flex">
+                    <span
+                      className="flex flex-1/2 items-center space-x-1 cursor-pointer text-black hover:text-gray-500"
+                      onClick={openNewAddressForm}
+                    >
+                      <PlusCircleIcon className="w-6 h-6 " />
+                      <p>ajouter une nouvelle adresse</p>
+                    </span>
+                  </div>
                 </div>
 
                 <div className="mt-10 border-t border-gray-200 pt-10">

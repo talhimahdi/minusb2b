@@ -29,7 +29,7 @@ function useAuthProvider() {
     if (localStorageX.isConnected()) {
       setUser(localStorageX.get("local_data").customer);
     } else {
-      const withoutConnexion = ["/connexion", "/register"];
+      const withoutConnexion = ["/connexion", "/register", "/page-attente"];
       if (!withoutConnexion.includes(router?.pathname))
         router.push("/connexion");
     }
@@ -49,8 +49,6 @@ function useAuthProvider() {
         }),
       };
 
-      // const baseUrl = location.protocol + "//" + location.host;
-
       return await fetch("/api/login", requestOptions)
         .then((response) => response?.json())
         .then((response) => {
@@ -59,6 +57,8 @@ function useAuthProvider() {
 
             localStorageX.add("local_data", response?.results?.data);
             router.push("/products");
+          } else if (response?.results?.newactive) {
+            router.push("/page-attente");
           } else {
             console.log("Error: " + response?.results?.message);
           }

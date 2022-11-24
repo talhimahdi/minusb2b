@@ -14,6 +14,7 @@ import ResponseModal from "./ResponseModal";
 export default function ProductPreview({ isOpen, setIsOpen, product }) {
   const [productState, setProductState] = useState(product);
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -30,7 +31,7 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
           <div>
             {modalOpen && (
               <ResponseModal
-                title={"Produit ajouté avec succes!"}
+                title={modalTitle}
                 description={""}
                 open={modalOpen}
                 setModalOpen={setModalOpen}
@@ -133,6 +134,8 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
                           btnVisible={true}
                           btnText={"Je le veux !"}
                           setModalOpen={setModalOpen}
+                          modalTitle={"Produit ajouté avec succes!"}
+                          setModalTitle={setModalTitle}
                         />
                       </div>
                     </div>
