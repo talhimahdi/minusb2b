@@ -11,11 +11,11 @@ export default {
     process.env.BASE_URL +
     `getSlider?output_format=JSON&ws_key=${process.env.WS_KEY}`,
 
-  productList: (pageNumber, limit, idCategorySearch, term) =>
+  productList: (pageNumber, limit, idCategorySearch, term, customer_id) =>
     process.env.BASE_URL +
     `products?output_format=JSON&ws_key=${process.env.WS_KEY}&limit=${
       pageNumber * limit
-    },${limit}&sort=id_ASC&category_id=${idCategorySearch}&term=${term}`,
+    },${limit}&sort=id_ASC&category_id=${idCategorySearch}&term=${term}&customer_id=${customer_id}`,
 
   getCategories:
     process.env.BASE_URL +

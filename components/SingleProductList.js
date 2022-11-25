@@ -89,7 +89,7 @@ function SingleProductList({ product }) {
                 <div className="pt-0 flex items-start justify-start">
                   <h2 className="text-black underline underline-offset-2">
                     Prix public :{" "}
-                    {parseFloat(productState?.wholesale_price).toFixed(2)} €
+                    {parseFloat(productState?.price_ttc).toFixed(2)} €
                   </h2>
                 </div>
                 <div className="flex md:block space-x-4 md:space-x-0">

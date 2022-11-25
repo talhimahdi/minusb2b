@@ -1,14 +1,20 @@
 import Urls from "./configs";
 
 export default async function handler(req, res) {
-  const { pageNumber, limit, idCategorySearch = "", term = "" } = req.body;
+  const {
+    customer_id,
+    pageNumber,
+    limit,
+    idCategorySearch = "",
+    term = "",
+  } = req.body;
 
   var requestOptions = {
     method: "GET",
   };
 
   const result = await fetch(
-    Urls.productList(pageNumber, limit, idCategorySearch, term),
+    Urls.productList(pageNumber, limit, idCategorySearch, term, customer_id),
     requestOptions
   )
     .then((response) => response?.json())
