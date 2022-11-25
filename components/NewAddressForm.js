@@ -1,12 +1,14 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/outline";
+import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 export default function NewAddressForm({
   open,
   setOpen,
   countries,
   addAddress,
+  errorMessage,
 }) {
   const [addressForm, setAddressForm] = useState({
     id_country: 1,
@@ -173,7 +175,7 @@ export default function NewAddressForm({
                         htmlFor="apartment"
                         className="block text-sm font-bold text-gray-700"
                       >
-                        Complément d&aposadresse
+                        Complément d&apos;adresse
                       </label>
                       <div className="mt-1">
                         <input
@@ -301,6 +303,14 @@ export default function NewAddressForm({
                   >
                     Annuler
                   </button>
+                </div>
+                <div className="mt-5">
+                  {errorMessage != "" && (
+                    <div className="flex items-center space-x-2 text-secondary">
+                      <ExclamationCircleIcon className="h-5 w-5" />
+                      <p>{errorMessage}</p>
+                    </div>
+                  )}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

@@ -87,6 +87,7 @@ function Products(/*{ productsList }*/) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        customer_id: auth?.user?.id,
         pageNumber: isSearch || reset ? 0 : pageNumber,
         limit,
         idCategorySearch: reset ? 0 : idCategorySearch,

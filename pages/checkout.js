@@ -31,7 +31,8 @@ function Checkout() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [showPaypalButton, setShowPaypalButton] = useState(false);
-  const [isOtherDeliveryAddress, setIsOtherDeliveryAddress] = useState(false);
+  const [isOtherDeliveryAddress, setIsOtherDeliveryAddress] = useState(true);
+  const [errorAddAddressMessage, setErrorAddAddressMessage] = useState("");
 
   useEffect(() => {
     const init = async () => {
@@ -130,8 +131,8 @@ function Checkout() {
         carrierId: selectedCarrier?.id_carrier,
         addressInvoiceId: selectedAddressFacturation?.id,
         addressDeliveryId: isOtherDeliveryAddress
-          ? selectedAddressLivraison?.id
-          : selectedAddressFacturation?.id,
+          ? selectedAddressFacturation?.id
+          : selectedAddressLivraison?.id,
         moduleName: selectedPaymentMethod?.module_name,
       }),
     };
@@ -193,6 +194,7 @@ function Checkout() {
       // setSelectedAddress(result?.new_address);
       setIsFormOpen(false);
     } else {
+      setErrorAddAddressMessage(result?.message);
       console.log("error!!!");
     }
     setLoading(false);
@@ -331,6 +333,7 @@ function Checkout() {
           setOpen={setIsFormOpen}
           countries={countries}
           addAddress={addAddress}
+          errorMessage={errorAddAddressMessage}
         />
         <main className="max-w-7xl mx-auto md:pt-16 pb-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto lg:max-w-none">
@@ -441,9 +444,10 @@ function Checkout() {
                     onChange={(e) => {
                       setIsOtherDeliveryAddress(e.target.checked);
                     }}
+                    checked={isOtherDeliveryAddress}
                     id="default-checkbox"
                     type="checkbox"
-                    className="w-4 h-4 bg-secondary text-black ring-0  border-gray-300 focus:outline-none "
+                    className="w-4 h-4 text-black ring-0 border-gray-300 focus:outline-none "
                   />
                   <label
                     htmlFor="default-checkbox"
@@ -453,7 +457,7 @@ function Checkout() {
                   </label>
                 </div>
 
-                {isOtherDeliveryAddress && (
+                {!isOtherDeliveryAddress && (
                   <div className="mt-3">
                     <RadioGroup
                       value={selectedAddressLivraison}
