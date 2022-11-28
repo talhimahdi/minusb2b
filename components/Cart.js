@@ -334,9 +334,8 @@ function Cart({ open, close, setOpenCart }) {
                                   <div className="flex flex-col">
                                     <div className="text-black space-x-2">
                                       <span className="text-xl font-londrina">
-                                        {/* {parseFloat(product?.price).toFixed(2) +
-                                          auth?.cart?.currency_symbol} */}
-                                        {product?.formatted_price}
+                                        {parseFloat(product?.price).toFixed(2) +
+                                          auth?.cart?.currency_symbol}
                                       </span>
                                       <span className="text-lg">HT</span>
                                     </div>
@@ -464,9 +463,8 @@ function Cart({ open, close, setOpenCart }) {
                                   <div className="col-span-2">
                                     <div className="text-black space-x-2">
                                       <span className="text-xl font-londrina">
-                                        {/* {parseFloat(product?.price).toFixed(2) +
-                                          auth?.cart?.currency_symbol} */}
-                                        {product?.formatted_price}
+                                        {parseFloat(product?.price).toFixed(2) +
+                                          auth?.cart?.currency_symbol}
                                       </span>
                                       <span className="text-lg">HT</span>
                                     </div>
