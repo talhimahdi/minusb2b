@@ -190,7 +190,8 @@ function Cart({ open, close, setOpenCart }) {
                                     id="summary-heading"
                                     className="text-2xl font-medium text-gray-900 font-londrina"
                                   >
-                                    {auth?.cart?.totals?.total?.value}
+                                    {/* {auth?.cart?.totals?.total?.value} */}
+                                    {auth?.cart?.subtotals?.products?.value}
                                   </h2>
                                 </div>
                               </div>
@@ -553,10 +554,11 @@ function Cart({ open, close, setOpenCart }) {
                                     className="text-2xl font-medium text-gray-900 font-londrina"
                                   >
                                     {/* {auth?.cart?.totals?.total?.value} */}
-                                    {
+                                    {/* {
                                       auth?.cart?.totals?.total_excluding_tax
                                         ?.value
-                                    }
+                                    } */}
+                                    {auth?.cart?.subtotals?.products?.value}
                                   </h2>
                                 </div>
                               </div>
