@@ -1,28 +1,26 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/outline";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
-export default function NewAddressForm({
+export default function EditAddressForm({
+  address,
   open,
   setOpen,
   countries,
-  addAddress,
+  editAddress,
   errorMessage,
 }) {
-  const [addressForm, setAddressForm] = useState({
-    id_country: 1,
-    alias: "",
-    company: "",
-    lastname: "",
-    firstname: "",
-    address1: "",
-    address2: "",
-    city: "",
-    postcode: "",
-    phone: "",
-  });
+  const [addressForm, setAddressForm] = useState(address);
   const cancelButtonRef = useRef(null);
+
+  useEffect(() => {
+    const init = async () => {
+      setAddressForm(address);
+    };
+    init();
+  }, [address]);
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -291,9 +289,9 @@ export default function NewAddressForm({
                   <button
                     type="button"
                     className="w-full inline-flex justify-center border border-transparent shadow-sm px-4 py-2 bg-primary text-lg font-medium text-secondary focus:outline-none focus:ring-0 sm:col-start-2"
-                    onClick={async () => await addAddress(addressForm)}
+                    onClick={async () => await editAddress(addressForm)}
                   >
-                    Enregister
+                    Modifier
                   </button>
                   <button
                     type="button"

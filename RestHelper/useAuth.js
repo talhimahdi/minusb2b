@@ -22,18 +22,43 @@ function useAuthProvider() {
   const [user, setUser] = useState({});
   const [cart, setCart] = useState({});
   const [offers, setOffers] = useState([]);
+  const [frontContent, setFrontContent] = useState([]);
 
   const [openCart, setOpenCart] = useState(false);
 
   useEffect(() => {
+    // get static content
+
+    getFrontContent();
+
     if (localStorageX.isConnected()) {
       setUser(localStorageX.get("local_data").customer);
     } else {
-      const withoutConnexion = ["/connexion", "/register", "/page-attente"];
+      const withoutConnexion = [
+        "/connexion",
+        "/register",
+        "/page-attente",
+        "/forget-password",
+      ];
       if (!withoutConnexion.includes(router?.pathname))
         router.push("/connexion");
     }
   }, []);
+
+  const getFrontContent = async () => {
+    var requestOptions = {
+      method: "GET",
+    };
+
+    return await fetch("/api/frontContent", requestOptions)
+      .then((response) => response?.json())
+      .then((response) => {
+        if (response?.results?.succes && response?.results?.code === 200) {
+          setFrontContent(response?.results?.content);
+        }
+      })
+      .catch((error) => console.log("error", error));
+  };
 
   const login = async ({ email, password }) => {
     if (email != "" && password != "") {
@@ -145,5 +170,6 @@ function useAuthProvider() {
     openCart,
     setOpenCart,
     editLocalStorage,
+    frontContent,
   };
 }

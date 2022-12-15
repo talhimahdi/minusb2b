@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { RadioGroup } from "@headlessui/react";
 import { PlusCircleIcon } from "@heroicons/react/outline";
-import { CheckCircleIcon, TrashIcon } from "@heroicons/react/solid";
+import { CheckCircleIcon, TrashIcon, PencilIcon } from "@heroicons/react/solid";
 import { useAuth } from "../RestHelper/useAuth";
 import CheckoutSummary from "../components/CheckoutSummary";
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import NewAddressForm from "../components/NewAddressForm";
 import Loader from "../components/Loader";
 
 import localStorageX from "../configs/localStorage";
+import EditAddressForm from "../components/EditAddressForm";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -28,11 +29,15 @@ function Checkout() {
   const [selectedCarrier, setSelectedCarrier] = useState({});
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState({});
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  // const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [showPaypalButton, setShowPaypalButton] = useState(false);
   const [isOtherDeliveryAddress, setIsOtherDeliveryAddress] = useState(true);
   const [errorAddAddressMessage, setErrorAddAddressMessage] = useState("");
+
+  const [updatedAddress, setUpdatedAddress] = useState({});
 
   useEffect(() => {
     const init = async () => {
@@ -167,7 +172,11 @@ function Checkout() {
   };
 
   const openNewAddressForm = () => {
-    setIsFormOpen(true);
+    setIsAddFormOpen(true);
+  };
+
+  const openEditAddressForm = () => {
+    setIsEditFormOpen(true);
   };
 
   const addAddress = async (addressInfos) => {
@@ -192,10 +201,38 @@ function Checkout() {
       setAddressesFacturation([...addressesFacturation, result?.new_address]);
       setAddressesLivraison([...addressesLivraison, result?.new_address]);
       // setSelectedAddress(result?.new_address);
-      setIsFormOpen(false);
+      setIsAddFormOpen(false);
     } else {
       setErrorAddAddressMessage(result?.message);
       console.log("error!!!");
+    }
+    setLoading(false);
+  };
+
+  const editAddress = async (addressInfos) => {
+    setLoading(true);
+    var requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ addressInfos }),
+    };
+
+    const result = await fetch("/api/addresses/edit", requestOptions)
+      .then((response) => response?.json())
+      .then((data) => {
+        return data?.results;
+      })
+      .catch((error) => console.log("error", error));
+
+    if (result?.code == 200 && result?.succes) {
+      await getAddresses();
+      setIsEditFormOpen(false);
+    } else {
+      console.log(result?.message);
+      setErrorAddAddressMessage(result?.message);
     }
     setLoading(false);
   };
@@ -329,10 +366,18 @@ function Checkout() {
       <div className="bg-white">
         <Loader isVisible={isLoading} />
         <NewAddressForm
-          open={isFormOpen}
-          setOpen={setIsFormOpen}
+          open={isAddFormOpen}
+          setOpen={setIsAddFormOpen}
           countries={countries}
           addAddress={addAddress}
+          errorMessage={errorAddAddressMessage}
+        />
+        <EditAddressForm
+          address={updatedAddress}
+          open={isEditFormOpen}
+          setOpen={setIsEditFormOpen}
+          countries={countries}
+          editAddress={editAddress}
           errorMessage={errorAddAddressMessage}
         />
         <main className="max-w-7xl mx-auto md:pt-16 pb-24 px-4 sm:px-6 lg:px-8">
@@ -381,9 +426,10 @@ function Checkout() {
                                   as="span"
                                   className="block text-lg font-bold text-gray-900"
                                 >
-                                  {address.alias != "ACCOUNT_ADDRESS"
+                                  {address.alias}
+                                  {/* {address.alias != "ACCOUNT_ADDRESS"
                                     ? address.alias
-                                    : "Adresse par défaut"}
+                                    : "Adresse par défaut"} */}
                                 </RadioGroup.Label>
                                 <RadioGroup.Label
                                   as="span"
@@ -402,8 +448,16 @@ function Checkout() {
                                   <p>{address?.phone}</p>
                                 </RadioGroup.Description>
                                 <RadioGroup.Description>
-                                  <span className="flex items-end justify-start mt-4 h-5">
-                                    {address.can_delete && (
+                                  {address.can_delete && (
+                                    <span className="flex items-end justify-start space-x-2 mt-4 h-5">
+                                      <PencilIcon
+                                        onClick={() => {
+                                          setUpdatedAddress(address);
+                                          openEditAddressForm();
+                                        }}
+                                        className="h-5 w-5 text-secondary hover:text-red-500"
+                                        aria-hidden="true"
+                                      />
                                       <TrashIcon
                                         onClick={() =>
                                           removeAddress(address.id)
@@ -411,8 +465,8 @@ function Checkout() {
                                         className="h-5 w-5 text-secondary hover:text-red-500"
                                         aria-hidden="true"
                                       />
-                                    )}
-                                  </span>
+                                    </span>
+                                  )}
                                 </RadioGroup.Description>
                               </span>
                               {checked ? (
@@ -491,9 +545,10 @@ function Checkout() {
                                     as="span"
                                     className="block text-lg font-bold text-gray-900"
                                   >
-                                    {address.alias != "ACCOUNT_ADDRESS"
+                                    {address.alias}
+                                    {/* {address.alias != "ACCOUNT_ADDRESS"
                                       ? address.alias
-                                      : "Adresse par défaut"}
+                                      : "Adresse par défaut"} */}
                                   </RadioGroup.Label>
                                   <RadioGroup.Label
                                     as="span"

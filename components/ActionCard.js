@@ -3,8 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Urls } from "../configs/configs";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import { useAuth } from "../RestHelper/useAuth";
 
 export default function ActionCard({ onLogin, errorMessage = "" }) {
+  const auth = useAuth();
+
   const [isLoading, setIsLoading] = useState();
   const [loginForm, setLoginForm] = useState({
     email: "",
@@ -24,11 +27,10 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                 </div>
               </div>
               <h3 className="uppercase mt-8 text-xl text-gray-900 font-londrina text-center">
-                COMMANDER EN LIGNE SUR LE SITE MINUS
+                {auth?.frontContent?.card_1_title}
               </h3>
               <p className="mt-5 text-base text-black text-center">
-                Le rêve pour vous c’est de passer votre commande en quelques
-                clics? Créez votre compte !
+                {auth?.frontContent?.card_1_desc}
               </p>
               <div className="flex justify-center md:justify-end mt-8">
                 <button
@@ -36,7 +38,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md text-white bg-black focus:outline-none"
                 >
                   <Link href={"/register"}>
-                    <a>Je crée mon compte</a>
+                    <a>{auth?.frontContent?.card_1_button_text}</a>
                   </Link>
                 </button>
               </div>
@@ -94,14 +96,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                       />
                     </div>
                   </div>
-
-                  <div className="flex flex-col items-center mb-5 md:mb-0">
-                    <p>Pas encore de compte ?</p>
-                    <Link href={"/register"}>
-                      <a className="underline ">Inscrivez-vous !</a>
-                    </Link>
-                  </div>
-                  <div className="flex flex-col items-center justify-center md:justify-end">
+                  <div className="pt-5 flex flex-col items-center justify-center md:justify-end">
                     <button
                       onClick={() => {
                         setIsLoading(true);
@@ -133,6 +128,15 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                       Suivant
                     </button>
                   </div>
+                  <div className="flex flex-col items-center mb-5 md:mb-0">
+                    <p>Mot de passe oublié ?</p>
+                    <Link href={"/register"}>
+                      <a className="underline ">
+                        Réinitialisez votre mot de passe.
+                      </a>
+                    </Link>
+                  </div>
+
                   {errorMessage != "" && (
                     <div className="flex items-center space-x-2 text-secondary">
                       <ExclamationCircleIcon className="h-5 w-5" />
@@ -155,22 +159,17 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                 </div>
               </div>
               <h3 className="uppercase mt-8 text-xl text-gray-900 font-londrina text-center">
-                COMMANDEZ PAR MAIL OU PAR TÉLÉPHONE
+                {auth?.frontContent?.card_2_title}
               </h3>
               <p className="mt-5 text-base text-black text-center">
-                Vous êtes plutôt téléphone et rêvez d’entendre notre douce voix,
-                appelez-nous pour échanger ou passer commande au 07 84 86 49 81
-                ou envoyez-nous un email à
-                <span className="underline ml-1">
-                  commande@minus-editions.fr
-                </span>
+                {auth?.frontContent?.card_2_desc}
               </p>
               <div className="flex justify-center md:justify-end mt-8">
                 <button
                   type="button"
                   className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md  text-white bg-black focus:outline-none"
                 >
-                  JE TÉLÉCHARGE LE CATALOGUE
+                  {auth?.frontContent?.card_2_button_text}
                 </button>
               </div>
             </div>
@@ -187,18 +186,17 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                 </div>
               </div>
               <h3 className="uppercase mt-8 text-xl text-center text-gray-900 font-londrina">
-                COMMANDER AVEC NOTRE PARTENAIRE ANKORSTORE
+                {auth?.frontContent?.card_3_title}
               </h3>
               <p className="mt-5 text-base text-black text-center">
-                Proin eget tortor risus. Donec sollicitudin molestie malesuada.
-                Vestibulum ante ipsum primis
+                {auth?.frontContent?.card_3_desc}
               </p>
               <div className="flex justify-center md:justify-end mt-8">
                 <button
                   type="button"
                   className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md text-white bg-black focus:outline-none"
                 >
-                  JE COMMANDE SUR ANKORSTORE
+                  {auth?.frontContent?.card_3_button_text}
                 </button>
               </div>
             </div>

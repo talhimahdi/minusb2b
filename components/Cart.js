@@ -39,6 +39,7 @@ function Cart({ open, close, setOpenCart }) {
       if (auth?.cart?.products_count < 1) {
         setOpenCart(false);
       }
+      console.log(auth?.cart?.totals);
     };
     init();
   }, [auth?.cart]);
@@ -551,7 +552,11 @@ function Cart({ open, close, setOpenCart }) {
                                     id="summary-heading"
                                     className="text-2xl font-medium text-gray-900 font-londrina"
                                   >
-                                    {auth?.cart?.totals?.total?.value}
+                                    {/* {auth?.cart?.totals?.total?.value} */}
+                                    {
+                                      auth?.cart?.totals?.total_excluding_tax
+                                        ?.value
+                                    }
                                   </h2>
                                 </div>
                               </div>
