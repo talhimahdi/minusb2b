@@ -68,7 +68,8 @@ function CheckoutSummary({ onConfirmCommande, showConfirmButton }) {
                   className="text-2xl font-medium text-gray-900 font-londrina"
                 >
                   {/* {auth?.cart?.totals?.total?.value} */}
-                  {auth?.cart?.totals?.total_excluding_tax?.value}
+                  {/* {auth?.cart?.totals?.total_excluding_tax?.value} */}
+                  {auth?.cart?.subtotals?.products?.value}
                 </h2>
               </div>
             </div>
