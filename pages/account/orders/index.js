@@ -118,12 +118,12 @@ export default function Orders() {
                         >
                           Statut
                         </th>
-                        <th
+                        {/* <th
                           scope="col"
                           className="px-3 py-3.5 text-left text-md font-semibold text-gray-900"
                         >
                           Facture
-                        </th>
+                        </th> */}
                         <th
                           scope="col"
                           className="relative py-3.5 pl-3 pr-4 sm:pr-6"
@@ -147,21 +147,23 @@ export default function Orders() {
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             {order.statut}
                           </td>
+                          {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <a
+                              onClick={() => {
+                                downloadInvoice(order.reference);
+                              }}
+                              className=" text-blue-500 hover:text-blue-300 cursor-pointer"
+                            >
+                              Télécharger
+                              <span className="sr-only">, {order.name}</span>
+                            </a>
+                          </td> */}
                           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-md font-bold sm:pr-6">
                             <a
                               href={"/account/orders/" + order.reference}
                               className=" text-blue-500 hover:text-blue-300"
                             >
                               Détails
-                              <span className="sr-only">, {order.name}</span>
-                            </a>
-                          </td>
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-md font-bold sm:pr-6">
-                            <a
-                              onClick={() => downloadInvoice(order.reference)}
-                              className=" text-blue-500 hover:text-blue-300 cursor-pointer"
-                            >
-                              Télécharger
                               <span className="sr-only">, {order.name}</span>
                             </a>
                           </td>
