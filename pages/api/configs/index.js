@@ -23,11 +23,15 @@ export default {
 
   getAddresses: (customerId) =>
     process.env.BASE_URL +
-    `getAddresses?output_format=JSON&ws_key=${process.env.WS_KEY}&display=full&filter[id_customer]=${customerId}`,
+    `getAddresses?output_format=JSON&ws_key=${process.env.WS_KEY}&id_customer=${customerId}`,
 
   addNewAddress:
     process.env.BASE_URL +
     `addNewAddress?output_format=JSON&ws_key=${process.env.WS_KEY}`,
+
+  editAddress:
+    process.env.BASE_URL +
+    `editAddress?output_format=JSON&ws_key=${process.env.WS_KEY}`,
 
   deleteAddress: (idAddress) =>
     process.env.BASE_URL +
@@ -72,4 +76,24 @@ export default {
   confirmationOrder:
     process.env.BASE_URL +
     `confirmationOrder?output_format=JSON&ws_key=${process.env.WS_KEY}`,
+
+  frontContent:
+    process.env.BASE_URL +
+    `getFrontContent?output_format=JSON&ws_key=${process.env.WS_KEY}`,
+
+  editPassword:
+    process.env.BASE_URL +
+    `editPassword?output_format=JSON&ws_key=${process.env.WS_KEY}`,
+
+  getOrders:
+    process.env.BASE_URL +
+    `getOrders?output_format=JSON&ws_key=${process.env.WS_KEY}`,
+
+  downloadInvoice:
+    process.env.BASE_URL +
+    `downloadInvoice?output_format=JSON&ws_key=${process.env.WS_KEY}`,
+
+  forgetPassword:
+    process.env.BASE_URL +
+    `forgetPassword?output_format=JSON&ws_key=${process.env.WS_KEY}`,
 };

@@ -42,13 +42,6 @@ export default function TopNavbar({ pageName }) {
               </span>
             </p>
           </div>
-          <LogoutIcon
-            className="w-6 h-6 ml-5 text-gray-800 cursor-pointer"
-            aria-hidden="true"
-            onClick={() => {
-              auth?.logout();
-            }}
-          />
         </div>
       </div>
     </div>

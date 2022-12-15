@@ -17,9 +17,14 @@ import {
   ExclamationCircleIcon,
 } from "@heroicons/react/solid";
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 export default function RegisterForm({ onRegister, errorMessage }) {
   const [isLoading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
+  const [tva_required, setTva_required] = useState(true);
   const [form, setForm] = useState({
     passwd: "",
     firstname: "",
@@ -228,7 +233,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                 </select>
               </div>
             </div>
-            <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center justify-between gap-4">
               <div className="flex-1 space-y-2">
                 <label
                   htmlFor="first-name"
@@ -251,6 +256,10 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
                 </div>
+                <label
+                  htmlFor="last-name"
+                  className="block text-xs text-gray-700 h-5"
+                ></label>
               </div>
 
               <div className="flex-1 space-y-2">
@@ -260,7 +269,12 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                 >
                   Numéro de TVA
                 </label>
-                <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
+                <div
+                  className={classNames(
+                    tva_required ? "ring-2 ring-red-600" : "",
+                    "flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center"
+                  )}
+                >
                   <UserIcon className="h-5 w-5 text-secondary" />
                   <input
                     type="text"
@@ -275,6 +289,13 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
                 </div>
+
+                <label
+                  htmlFor="last-name"
+                  className="block text-xs text-red-600 h-5"
+                >
+                  {tva_required && "Champ obligatoire."}
+                </label>
               </div>
             </div>
 
@@ -385,12 +406,15 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                   <GlobeIcon className="h-5 w-5 text-secondary" />
                   <select
                     value={form.id_country}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setForm({
                         ...form,
                         id_country: e.target.value,
-                      })
-                    }
+                      });
+                      e.target.value == 8
+                        ? setTva_required(true)
+                        : setTva_required(false);
+                    }}
                     className="block w-full border-none shadow-sm focus:ring-0  sm:text-sm"
                   >
                     {/* <option value={0}>Selectionner un pays</option> */}
@@ -434,7 +458,9 @@ export default function RegisterForm({ onRegister, errorMessage }) {
           <button
             type="button"
             className="uppercase justify-center items-center w-60 h-10 px-10 border border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none"
-            onClick={async () => await onRegister(form)}
+            onClick={async () => {
+              tva_required ? "" : await onRegister(form);
+            }}
           >
             Je crée mon compte
           </button>

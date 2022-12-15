@@ -5,7 +5,6 @@ import Cover from "../components/Cover";
 import Infos from "../components/Infos";
 import { useAuth } from "../RestHelper/useAuth";
 import localStorageX from "../configs/localStorage";
-import Header from "../components/Header";
 
 export default function Connexion() {
   const router = useRouter();

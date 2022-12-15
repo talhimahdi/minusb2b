@@ -7,11 +7,13 @@ import {
   UsersIcon,
   ShoppingBagIcon,
 } from "@heroicons/react/outline";
+import Addresses from "../pages/account/addresses";
+import Orders from "../pages/account/orders";
 
 const navigation = [
-  { name: "Adresses", icon: HomeIcon, current: true },
-  { name: "Commandes", icon: ShoppingBagIcon, current: false },
-  { name: "Projects", icon: FolderIcon, current: false },
+  { name: "Adresses", page: Addresses, icon: HomeIcon, current: true },
+  { name: "Commandes", page: Orders, icon: ShoppingBagIcon, current: false },
+  { name: "Projects", page: false, icon: FolderIcon, current: false },
 ];
 
 function classNames(...classes) {
