@@ -130,7 +130,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   </div>
                   <div className="flex flex-col items-center mb-5 md:mb-0">
                     <p>Mot de passe oublié ?</p>
-                    <Link href={"/register"}>
+                    <Link href={"#"}>
                       <a className="underline ">
                         Réinitialisez votre mot de passe.
                       </a>
