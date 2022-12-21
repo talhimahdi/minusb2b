@@ -66,12 +66,12 @@ function SingleProductList({ product }) {
                     {/* {productState?.legend?.length > 27
                       ? productState?.legend.slice(0, 27).concat("...")
                       : productState?.legend} */}
-                    {productState?.display_categorie}
+                    {productState?.display_categorie.toUpperCase()}
                   </h2>
                 </div>
                 <div className="pt-0 sm:pt-5">
                   <h2 className="text-black">
-                    Référence : {productState?.reference}
+                    Réf : {productState?.reference}
                   </h2>
                 </div>
               </div>

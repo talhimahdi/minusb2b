@@ -24,7 +24,7 @@ function classNames(...classes) {
 export default function RegisterForm({ onRegister, errorMessage }) {
   const [isLoading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
-  const [tva_required, setTva_required] = useState(true);
+  const [tva_required, setTva_required] = useState(false);
   const [form, setForm] = useState({
     passwd: "",
     firstname: "",
@@ -40,6 +40,25 @@ export default function RegisterForm({ onRegister, errorMessage }) {
     postcode: "",
     phone: "",
   });
+
+  const validateForm = async () => {
+    if (tva_required && form.vat_number == "") return;
+    if (
+      form.firstname == "" ||
+      form.lastname == "" ||
+      form.email == "" ||
+      form.passwd == "" ||
+      form.address1 == "" ||
+      form.address2 == "" ||
+      form.city == "" ||
+      form.postcode == "" ||
+      form.phone == "" ||
+      form.id_country == 0
+    )
+      return;
+
+    await onRegister(form);
+  };
 
   const getCountries = async () => {
     var requestOptions = {
@@ -92,6 +111,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                   className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
                 >
                   Votre prénom
+                  <strong className="ml-1 text-lg text-red-500">*</strong>
                 </label>
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <UserIcon className="h-5 w-5 text-secondary" />
@@ -116,6 +136,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                   className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
                 >
                   Votre nom
+                  <strong className="ml-1 text-lg text-red-500">*</strong>
                 </label>
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <UserIcon className="h-5 w-5 text-secondary" />
@@ -141,6 +162,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                 className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
               >
                 Votre adresse email
+                <strong className="ml-1 text-lg text-red-500">*</strong>
               </label>
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <MailIcon className="h-5 w-5 text-secondary" />
@@ -165,6 +187,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                 className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
               >
                 Mot de passe
+                <strong className="ml-1 text-lg text-red-500">*</strong>
               </label>
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <LockClosedIcon className="h-5 w-5 text-secondary" />
@@ -256,10 +279,6 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
                 </div>
-                <label
-                  htmlFor="last-name"
-                  className="block text-xs text-gray-700 h-5"
-                ></label>
               </div>
 
               <div className="flex-1 space-y-2">
@@ -268,10 +287,13 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                   className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
                 >
                   Numéro de TVA
+                  {tva_required && (
+                    <strong className="ml-1 text-red-500">*</strong>
+                  )}
                 </label>
                 <div
                   className={classNames(
-                    tva_required ? "ring-2 ring-red-600" : "",
+                    // tva_required ? "ring-2 ring-red-600" : "",
                     "flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center"
                   )}
                 >
@@ -289,13 +311,6 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                     className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
                   />
                 </div>
-
-                <label
-                  htmlFor="last-name"
-                  className="block text-xs text-red-600 h-5"
-                >
-                  {tva_required && "Champ obligatoire."}
-                </label>
               </div>
             </div>
 
@@ -304,7 +319,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                 htmlFor="email"
                 className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
               >
-                Adresse
+                Adresse<strong className="ml-1 text-lg text-red-500">*</strong>
               </label>
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <HomeIcon className="h-5 w-5 text-secondary" />
@@ -328,6 +343,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                 className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
               >
                 Complément adresse
+                <strong className="ml-1 text-lg text-red-500">*</strong>
               </label>
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <InformationCircleIcon className="h-5 w-5 text-secondary" />
@@ -352,6 +368,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                   className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
                 >
                   Code Postal
+                  <strong className="ml-1 text-lg text-red-500">*</strong>
                 </label>
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <InboxIcon className="h-5 w-5 text-secondary" />
@@ -375,7 +392,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                   htmlFor="last-name"
                   className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
                 >
-                  Ville
+                  Ville<strong className="ml-1 text-lg text-red-500">*</strong>
                 </label>
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <HomeIcon className="h-5 w-5 text-secondary" />
@@ -400,7 +417,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                   htmlFor="first-name"
                   className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
                 >
-                  Pays
+                  Pays<strong className="ml-1 text-lg text-red-500">*</strong>
                 </label>
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm pl-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <GlobeIcon className="h-5 w-5 text-secondary" />
@@ -412,8 +429,8 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                         id_country: e.target.value,
                       });
                       e.target.value == 8
-                        ? setTva_required(true)
-                        : setTva_required(false);
+                        ? setTva_required(false)
+                        : setTva_required(true);
                     }}
                     className="block w-full border-none shadow-sm focus:ring-0  sm:text-sm"
                   >
@@ -433,6 +450,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                   className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
                 >
                   Téléphone
+                  <strong className="ml-1 text-lg text-red-500">*</strong>
                 </label>
                 <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                   <PhoneIcon className="h-5 w-5 text-secondary" />
@@ -458,9 +476,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
           <button
             type="button"
             className="uppercase justify-center items-center w-60 h-10 px-10 border border-gray-300 shadow-sm text-base font-medium  text-white bg-black focus:outline-none"
-            onClick={async () => {
-              tva_required ? "" : await onRegister(form);
-            }}
+            onClick={async () => validateForm()}
           >
             Je crée mon compte
           </button>
@@ -471,6 +487,10 @@ export default function RegisterForm({ onRegister, errorMessage }) {
             <p>{errorMessage}</p>
           </div>
         )}
+        <div className="mt-3 text-ms text-gray-500">
+          <strong className="text-lg text-red-500">(*)</strong> Champ
+          obligatoire
+        </div>
       </form>
     </div>
   );
