@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { MailIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import { useAuth } from "../RestHelper/useAuth";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Footer({ pageName, withMargin }) {
+  const auth = useAuth();
   if (pageName == "/paymentResult") {
     return <></>;
   }
@@ -20,7 +22,7 @@ export default function Footer({ pageName, withMargin }) {
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="xl:grid xl:grid-cols-4 xl:gap-8">
           <div className="grid grid-cols-1 gap-8 xl:col-span-4">
-            <div className="grid md:grid-cols-4 md:gap-8">
+            <div className="grid md:grid-cols-3 md:gap-8">
               <div className="text-center mt-12 md:mt-0 space-y-6 order-last md:order-first">
                 <a
                   href="#"
@@ -44,7 +46,7 @@ export default function Footer({ pageName, withMargin }) {
                 <ul role="list" className="mt-4 space-y-2">
                   <li>
                     <a
-                      href={"#"}
+                      href={auth?.frontContent?.about_link}
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       À propos de Minus
@@ -52,7 +54,7 @@ export default function Footer({ pageName, withMargin }) {
                   </li>
                   <li>
                     <a
-                      href={"#"}
+                      href={auth?.frontContent?.contact_link}
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Contact
@@ -60,7 +62,7 @@ export default function Footer({ pageName, withMargin }) {
                   </li>
                   <li>
                     <a
-                      href={"#"}
+                      href={auth?.frontContent?.livraison_link}
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Livraison
@@ -68,7 +70,7 @@ export default function Footer({ pageName, withMargin }) {
                   </li>
                   <li>
                     <a
-                      href={"#"}
+                      href={auth?.frontContent?.mentions_legales_link}
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Mentions légales
@@ -76,7 +78,7 @@ export default function Footer({ pageName, withMargin }) {
                   </li>
                   <li>
                     <a
-                      href={"#"}
+                      href={auth?.frontContent?.conditions_generales}
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Conditions générales de vente
@@ -91,7 +93,7 @@ export default function Footer({ pageName, withMargin }) {
                 <ul role="list" className="mt-4 space-y-2">
                   <li>
                     <a
-                      href={"#"}
+                      href={auth?.frontContent?.instagram_link}
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Instagram
@@ -99,7 +101,7 @@ export default function Footer({ pageName, withMargin }) {
                   </li>
                   <li>
                     <a
-                      href={"#"}
+                      href={auth?.frontContent?.facebooklink}
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Facebook
@@ -107,7 +109,7 @@ export default function Footer({ pageName, withMargin }) {
                   </li>
                   <li>
                     <a
-                      href={"#"}
+                      href={auth?.frontContent?.pinterest_link}
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Pinterest
@@ -115,7 +117,7 @@ export default function Footer({ pageName, withMargin }) {
                   </li>
                 </ul>
               </div>
-              <div className="text-center mt-12 md:mt-0  space-y-6">
+              <div className=" hidden text-center mt-12 md:mt-0  space-y-6">
                 <div className="flex-none w-12 h-6 mx-auto">
                   <img src="/images/footer-images/news.png" />
                 </div>

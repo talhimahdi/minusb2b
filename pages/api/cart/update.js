@@ -1,7 +1,8 @@
 import Urls from "../configs";
 
 export default async function handler(req, res) {
-  const { cartId, carrierId, addressId } = req.body;
+  const { cartId, carrierId, addressFacturationId, addressLivraisonId } =
+    req.body;
 
   var requestOptions = {
     method: "POST",
@@ -12,7 +13,8 @@ export default async function handler(req, res) {
     body: JSON.stringify({
       id_cart: cartId,
       id_carrier: carrierId,
-      id_address: addressId,
+      id_address_facturation: addressFacturationId,
+      id_address_livraison: addressLivraisonId,
     }),
   };
 

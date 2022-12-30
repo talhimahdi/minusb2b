@@ -49,7 +49,6 @@ export default function RegisterForm({ onRegister, errorMessage }) {
       form.email == "" ||
       form.passwd == "" ||
       form.address1 == "" ||
-      form.address2 == "" ||
       form.city == "" ||
       form.postcode == "" ||
       form.phone == "" ||
@@ -343,7 +342,6 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                 className="block text-base text-gray-700 sm:mt-px sm:pt-2 font-semibold"
               >
                 Complément adresse
-                <strong className="ml-1 text-lg text-red-500">*</strong>
               </label>
               <div className="flex mt-1 sm:mt-0 flex-1 w-full shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center">
                 <InformationCircleIcon className="h-5 w-5 text-secondary" />
