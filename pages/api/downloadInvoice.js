@@ -14,15 +14,15 @@ export default async function handler(req, res) {
     }),
   };
 
-  const result = await fetch(Urls.downloadInvoice, requestOptions)
-    .then((response) => response?.json())
-    .then((data) => data)
-    .catch((error) => {
-      return {
-        success: false,
-        message: "ERROR!",
-      };
-    });
+  const result = await fetch(Urls.downloadInvoice, requestOptions).then(
+    (response) => response
+  );
+  // .catch((error) => {
+  //   return {
+  //     success: false,
+  //     message: error,
+  //   };
+  // });
 
-  res.status(200).json(result);
+  res.status(200).send(result);
 }

@@ -39,7 +39,6 @@ function Cart({ open, close, setOpenCart }) {
       if (auth?.cart?.products_count < 1) {
         setOpenCart(false);
       }
-      console.log(auth?.cart?.totals);
     };
     init();
   }, [auth?.cart]);

@@ -1,8 +1,7 @@
-import Urls from "../configs";
+import Urls from "./configs";
 
 export default async function handler(req, res) {
-  const { cartId, carrierId, addressFacturationId, addressLivraisonId } =
-    req.body;
+  const { password, token, id_customer, reset_token } = req.body;
 
   var requestOptions = {
     method: "POST",
@@ -11,14 +10,14 @@ export default async function handler(req, res) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      id_cart: cartId,
-      id_carrier: carrierId,
-      id_address_facturation: addressFacturationId,
-      id_address_livraison: addressLivraisonId,
+      password,
+      token,
+      id_customer,
+      reset_token,
     }),
   };
 
-  const result = await fetch(Urls.updateCart, requestOptions)
+  const result = await fetch(Urls.changeForgetPass, requestOptions)
     .then((response) => response?.json())
     .then((data) => data)
     .catch((error) => {

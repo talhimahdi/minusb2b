@@ -35,10 +35,12 @@ function useAuthProvider() {
       setUser(localStorageX.get("local_data").customer);
     } else {
       const withoutConnexion = [
+        "/404",
         "/connexion",
         "/register",
         "/page-attente",
         "/forget-password",
+        "/recovery-password",
       ];
       if (!withoutConnexion.includes(router?.pathname))
         router.push("/connexion");

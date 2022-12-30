@@ -96,4 +96,8 @@ export default {
   forgetPassword:
     process.env.BASE_URL +
     `forgetPassword?output_format=JSON&ws_key=${process.env.WS_KEY}`,
+
+  changeForgetPass:
+    process.env.BASE_URL +
+    `changeForgetPass?output_format=JSON&ws_key=${process.env.WS_KEY}`,
 };

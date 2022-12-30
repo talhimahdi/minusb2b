@@ -107,7 +107,8 @@ function Checkout() {
       body: JSON.stringify({
         cartId: auth?.user?.id_cart,
         carrierId: id_carrier,
-        addressId: selectedAddress?.id,
+        id_address_invoice: selectedAddressFacturation.id,
+        id_address_delivery: selectedAddressLivraison.id,
       }),
     };
     const result = await fetch("/api/cart/update", requestOptions)
@@ -145,6 +146,13 @@ function Checkout() {
     await fetch("/api/payment", requestOptions)
       .then((response) => response?.json())
       .then((result) => {
+        if (result?.results?.code == 200 && result?.results?.succes == false) {
+          console.log(result?.results?.message);
+          alert(result?.results?.message);
+          // setLoading(false);
+          return;
+        }
+
         if (result?.results?.newCartId) {
           console.log(result?.results);
           auth?.setUser({
@@ -161,7 +169,7 @@ function Checkout() {
           Payplug.showPayment(result?.results?.payplug?.payment_url);
         } else {
           console.log(result?.results);
-          setLoading(false);
+          // setLoading(false);
 
           router.replace(
             `/confirmation-commande/${result?.results?.order?.reference}`
@@ -169,6 +177,8 @@ function Checkout() {
         }
       })
       .catch((error) => console.log("error", error));
+
+    setLoading(false);
   };
 
   const openNewAddressForm = () => {

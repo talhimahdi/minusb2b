@@ -11,7 +11,7 @@ export default function NewAddressForm({
   errorMessage,
 }) {
   const [addressForm, setAddressForm] = useState({
-    id_country: 1,
+    id_country: 8,
     alias: "",
     company: "",
     lastname: "",

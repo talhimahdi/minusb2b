@@ -111,6 +111,14 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
                             {productState?.legend}
                           </h2>
                         </div>
+                        <div className="space-y-1">
+                          <h2 className="leading-none text-gray-700 text-sm">
+                            {productState?.display_categorie.toUpperCase()}
+                          </h2>
+                          <h2 className="text-black">
+                            Réf : {productState?.reference}
+                          </h2>
+                        </div>
                         <div className="pt-0 sm:pt-5">
                           <h2 className="text-black text-3xl font-semibold">
                             {parseFloat(productState?.price).toFixed(2)} €
