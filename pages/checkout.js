@@ -48,20 +48,21 @@ function Checkout() {
     init();
   }, []);
 
-  // useEffect(() => {
-  //   const init = async () => {
-  //     if (auth?.user?.id) {
-  //       setLoading(true);
-  //       const result = await updateCart();
+  useEffect(() => {
+    console.log("Carrier changed");
+    const init = async () => {
+      if (auth?.user?.id) {
+        setLoading(true);
+        const result = await updateCart(selectedCarrier.id_carrier);
 
-  //       if (result) {
-  //         await auth?.getCart(auth?.user?.id_cart);
-  //       }
-  //     }
-  //     setLoading(false);
-  //   };
-  //   init();
-  // }, [selectedCarrier]);
+        if (result) {
+          await auth?.getCart(auth?.user?.id_cart);
+        }
+      }
+      setLoading(false);
+    };
+    init();
+  }, [selectedCarrier.id_carrier]);
 
   useEffect(() => {
     const init = async () => {
@@ -107,8 +108,8 @@ function Checkout() {
       body: JSON.stringify({
         cartId: auth?.user?.id_cart,
         carrierId: id_carrier,
-        id_address_invoice: selectedAddressFacturation.id,
-        id_address_delivery: selectedAddressLivraison.id,
+        addressFacturationId: selectedAddressFacturation.id,
+        addressLivraisonId: selectedAddressLivraison.id,
       }),
     };
     const result = await fetch("/api/cart/update", requestOptions)
