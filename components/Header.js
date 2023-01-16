@@ -81,6 +81,7 @@ export default function Header({ pageName }) {
   // console.log(router);
 
   switch (pageName) {
+    case "/conditions-generales":
     case "/page-attente":
     case "/forget-password":
     case "/recovery-password":

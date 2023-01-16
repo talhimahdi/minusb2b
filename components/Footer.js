@@ -52,7 +52,7 @@ export default function Footer({ pageName, withMargin }) {
                       À propos de Minus
                     </a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a
                       href={auth?.frontContent?.contact_link}
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
@@ -67,7 +67,7 @@ export default function Footer({ pageName, withMargin }) {
                     >
                       Livraison
                     </a>
-                  </li>
+                  </li> */}
                   <li>
                     <a
                       href={auth?.frontContent?.mentions_legales_link}
@@ -78,7 +78,8 @@ export default function Footer({ pageName, withMargin }) {
                   </li>
                   <li>
                     <a
-                      href={auth?.frontContent?.conditions_generales}
+                      // href={auth?.frontContent?.conditions_generales}
+                      href={"/conditions-generales"}
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Conditions générales de vente
