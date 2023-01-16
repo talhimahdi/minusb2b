@@ -135,8 +135,8 @@ export default function ConditionsGenerales() {
               <div>
                 Les marchandises vendues restent lapropriété de la société Minus
                 Editionsjusqu&apos;au au paiement intégral de leur prixde
-                vente.Jusqu'à leur règlement complet, lesmarchandises sont sous
-                la garde de leuracquéreur qui doit supporter les
+                vente.Jusqu&apos;à leur règlement complet, lesmarchandises sont
+                sous la garde de leuracquéreur qui doit supporter les
                 risquesqu&apos;elles pourraient subir ou occasionnerquelle
                 qu&apos;en soit les causes.
               </div>
