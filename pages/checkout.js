@@ -49,7 +49,6 @@ function Checkout() {
   }, []);
 
   useEffect(() => {
-    console.log("Carrier changed");
     const init = async () => {
       if (auth?.user?.id) {
         setLoading(true);
@@ -109,7 +108,9 @@ function Checkout() {
         cartId: auth?.user?.id_cart,
         carrierId: id_carrier,
         addressFacturationId: selectedAddressFacturation.id,
-        addressLivraisonId: selectedAddressLivraison.id,
+        addressLivraisonId: isOtherDeliveryAddress
+          ? selectedAddressFacturation?.id
+          : selectedAddressLivraison?.id,
       }),
     };
     const result = await fetch("/api/cart/update", requestOptions)
@@ -150,6 +151,7 @@ function Checkout() {
         if (result?.results?.code == 200 && result?.results?.succes == false) {
           console.log(result?.results?.message);
           alert(result?.results?.message);
+          console.log(result?.results?.message);
           // setLoading(false);
           return;
         }
