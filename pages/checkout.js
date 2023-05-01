@@ -52,7 +52,9 @@ function Checkout() {
     const init = async () => {
       if (auth?.user?.id) {
         setLoading(true);
-        const result = await updateCart(selectedCarrier.id_carrier);
+        const result = await updateCart({
+          id_carrier: selectedCarrier?.id_carrier,
+        });
 
         if (result) {
           await auth?.getCart(auth?.user?.id_cart);
@@ -61,7 +63,7 @@ function Checkout() {
       setLoading(false);
     };
     init();
-  }, [selectedCarrier.id_carrier]);
+  }, [selectedCarrier?.id_carrier]);
 
   useEffect(() => {
     const init = async () => {
@@ -97,7 +99,42 @@ function Checkout() {
     init();
   }, [auth?.cart]);
 
-  const updateCart = async (id_carrier) => {
+  useEffect(() => {
+    const init = async () => {
+      if (
+        paymentMethods.filter(
+          (e) => e.id === auth?.cart?.last_payment_methode?.id
+        ).length > 0
+      ) {
+        setSelectedPaymentMethod(auth?.cart?.last_payment_methode);
+      }
+    };
+
+    init();
+  }, [auth?.cart?.last_payment_methode]);
+
+  const updateCart = async ({
+    id_carrier,
+    id_address_invoice = null,
+    id_address_delivery = null,
+  }) => {
+    const addressFacturationId = id_address_invoice
+      ? id_address_invoice
+      : selectedAddressFacturation.id;
+
+    const addressLivraisonId = null;
+    if (id_address_invoice && isOtherDeliveryAddress) {
+      addressLivraisonId = id_address_invoice;
+    } else {
+      addressLivraisonId = id_address_delivery
+        ? id_address_delivery
+        : selectedAddressLivraison.id;
+    }
+
+    if (addressFacturationId != addressLivraisonId) {
+      setIsOtherDeliveryAddress(false);
+    }
+
     var requestOptions = {
       method: "POST",
       headers: {
@@ -107,10 +144,8 @@ function Checkout() {
       body: JSON.stringify({
         cartId: auth?.user?.id_cart,
         carrierId: id_carrier,
-        addressFacturationId: selectedAddressFacturation.id,
-        addressLivraisonId: isOtherDeliveryAddress
-          ? selectedAddressFacturation?.id
-          : selectedAddressLivraison?.id,
+        addressFacturationId: addressFacturationId,
+        addressLivraisonId: addressLivraisonId,
       }),
     };
     const result = await fetch("/api/cart/update", requestOptions)
@@ -367,8 +402,9 @@ function Checkout() {
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
           setPaymentMethods(data?.results?.paymentMethods);
-          data?.results?.paymentMethods.length > 0 &&
-            setSelectedPaymentMethod(data?.results?.paymentMethods[0]);
+          if (data?.results?.paymentMethods.length > 0) {
+            setSelectedPaymentMethod(data?.results?.paymentMethods[1]);
+          }
         }
       })
       .catch((error) => console.log("error", error));
@@ -420,6 +456,12 @@ function Checkout() {
                     <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                       {addressesFacturation?.map((address) => (
                         <RadioGroup.Option
+                          onClick={() =>
+                            updateCart({
+                              id_carrier: selectedCarrier?.id_carrier,
+                              id_address_invoice: address.id,
+                            })
+                          }
                           key={address.id}
                           value={address}
                           className={({ checked, active }) =>
@@ -434,19 +476,10 @@ function Checkout() {
                         >
                           {({ checked, active }) => (
                             <>
-                              <span className="flex-1 flex flex-col justify-between">
+                              <span className="flex-1 flex flex-col space-y-5">
                                 <RadioGroup.Label
                                   as="span"
-                                  className="block text-lg font-bold text-gray-900"
-                                >
-                                  {address.alias}
-                                  {/* {address.alias != "ACCOUNT_ADDRESS"
-                                    ? address.alias
-                                    : "Adresse par défaut"} */}
-                                </RadioGroup.Label>
-                                <RadioGroup.Label
-                                  as="span"
-                                  className="block text-md font-bold text-gray-900 my-3"
+                                  className="block text-md font-bold text-gray-900"
                                 >
                                   {address.company}
                                 </RadioGroup.Label>
@@ -539,6 +572,12 @@ function Checkout() {
                       <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                         {addressesLivraison?.map((address) => (
                           <RadioGroup.Option
+                            onClick={() =>
+                              updateCart({
+                                id_carrier: selectedCarrier?.id_carrier,
+                                id_address_delivery: address.id,
+                              })
+                            }
                             key={address.id}
                             value={address}
                             className={({ checked, active }) =>
@@ -553,19 +592,10 @@ function Checkout() {
                           >
                             {({ checked, active }) => (
                               <>
-                                <span className="flex-1 flex flex-col justify-between">
+                                <span className="flex-1 flex flex-col space-y-5">
                                   <RadioGroup.Label
                                     as="span"
-                                    className="block text-lg font-bold text-gray-900"
-                                  >
-                                    {address.alias}
-                                    {/* {address.alias != "ACCOUNT_ADDRESS"
-                                      ? address.alias
-                                      : "Adresse par défaut"} */}
-                                  </RadioGroup.Label>
-                                  <RadioGroup.Label
-                                    as="span"
-                                    className="block text-md font-bold text-gray-900 my-3"
+                                    className="block text-md font-bold text-gray-900"
                                   >
                                     {address.company}
                                   </RadioGroup.Label>
@@ -642,7 +672,9 @@ function Checkout() {
                     <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                       {carriers.map((carrier) => (
                         <RadioGroup.Option
-                          onClick={() => updateCart(carrier.id_carrier)}
+                          onClick={() =>
+                            updateCart({ id_carrier: carrier.id_carrier })
+                          }
                           key={carrier.id_carrier}
                           value={carrier}
                           className={({ checked, active }) =>

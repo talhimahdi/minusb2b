@@ -69,7 +69,8 @@ function CheckoutSummary({ onConfirmCommande, showConfirmButton }) {
                 >
                   {/* {auth?.cart?.totals?.total?.value} */}
                   {/* {auth?.cart?.totals?.total_excluding_tax?.value} */}
-                  {auth?.cart?.subtotals?.products?.value}
+                  {/* {auth?.cart?.subtotals?.products?.value} */}
+                  {parseFloat(auth?.cart?.total_products_ht).toFixed(2)} € HT
                 </h2>
               </div>
             </div>

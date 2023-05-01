@@ -16,6 +16,7 @@ export default function ConfirmationCommande() {
 
   const [isLoading, setLoading] = useState(false);
   const [order, setOrder] = useState({});
+  const [orderDiscounts, setOrderDiscounts] = useState([]);
   const [products, setProducts] = useState([]);
   const [customer, setCustomer] = useState({});
   const [carrier, setCarrier] = useState({});
@@ -63,11 +64,12 @@ export default function ConfirmationCommande() {
       .then((response) => response?.json())
       .then((result) => {
         if (result?.succes) {
-          // console.log(result);
+          console.log(result);
           setProducts(result?.order_products);
           setOrder(result?.order);
           setCustomer(result?.customer);
           setCarrier(result?.carrier);
+          setOrderDiscounts(result?.order_discounts);
 
           if (result?.lcr_module_info) {
             setLcrModuleInfo(result?.lcr_module_info);
@@ -109,7 +111,7 @@ export default function ConfirmationCommande() {
   return (
     <>
       <Loader isVisible={isLoading} />
-      <div className="md:max-w-6xl mx-auto my-5 space-y-5">
+      <div className="md:max-w-7xl mx-auto my-5 space-y-5">
         <div className=" bg-primary px-7 py-5 space-y-2">
           <div className="flex items-center space-x-2">
             <CheckIcon className=" w-12 h-12 md:w-6 md:h-6 text-secondary" />
@@ -203,7 +205,10 @@ export default function ConfirmationCommande() {
                         <div className="">
                           <dd className="text-lg text-center font-bold">
                             <span className="block">
-                              {parseFloat(product.price).toFixed(2)} €
+                              {parseFloat(
+                                product.price_without_reduction_without_tax
+                              ).toFixed(2)}
+                              €{" HT"}
                             </span>
                           </dd>
                         </div>
@@ -214,7 +219,13 @@ export default function ConfirmationCommande() {
                         </div>
                         <div className="">
                           <dd className="text-lg text-center font-bold">
-                            <p>{parseFloat(product.total).toFixed(2)} €</p>
+                            <p>
+                              {parseFloat(
+                                product.price_without_reduction_without_tax *
+                                  product.cart_quantity
+                              ).toFixed(2)}
+                              €{" HT"}
+                            </p>
                           </dd>
                         </div>
                       </dl>
@@ -232,6 +243,108 @@ export default function ConfirmationCommande() {
             className=" lg:col-span-3 space-y-4"
           >
             <div className="space-y-2">
+              <div className="flex items-center justify-between ">
+                <div className="text-sm text-gray-600">
+                  <h2
+                    id="summary-heading"
+                    className="text-xl font-medium text-gray-900"
+                  >
+                    Total articles HT
+                  </h2>
+                </div>
+                <div className="text-sm font-medium text-gray-900">
+                  <h2
+                    id="summary-heading"
+                    className="text-2xl font-medium text-gray-900 font-londrina"
+                  >
+                    {/* {parseFloat(order?.total_paid_tax_excl).toFixed(2)} € */}
+                    {parseFloat(order?.total_products).toFixed(2)} €
+                  </h2>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between ">
+                <div className="text-sm text-gray-600">
+                  <h2
+                    id="summary-heading"
+                    className="text-xl font-medium text-gray-900"
+                  >
+                    Livraison HT
+                  </h2>
+                </div>
+                <div className="text-sm font-medium text-gray-900">
+                  <h2
+                    id="summary-heading"
+                    className="text-2xl font-medium text-gray-900 font-londrina"
+                  >
+                    {carrier?.is_free == 0
+                      ? parseFloat(order?.total_shipping_tax_excl).toFixed(2) +
+                        " €"
+                      : "gratuite"}
+                  </h2>
+                </div>
+              </div>
+
+              {/* Display order discounts */}
+
+              {orderDiscounts.length > 0 && (
+                <div className="flex items-center justify-between ">
+                  <div className="text-sm text-gray-600">
+                    <h2
+                      id="summary-heading"
+                      className="text-xl font-medium text-gray-900"
+                    >
+                      Promotions
+                    </h2>
+
+                    {orderDiscounts?.map((discount) => (
+                      <h2
+                        key={discount.id_order_cart_rule}
+                        id="summary-heading"
+                        className="ml-10 text-base text-gray-900 font-londrina"
+                      >
+                        {discount.name}
+                      </h2>
+                    ))}
+                  </div>
+                  <div>
+                    {orderDiscounts?.map((discount) => (
+                      <h2
+                        key={discount.id_order_cart_rule}
+                        id="summary-heading"
+                        className="text-xl font-medium text-gray-900 font-londrina"
+                      >
+                        - {parseFloat(discount.value_tax_excl).toFixed(2)} €
+                      </h2>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* end Display order discounts */}
+
+              <div className="flex items-center justify-between ">
+                <div className="text-sm text-gray-600">
+                  <h2
+                    id="summary-heading"
+                    className="text-xl font-medium text-gray-900"
+                  >
+                    Total taxes
+                  </h2>
+                </div>
+                <div className="text-sm font-medium text-gray-900">
+                  <h2
+                    id="summary-heading"
+                    className="text-2xl font-medium text-gray-900 font-londrina"
+                  >
+                    {parseFloat(
+                      order?.total_paid_tax_incl - order?.total_paid_tax_excl
+                    ).toFixed(2)}{" "}
+                    €
+                  </h2>
+                </div>
+              </div>
+
               <div className="flex items-center justify-between">
                 <div className="text-sm text-gray-600">
                   <h2
@@ -247,70 +360,6 @@ export default function ConfirmationCommande() {
                     className="text-2xl font-medium text-gray-900 font-londrina"
                   >
                     {parseFloat(order?.total_paid).toFixed(2)} €
-                  </h2>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between ">
-                <div className="text-sm text-gray-600">
-                  <h2
-                    id="summary-heading"
-                    className="text-xl font-medium text-gray-900"
-                  >
-                    Livraison
-                  </h2>
-                </div>
-                <div className="text-sm font-medium text-gray-900">
-                  <h2
-                    id="summary-heading"
-                    className="text-2xl font-medium text-gray-900 font-londrina"
-                  >
-                    {carrier?.is_free == 0
-                      ? parseFloat(order?.total_shipping).toFixed(2) + "€"
-                      : "gratuite"}
-                  </h2>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between ">
-                <div className="text-sm text-gray-600">
-                  <h2
-                    id="summary-heading"
-                    className="text-xl font-medium text-gray-900"
-                  >
-                    Total (HT)
-                  </h2>
-                </div>
-                <div className="text-sm font-medium text-gray-900">
-                  <h2
-                    id="summary-heading"
-                    className="text-2xl font-medium text-gray-900 font-londrina"
-                  >
-                    {parseFloat(order?.total_paid_tax_excl).toFixed(2)} €
-                  </h2>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between ">
-                <div className="text-sm text-gray-600">
-                  <h2
-                    id="summary-heading"
-                    className="text-xl font-medium text-gray-900"
-                  >
-                    Taxes
-                  </h2>
-                </div>
-                <div className="text-sm font-medium text-gray-900">
-                  <h2
-                    id="summary-heading"
-                    className="text-2xl font-medium text-gray-900 font-londrina"
-                  >
-                    {parseFloat(
-                      order?.total_paid_tax_incl - order?.total_paid_tax_excl
-                    ).toFixed(2)}{" "}
-                    €
                   </h2>
                 </div>
               </div>
@@ -359,7 +408,7 @@ export default function ConfirmationCommande() {
         </div>
 
         {checkModuleInfo?.CHEQUE_NAME && (
-          <div className=" bg-primary px-7 py-5 space-y-2">
+          <div className="bg-primary px-7 py-5 space-y-2">
             <div>
               <p className="f text-lg text-gray-500">
                 Votre commande sur MinusB2B a bien été enregistrée.

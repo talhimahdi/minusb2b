@@ -97,7 +97,7 @@ export default function Header({ pageName }) {
               className="max-w-7xl mx-auto px-4 md:px-10 py-5"
             >
               <div className="flex items-center justify-between">
-                <div className="h-full flex space-x-8">
+                {/* <div className="h-full flex space-x-8">
                   <Link href="https://www.minus-editions.fr/">
                     <a className="flex items-center text-sm font-medium text-black hover:text-gray-800">
                       <span className="flex">
@@ -116,16 +116,11 @@ export default function Header({ pageName }) {
                       </span>
                     </a>
                   </Link>
-                </div>
+                </div> */}
 
                 {/* Logo */}
                 <Link href="/">
                   <a className="flex-none relative w-32 h-16 md:w-48 md:h-20">
-                    {/* <Image
-                    src="/logo-minus-pro.svg"
-                    layout="fill"
-                    className="relative"
-                  /> */}
                     <img
                       src={"/logo-minus-pro.svg"}
                       alt=""
@@ -228,7 +223,7 @@ export default function Header({ pageName }) {
           <header className="relative">
             <nav aria-label="Top" className="max-w-7xl mx-auto py-5">
               <div className="flex items-center justify-between">
-                <div className="h-full flex space-x-8">
+                {/* <div className="h-full flex space-x-8">
                   <Link href="https://www.minus-editions.fr/">
                     <a className="flex items-center text-sm font-medium text-black hover:text-gray-800">
                       <span className="flex">
@@ -247,7 +242,7 @@ export default function Header({ pageName }) {
                       </span>
                     </a>
                   </Link>
-                </div>
+                </div> */}
 
                 {/* Logo */}
                 <Link href="/">
@@ -378,7 +373,7 @@ export default function Header({ pageName }) {
           <header className="relative">
             <nav aria-label="Top" className="max-w-7xl mx-auto py-5">
               <div className="flex items-center justify-between">
-                <div className="h-full flex space-x-8">
+                {/* <div className="h-full flex space-x-8">
                   <Link href="https://www.minus-editions.fr/">
                     <a className="flex items-center text-sm font-medium text-black hover:text-gray-800">
                       <span className="flex">
@@ -397,7 +392,7 @@ export default function Header({ pageName }) {
                       </span>
                     </a>
                   </Link>
-                </div>
+                </div> */}
 
                 {/* Logo */}
                 <Link href="/">
