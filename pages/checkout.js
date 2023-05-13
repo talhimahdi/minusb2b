@@ -118,6 +118,7 @@ function Checkout() {
     id_address_invoice = null,
     id_address_delivery = null,
   }) => {
+    setLoading(true);
     const addressFacturationId = id_address_invoice
       ? id_address_invoice
       : selectedAddressFacturation.id;
@@ -155,8 +156,10 @@ function Checkout() {
 
     if (result?.code == 200 && result?.succes) {
       await auth?.getCart(auth?.user?.id_cart);
+      setLoading(false);
       return true;
     } else {
+      setLoading(false);
       return false;
     }
   };
