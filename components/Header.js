@@ -234,7 +234,7 @@ export default function Header({ pageName }) {
       return (
         <div className="fixed left-0 top-10 md:top-12 right-0 bg-white pb-5 z-10">
           <header className="relative">
-            <nav aria-label="Top" className="mx-6 max-w-7xl md:mx-auto py-5">
+            <nav aria-label="Top" className="mx-6 xl:max-w-7xl xl:mx-auto py-5">
               <div className="flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/">
