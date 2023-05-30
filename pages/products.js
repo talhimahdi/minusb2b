@@ -75,7 +75,7 @@ function Products(/*{ productsList }*/) {
   const getProducts = async (isSearch = false, reset = false) => {
     setIsButtonSpin(true);
     if (isSearch) {
-      setPageNumber(0);
+      setPageNumber(1);
     } else {
       setPageNumber((prev) => prev + 1);
     }
@@ -103,7 +103,7 @@ function Products(/*{ productsList }*/) {
       .catch((error) => console.log("error", error));
 
     if (result?.results?.code == 200 && result?.results?.products) {
-      if (isSearch || pageNumber == 0) {
+      if (isSearch || reset || pageNumber == 0) {
         setProducts(result?.results?.products);
       } else {
         setProducts((prev) => [

@@ -13,7 +13,7 @@ function ProgressBar({ title, amount, total }) {
         ></div>
         <div className="absolute p-2 h-full ">{title}</div>
         <div className="absolute p-2 h-full right-0 text-end">
-          {amount}€ HT / {total}€
+          {amount}€ / {total}€ HT
         </div>
       </div>
       <div className="w-full h-full hidden">

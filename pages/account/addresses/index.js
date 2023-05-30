@@ -187,9 +187,9 @@ export default function Addresses() {
                   <div className="flex w-full items-center justify-between space-x-6 p-6">
                     <div className="flex-1 ">
                       <div className="flex items-center justify-between space-x-3 mb-5">
-                        <h3 className=" text-sm font-medium text-gray-900">
+                        {/* <h3 className=" text-sm font-medium text-gray-900">
                           {address.alias}
-                        </h3>
+                        </h3> */}
                         <span className="inline-block rounded-full bg-primary px-2 py-0.5 text-sm font-semibold text-secondary">
                           {address.company}
                         </span>

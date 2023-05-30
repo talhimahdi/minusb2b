@@ -89,7 +89,9 @@ function CheckoutSummary({ onConfirmCommande, showConfirmButton }) {
                   id="summary-heading"
                   className="text-2xl font-medium text-gray-900 font-londrina"
                 >
-                  {auth?.cart?.subtotals?.shipping?.wt_taxe}
+                  {auth?.cart?.subtotals?.shipping?.value == "gratuit"
+                    ? auth?.cart?.subtotals?.shipping?.value
+                    : auth?.cart?.subtotals?.shipping?.wt_taxe}
                 </h2>
               </div>
             </div>

@@ -20,7 +20,7 @@ function ProductList({
   const getMoreProducts = async () => {
     const result = await getProducts();
 
-    if (result == 0) {
+    if (result < 10) {
       setEmptyResult(true);
     } else {
       setEmptyResult(false);
