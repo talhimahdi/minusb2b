@@ -24,7 +24,7 @@ export default function Footer({ pageName, withMargin }) {
           <div className="grid grid-cols-1 gap-8 xl:col-span-4">
             <div className="grid md:grid-cols-3 md:gap-8">
               <div className="flex flex-col mt-12 md:mt-0 space-y-6 order-last md:order-first justify-between text-center">
-                <a href="#" className="flex w-36 h-16  mx-auto z-0">
+                <a href="#" className="w-28 mx-auto z-0">
                   <img src="/logo-footer.png" className="" />
                 </a>
                 <p className="text-md text-gray-900 font-semibold">
