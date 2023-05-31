@@ -169,7 +169,12 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   type="button"
                   className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md  text-white bg-black focus:outline-none"
                 >
-                  {auth?.frontContent?.card_2_button_text}
+                  <a
+                    href={auth?.frontContent?.card_1_catalogue_link}
+                    target="_blank"
+                  >
+                    {auth?.frontContent?.card_2_button_text}
+                  </a>
                 </button>
               </div>
             </div>
@@ -196,7 +201,12 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   type="button"
                   className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md text-white bg-black focus:outline-none"
                 >
-                  {auth?.frontContent?.card_3_button_text}
+                  <a
+                    href={auth?.frontContent?.card_3_ankorstore_link}
+                    target="_blank"
+                  >
+                    {auth?.frontContent?.card_3_button_text}
+                  </a>
                 </button>
               </div>
             </div>
