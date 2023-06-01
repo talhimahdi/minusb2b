@@ -187,7 +187,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
               <div className="flex flex-auto items-center justify-center">
                 <div className="flex-none relative w-32 h-32 object-center object-cover rounded-full border-8 border-white bg-white">
                   {/* <Image src={"/images/info1.png"} layout="fill" alt="" /> */}
-                  <img src={"/images/info3.png"} alt="" />
+                  <img src={"/images/info3.png"} alt=" " />
                 </div>
               </div>
               <h3 className="uppercase mt-8 text-xl text-center text-gray-900 font-londrina">
