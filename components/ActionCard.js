@@ -172,6 +172,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   <a
                     href={auth?.frontContent?.card_1_catalogue_link}
                     target="_blank"
+                    rel="noreferrer"
                   >
                     {auth?.frontContent?.card_2_button_text}
                   </a>
@@ -204,6 +205,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   <a
                     href={auth?.frontContent?.card_3_ankorstore_link}
                     target="_blank"
+                    rel="noreferrer"
                   >
                     {auth?.frontContent?.card_3_button_text}
                   </a>
