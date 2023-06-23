@@ -30,8 +30,8 @@ function ProductCheckout({ product, currency_symbol, removeProduct }) {
 
       <div className="flex-1 pt-2 flex items-end justify-between">
         <p className="text-xl font-medium text-gray-900 font-londrina">
-          {/* {parseFloat(product?.price).toFixed(2)} {currency_symbol} */}
-          {product?.formatted_total}
+          {parseFloat(product?.price).toFixed(2)} {currency_symbol} HT
+          {/* {product?.formatted_total} */}
         </p>
 
         <div className="ml-4">

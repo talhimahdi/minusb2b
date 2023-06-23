@@ -23,11 +23,8 @@ export default function Footer({ pageName, withMargin }) {
         <div className="xl:grid xl:grid-cols-4 xl:gap-8">
           <div className="grid grid-cols-1 gap-8 xl:col-span-4">
             <div className="grid md:grid-cols-3 md:gap-8">
-              <div className="text-center mt-12 md:mt-0 space-y-6 order-last md:order-first">
-                <a
-                  href="#"
-                  className="flex w-36 h-16 md:w-48 md:h-20 mx-auto z-0"
-                >
+              <div className="flex flex-col mt-12 md:mt-0 space-y-6 order-last md:order-first justify-between text-center">
+                <a href="#" className="w-28 mx-auto z-0">
                   <img src="/logo-footer.png" className="" />
                 </a>
                 <p className="text-md text-gray-900 font-semibold">

@@ -59,7 +59,7 @@ export default function EditAddressForm({
                   </h2> */}
 
                   <div className="mt-4 grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-4">
-                    <div className="sm:col-span-2">
+                    {/* <div className="sm:col-span-2">
                       <label
                         htmlFor="first-name"
                         className="block text-sm font-bold text-gray-700"
@@ -79,7 +79,7 @@ export default function EditAddressForm({
                           className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div>
                       <label
                         htmlFor="first-name"

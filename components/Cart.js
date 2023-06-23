@@ -157,7 +157,9 @@ function Cart({ open, close, setOpenCart }) {
                             <ProgressBar
                               key={offer?.title + offer?.amount}
                               title={offer?.title}
-                              amount={auth?.cart?.totals?.total?.amount}
+                              amount={parseFloat(
+                                auth?.cart?.total_products_ht
+                              ).toFixed(2)}
                               total={offer?.amount}
                             />
                             {/* ))} */}
@@ -400,7 +402,9 @@ function Cart({ open, close, setOpenCart }) {
                             <ProgressBar
                               key={offer?.title + offer?.amount}
                               title={offer?.title}
-                              amount={auth?.cart?.totals?.total?.amount}
+                              amount={parseFloat(
+                                auth?.cart?.total_products_ht
+                              ).toFixed(2)}
                               total={offer?.amount}
                             />
                             {/* ))} */}
@@ -500,7 +504,7 @@ function Cart({ open, close, setOpenCart }) {
                                   <div className="col-span-2 ">
                                     <div className="text-black space-x-2">
                                       <span className="text-xl font-londrina">
-                                        {product?.total +
+                                        {parseFloat(product?.total).toFixed(2) +
                                           auth?.cart?.currency_symbol}
                                       </span>
                                       <span className="text-lg">HT</span>
@@ -557,7 +561,10 @@ function Cart({ open, close, setOpenCart }) {
                                       auth?.cart?.totals?.total_excluding_tax
                                         ?.value
                                     } */}
-                                    {auth?.cart?.subtotals?.products?.value}
+                                    {parseFloat(
+                                      auth?.cart?.total_products_ht
+                                    ).toFixed(2)}{" "}
+                                    € HT
                                   </h2>
                                 </div>
                               </div>

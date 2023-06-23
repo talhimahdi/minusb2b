@@ -69,7 +69,8 @@ function CheckoutSummary({ onConfirmCommande, showConfirmButton }) {
                 >
                   {/* {auth?.cart?.totals?.total?.value} */}
                   {/* {auth?.cart?.totals?.total_excluding_tax?.value} */}
-                  {auth?.cart?.subtotals?.products?.value}
+                  {/* {auth?.cart?.subtotals?.products?.value} */}
+                  {parseFloat(auth?.cart?.total_products_ht).toFixed(2)} € HT
                 </h2>
               </div>
             </div>
@@ -80,7 +81,7 @@ function CheckoutSummary({ onConfirmCommande, showConfirmButton }) {
                   id="summary-heading"
                   className="text-xl font-medium text-gray-900"
                 >
-                  Livraison
+                  Livraison HT
                 </h2>
               </div>
               <div className="text-sm font-medium text-gray-900">
@@ -88,7 +89,9 @@ function CheckoutSummary({ onConfirmCommande, showConfirmButton }) {
                   id="summary-heading"
                   className="text-2xl font-medium text-gray-900 font-londrina"
                 >
-                  {auth?.cart?.subtotals?.shipping?.value}
+                  {auth?.cart?.subtotals?.shipping?.value == "gratuit"
+                    ? auth?.cart?.subtotals?.shipping?.value
+                    : auth?.cart?.subtotals?.shipping?.wt_taxe}
                 </h2>
               </div>
             </div>

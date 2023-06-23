@@ -169,7 +169,13 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   type="button"
                   className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md  text-white bg-black focus:outline-none"
                 >
-                  {auth?.frontContent?.card_2_button_text}
+                  <a
+                    href={auth?.frontContent?.card_1_catalogue_link}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {auth?.frontContent?.card_2_button_text}
+                  </a>
                 </button>
               </div>
             </div>
@@ -181,8 +187,8 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
             <div className="-mt-20 flex flex-col items-center justify-center">
               <div className="flex flex-auto items-center justify-center">
                 <div className="flex-none relative w-32 h-32 object-center object-cover rounded-full border-8 border-white bg-white">
-                  {/* <Image src={"/images/info1.png"} layout="fill" alt="" /> */}
-                  <img src={"/images/info3.png"} alt="" />
+                  {/* <Image src={"/images/info1.png"} layout="fill" alt=" " /> */}
+                  <img src={"/images/info3.png"} alt=" " />
                 </div>
               </div>
               <h3 className="uppercase mt-8 text-xl text-center text-gray-900 font-londrina">
@@ -196,7 +202,13 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                   type="button"
                   className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md text-white bg-black focus:outline-none"
                 >
-                  {auth?.frontContent?.card_3_button_text}
+                  <a
+                    href={auth?.frontContent?.card_3_ankorstore_link}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {auth?.frontContent?.card_3_button_text}
+                  </a>
                 </button>
               </div>
             </div>

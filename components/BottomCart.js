@@ -19,7 +19,8 @@ function BottomCart({ onOpenCart }) {
           <ProgressBar
             key={offer?.title + offer?.amount}
             title={offer?.title}
-            amount={auth?.cart?.totals?.total?.amount}
+            // amount={auth?.cart?.totals?.total?.amount}
+            amount={parseFloat(auth?.cart?.total_products_ht).toFixed(2)}
             total={offer?.amount}
           />
           {/* ))} */}
@@ -36,8 +37,9 @@ function BottomCart({ onOpenCart }) {
               </div>
 
               <a className="font-semibold">
-                {auth?.cart?.summary_string} ({auth?.cart?.totals?.total?.value}
-                )
+                {auth?.cart?.summary_string} (
+                {/* {auth?.cart?.subtotals?.products?.value} HT) */}
+                {parseFloat(auth?.cart?.total_products_ht).toFixed(2)}€ HT)
               </a>
             </div>
             <div className="flex items-center justify-center md:justify-end">
