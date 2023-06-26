@@ -287,7 +287,7 @@ export default function OrderDetails() {
 
               {/* Display order discounts */}
 
-              {orderDiscounts.length > 0 && (
+              {orderDiscounts?.length > 0 && (
                 <div className="flex items-center justify-between ">
                   <div className="text-sm text-gray-600">
                     <h2
@@ -407,277 +407,98 @@ export default function OrderDetails() {
           </div>
         </div>
 
-        {checkModuleInfo?.CHEQUE_NAME && (
-          <div className=" bg-primary px-7 py-5 space-y-2">
-            <div>
-              <p className="f text-lg text-gray-500">
-                Votre commande sur MinusB2B a bien été enregistrée.
-              </p>
-              <p className="f text-lg text-gray-500">
-                Veuillez nous envoyer un chèque avec :{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                Montant du règlement :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {parseFloat(order?.total_paid).toFixed(2)} €
-                </span>{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                payable à l&apos;ordre de :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {checkModuleInfo.CHEQUE_NAME}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                à envoyer à :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {checkModuleInfo.CHEQUE_ADDRESS}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 mt-5">
-                N&apos;oubliez pas d&apos;indiquer votre référence de commande{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {order?.reference}
-                </span>
-                .
-              </p>
-              <p className="hidden text-lg">
-                Un e-mail contenant ces informations vous a été envoyé. Votre
-                commande vous sera envoyée dès réception du paiement.
-              </p>
+        {checkModuleInfo?.CHEQUE_ADDRESS && (
+          <div className="bg-primary px-7 py-5 space-y-2">
+            <p className="text-lg text-gray-500">
+              Votre commande sur MinusB2B a bien été enregistrée.
+            </p>
+            <div className="text-base text-gray-500">
+              <div
+                className="  text-black font-londrina space-y-1"
+                dangerouslySetInnerHTML={{
+                  __html: checkModuleInfo.CHEQUE_ADDRESS,
+                }}
+              ></div>
             </div>
           </div>
         )}
 
-        {checkModuleInfo30?.CHEQUE_30_NAME && (
+        {checkModuleInfo30?.CHEQUE_30_ADDRESS && (
           <div className=" bg-primary px-7 py-5 space-y-2">
-            <div>
-              <p className="f text-lg text-gray-500">
-                Votre commande sur MinusB2B a bien été enregistrée.
-              </p>
-              <p className="f text-lg text-gray-500">
-                Veuillez nous envoyer un chèque avec :{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                Montant du règlement :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {parseFloat(order?.total_paid).toFixed(2)} €
-                </span>{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                payable à l&apos;ordre de :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {checkModuleInfo30.CHEQUE_30_NAME}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                à envoyer à :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {checkModuleInfo30.CHEQUE_30_ADDRESS}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 mt-5">
-                N&apos;oubliez pas d&apos;indiquer votre référence de commande{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {order?.reference}
-                </span>
-                .
-              </p>
-              <p className="hidden text-lg">
-                Un e-mail contenant ces informations vous a été envoyé. Votre
-                commande vous sera envoyée dès réception du paiement.
-              </p>
+            <p className="text-lg text-gray-500">
+              Votre commande sur MinusB2B a bien été enregistrée.
+            </p>
+            <div className="text-base text-gray-500">
+              <div
+                className="  text-black font-londrina space-y-1"
+                dangerouslySetInnerHTML={{
+                  __html: checkModuleInfo30.CHEQUE_30_ADDRESS,
+                }}
+              ></div>
             </div>
           </div>
         )}
 
-        {lcrModuleInfo?.LCR_BANK_WIRE_OWNER && (
-          <div className=" bg-primary px-7 py-5 space-y-2">
-            <div>
-              <p className="f text-lg text-gray-500">
-                Votre commande sur Presta Boutique a bien été enregistrée.
-              </p>
-              <p className="f text-lg text-gray-500">
-                Veuillez nous envoyer un virement bancaire :{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                Montant :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {parseFloat(order?.total_paid).toFixed(2)} €
-                </span>{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                à l&apos;ordre de :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {lcrModuleInfo.LCR_BANK_WIRE_OWNER}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                Veuillez inclure ces informations :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {lcrModuleInfo.LCR_BANK_WIRE_DETAILS}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                à cette banque :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {lcrModuleInfo.LCR_BANK_WIRE_ADDRESS}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 mt-5">
-                Veuillez préciser votre numéro de commande{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {order?.reference}
-                </span>{" "}
-                dans la description du virement.
-              </p>
-              <p className="hidden text-lg">
-                Un e-mail contenant ces informations vous a été envoyé. Votre
-                commande vous sera envoyée dès réception du paiement.
-              </p>
+        {lcrModuleInfo.LCR_BANK_WIRE_ADDRESS && (
+          <div className="bg-primary px-7 py-5 space-y-2">
+            <p className="text-lg text-gray-500">
+              Votre commande sur MinusB2B a bien été enregistrée.
+            </p>
+            <div className="text-base text-gray-500">
+              <div
+                className="  text-black font-londrina space-y-1"
+                dangerouslySetInnerHTML={{
+                  __html: lcrModuleInfo.LCR_BANK_WIRE_ADDRESS,
+                }}
+              ></div>
             </div>
           </div>
         )}
 
-        {lcrModuleInfo30?.LCR_30_BANK_WIRE_OWNER && (
-          <div className=" bg-primary px-7 py-5 space-y-2">
-            <div>
-              <p className="f text-lg text-gray-500">
-                Votre commande sur Presta Boutique a bien été enregistrée.
-              </p>
-              <p className="f text-lg text-gray-500">
-                Veuillez nous envoyer un virement bancaire :{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                Montant :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {parseFloat(order?.total_paid).toFixed(2)} €
-                </span>{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                à l&apos;ordre de :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {lcrModuleInfo30.LCR_30_BANK_WIRE_OWNER}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                Veuillez inclure ces informations :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {lcrModuleInfo30.LCR_30_BANK_WIRE_DETAILS}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                à cette banque :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {lcrModuleInfo30.LCR_30_BANK_WIRE_ADDRESS}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 mt-5">
-                Veuillez préciser votre numéro de commande{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {order?.reference}
-                </span>{" "}
-                dans la description du virement.
-              </p>
-              <p className="hidden text-lg">
-                Un e-mail contenant ces informations vous a été envoyé. Votre
-                commande vous sera envoyée dès réception du paiement.
-              </p>
+        {lcrModuleInfo30?.LCR_30_BANK_WIRE_DETAILS && (
+          <div className="bg-primary px-7 py-5 space-y-2">
+            <p className="text-lg text-gray-500">
+              Votre commande sur MinusB2B a bien été enregistrée.
+            </p>
+            <div className="text-base text-gray-500">
+              <div
+                className="  text-black font-londrina space-y-1"
+                dangerouslySetInnerHTML={{
+                  __html: lcrModuleInfo30?.LCR_30_BANK_WIRE_DETAILS,
+                }}
+              ></div>
             </div>
           </div>
         )}
 
-        {bankTransferModuleInfo?.BANK_WIRE_OWNER && (
-          <div className=" bg-primary px-7 py-5 space-y-2">
-            <div>
-              <p className="f text-lg text-gray-500">
-                Votre commande sur Presta Boutique a bien été enregistrée.
-              </p>
-              <p className="f text-lg text-gray-500">
-                Veuillez nous envoyer un virement bancaire :{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                Montant :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {parseFloat(order?.total_paid).toFixed(2)} €
-                </span>{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                à l&apos;ordre de :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {bankTransferModuleInfo.BANK_WIRE_OWNER}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                Veuillez inclure ces informations :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {bankTransferModuleInfo.BANK_WIRE_DETAILS}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                à cette banque :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {bankTransferModuleInfo.BANK_WIRE_ADDRESS}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 mt-5">
-                Veuillez préciser votre numéro de commande{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {order?.reference}
-                </span>{" "}
-                dans la description du virement.
-              </p>
-              <p className="hidden text-lg">
-                Un e-mail contenant ces informations vous a été envoyé. Votre
-                commande vous sera envoyée dès réception du paiement.
-              </p>
+        {bankTransferModuleInfo?.BANK_WIRE_ADDRESS && (
+          <div className="bg-primary px-7 py-5 space-y-2">
+            <p className="text-lg text-gray-500">
+              Votre commande sur MinusB2B a bien été enregistrée.
+            </p>
+            <div className="text-base text-gray-500">
+              <div
+                className="  text-black font-londrina space-y-1"
+                dangerouslySetInnerHTML={{
+                  __html: bankTransferModuleInfo?.BANK_WIRE_ADDRESS,
+                }}
+              ></div>
             </div>
           </div>
         )}
-        {bankTransferModuleInfo30?.BANK_WIRE_30_OWNER && (
-          <div className=" bg-primary px-7 py-5 space-y-2">
-            <div>
-              <p className="f text-lg text-gray-500">
-                Votre commande sur Presta Boutique a bien été enregistrée.
-              </p>
-              <p className="f text-lg text-gray-500">
-                Veuillez nous envoyer un virement bancaire :{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                Montant :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {parseFloat(order?.total_paid).toFixed(2)} €
-                </span>{" "}
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                à l&apos;ordre de :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {bankTransferModuleInfo30.BANK_WIRE_30_OWNER}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                Veuillez inclure ces informations :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {bankTransferModuleInfo30.BANK_WIRE_30_DETAILS}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 ml-5">
-                à cette banque :{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {bankTransferModuleInfo30.BANK_WIRE_30_ADDRESS}
-                </span>
-              </p>
-              <p className="f text-lg text-gray-500 mt-5">
-                Veuillez préciser votre numéro de commande{" "}
-                <span className=" font-bold text-black font-londrina">
-                  {order?.reference}
-                </span>{" "}
-                dans la description du virement.
-              </p>
-              <p className="hidden text-lg">
-                Un e-mail contenant ces informations vous a été envoyé. Votre
-                commande vous sera envoyée dès réception du paiement.
-              </p>
+
+        {bankTransferModuleInfo30?.BANK_WIRE_30_ADDRESS && (
+          <div className="bg-primary px-7 py-5 space-y-2">
+            <p className="text-lg text-gray-500">
+              Votre commande sur MinusB2B a bien été enregistrée.
+            </p>
+            <div className="text-base text-gray-500">
+              <div
+                className="  text-black font-londrina space-y-1"
+                dangerouslySetInnerHTML={{
+                  __html: bankTransferModuleInfo30?.BANK_WIRE_30_ADDRESS,
+                }}
+              ></div>
             </div>
           </div>
         )}
