@@ -6,16 +6,6 @@ import Loader from "../../../components/Loader";
 
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/solid";
 
-const people = [
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  // More people...
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -158,10 +148,10 @@ export default function Orders() {
                               <span className="sr-only">, {order.name}</span>
                             </a>
                           </td> */}
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-md font-bold sm:pr-6">
+                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-base font-bold sm:pr-6">
                             <a
                               href={"/account/orders/" + order.reference}
-                              className=" text-blue-500 hover:text-blue-300"
+                              className="text-black hover:text-gray-800"
                             >
                               Détails
                               <span className="sr-only">, {order.name}</span>

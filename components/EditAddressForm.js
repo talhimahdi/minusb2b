@@ -1,6 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/outline";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 export default function EditAddressForm({
@@ -54,32 +53,7 @@ export default function EditAddressForm({
             >
               <Dialog.Panel className="relative bg-white px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
                 <div className="bg-white">
-                  {/* <h2 className="text-lg font-bold text-gray-900">
-                    Informations sur la livraison
-                  </h2> */}
-
                   <div className="mt-4 grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-4">
-                    {/* <div className="sm:col-span-2">
-                      <label
-                        htmlFor="first-name"
-                        className="block text-sm font-bold text-gray-700"
-                      >
-                        Alias
-                      </label>
-                      <div className="mt-1">
-                        <input
-                          type="text"
-                          value={addressForm.alias}
-                          onChange={(e) =>
-                            setAddressForm({
-                              ...addressForm,
-                              alias: e.target.value,
-                            })
-                          }
-                          className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
-                        />
-                      </div>
-                    </div> */}
                     <div>
                       <label
                         htmlFor="first-name"
