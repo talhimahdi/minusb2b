@@ -16,7 +16,7 @@ export default function Layout({ children }) {
         <title>Minus Pro</title>
         <meta content="upgrade-insecure-requests" />
         <meta name="description" content="Minus B2B" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/favicon.ico" />
       </Head>
       <main>
         {router?.pathname == "/checkout" && (
