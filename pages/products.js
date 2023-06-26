@@ -1,26 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { withRouter } from "next/router";
-import Image from "next/image";
 import CoverThumbnails from "../components/CoverThumbnails";
 import ProductList from "../components/ProductList";
 import BottomCart from "../components/BottomCart";
 import Cart from "../components/Cart";
-import { Urls } from "../configs/configs";
 import { useAuth } from "../RestHelper/useAuth";
 import Loader from "../components/Loader";
 
 import localStorageX from "../configs/localStorage";
-import Header from "../components/Header";
 
-function Products(/*{ productsList }*/) {
+function Products() {
   const router = useRouter();
   const auth = useAuth();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [slides, setSlides] = useState({});
   const [slides_, setSlides_] = useState({});
-  // const [openCart, setOpenCart] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [limit, setLimit] = useState(10);
   const [idCategorySearch, setIdCategorySearch] = useState(0);
@@ -74,6 +69,9 @@ function Products(/*{ productsList }*/) {
 
   const getProducts = async (isSearch = false, reset = false) => {
     setIsButtonSpin(true);
+    if (reset) {
+      setLoading(true);
+    }
     if (isSearch) {
       setPageNumber(1);
     } else {
@@ -115,6 +113,7 @@ function Products(/*{ productsList }*/) {
       }
 
       setIsButtonSpin(false);
+      setLoading(false);
     }
 
     return result?.results?.products?.length;
@@ -183,22 +182,3 @@ function Products(/*{ productsList }*/) {
 }
 
 export default Products;
-
-// export async function getServerSideProps(context) {
-// const products = await API.products.all();
-// console.log(products);
-// var requestOptions = {
-//   method: "GET",
-// };
-// const url = Urls.productList;
-// const result = await fetch(url, requestOptions)
-//   .then((response) => response?.json())
-//   .then((result) => {
-//     return result;
-//   })
-//   .catch((error) => console.log("error", error));
-// return {
-//   // props: { productsList: result?.psdata ? result?.psdata : [] }, // will be passed to the page component as props
-//   props: { productsList: products ? products : [] }, // will be passed to the page component as props
-// };
-// }

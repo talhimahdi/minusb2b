@@ -13,7 +13,7 @@ export default function Layout({ children }) {
   return (
     <div>
       <Head>
-        <title>Minus B2B</title>
+        <title>Minus Pro</title>
         <meta content="upgrade-insecure-requests" />
         <meta name="description" content="Minus B2B" />
         <link rel="icon" href="/favicon.ico" />
