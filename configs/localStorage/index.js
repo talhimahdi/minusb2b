@@ -5,8 +5,8 @@ if (typeof window !== "undefined") {
   if (
     window.location.hostname == "minusb2b.vercel.app" ||
     window.location.hostname == "minusb2b-git-stage-talhimahdi.vercel.app" ||
-    window.location.hostname == "minusb2b-frontend.vercel.app" ||
-    window.location.hostname == "localhost"
+    window.location.hostname == "minusb2b-frontend.vercel.app"
+    // window.location.hostname == "localhost"
   )
     Storage = window.localStorage;
 }
@@ -24,8 +24,8 @@ const localStorage = {
     localStorage.add(key, data);
   },
   get(key) {
-    return Storage.getItem(prefix + key) !== null
-      ? decrypt(Storage.getItem(prefix + key), salt)
+    return Storage?.getItem(prefix + key) !== null
+      ? decrypt(Storage?.getItem(prefix + key), salt)
       : false;
   },
   remove(key) {
