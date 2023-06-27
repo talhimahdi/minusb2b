@@ -5,8 +5,8 @@ if (typeof window !== "undefined") {
   if (
     window.location.hostname == "minusb2b.vercel.app" ||
     window.location.hostname == "minusb2b-git-stage-talhimahdi.vercel.app" ||
-    window.location.hostname == "minusb2b-frontend.vercel.app"
-    // window.location.hostname == "localhost"
+    window.location.hostname == "minusb2b-frontend.vercel.app" ||
+    window.location.hostname == "localhost"
   )
     Storage = window.localStorage;
 }
@@ -15,13 +15,13 @@ let prefix = "ps_";
 
 const localStorage = {
   add(key, value) {
-    Storage.setItem(prefix + key, encrypt(value, salt));
+    Storage?.setItem(prefix + key, encrypt(value, salt));
   },
   edit(key, value) {
     const data = {
       customer: value,
     };
-    localStorage.add(key, data);
+    localStorage?.add(key, data);
   },
   get(key) {
     return Storage?.getItem(prefix + key) !== null
@@ -29,13 +29,13 @@ const localStorage = {
       : false;
   },
   remove(key) {
-    Storage.removeItem(prefix + key);
+    Storage?.removeItem(prefix + key);
   },
   clear() {
-    Storage.clear();
+    Storage?.clear();
   },
   isConnected() {
-    if (localStorage.get("local_data")) return true;
+    if (localStorage?.get("local_data")) return true;
     return false;
   },
 };
