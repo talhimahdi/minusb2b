@@ -5,6 +5,7 @@ if (typeof window !== "undefined") {
   if (
     window.location.hostname == "minusb2b.vercel.app" ||
     window.location.hostname == "minusb2b-git-stage-talhimahdi.vercel.app" ||
+    window.location.hostname == "minusb2b-frontend.vercel.app" ||
     window.location.hostname == "localhost"
   )
     Storage = window.localStorage;
