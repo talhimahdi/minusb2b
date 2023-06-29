@@ -409,9 +409,6 @@ export default function OrderDetails() {
 
         {checkModuleInfo?.CHEQUE_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
                 className="  text-black font-londrina space-y-1"
@@ -425,9 +422,6 @@ export default function OrderDetails() {
 
         {checkModuleInfo30?.CHEQUE_30_ADDRESS && (
           <div className=" bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
                 className="  text-black font-londrina space-y-1"
@@ -441,9 +435,6 @@ export default function OrderDetails() {
 
         {lcrModuleInfo.LCR_BANK_WIRE_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
                 className="  text-black font-londrina space-y-1"
@@ -457,9 +448,6 @@ export default function OrderDetails() {
 
         {lcrModuleInfo30?.LCR_30_BANK_WIRE_DETAILS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
                 className="  text-black font-londrina space-y-1"
@@ -473,9 +461,6 @@ export default function OrderDetails() {
 
         {bankTransferModuleInfo?.BANK_WIRE_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
                 className="  text-black font-londrina space-y-1"
@@ -489,9 +474,6 @@ export default function OrderDetails() {
 
         {bankTransferModuleInfo30?.BANK_WIRE_30_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
                 className="  text-black font-londrina space-y-1"
