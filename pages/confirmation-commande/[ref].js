@@ -418,12 +418,9 @@ export default function ConfirmationCommande() {
 
         {checkModuleInfo?.CHEQUE_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
-                className="  text-black font-londrina space-y-1"
+                className="  text-lg font-medium text-gray-900 space-y-1"
                 dangerouslySetInnerHTML={{
                   __html: checkModuleInfo.CHEQUE_ADDRESS,
                 }}
@@ -434,12 +431,9 @@ export default function ConfirmationCommande() {
 
         {checkModuleInfo30?.CHEQUE_30_ADDRESS && (
           <div className=" bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
-                className="  text-black font-londrina space-y-1"
+                className="  text-lg font-medium text-gray-900 space-y-1"
                 dangerouslySetInnerHTML={{
                   __html: checkModuleInfo30.CHEQUE_30_ADDRESS,
                 }}
@@ -450,12 +444,9 @@ export default function ConfirmationCommande() {
 
         {checkModuleInfo45?.CHEQUE_45_ADDRESS && (
           <div className=" bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
-                className="  text-black font-londrina space-y-1"
+                className="  text-lg font-medium text-gray-900 space-y-1"
                 dangerouslySetInnerHTML={{
                   __html: checkModuleInfo45.CHEQUE_45_ADDRESS,
                 }}
@@ -466,12 +457,9 @@ export default function ConfirmationCommande() {
 
         {checkModuleInfo60?.CHEQUE_60_ADDRESS && (
           <div className=" bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
-                className="text-black font-londrina space-y-1"
+                className="text-lg font-medium text-gray-900 space-y-1"
                 dangerouslySetInnerHTML={{
                   __html: checkModuleInfo60.CHEQUE_60_ADDRESS,
                 }}
@@ -482,12 +470,9 @@ export default function ConfirmationCommande() {
 
         {lcrModuleInfo.LCR_BANK_WIRE_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
-                className="  text-black font-londrina space-y-1"
+                className="  text-lg font-medium text-gray-900 space-y-1"
                 dangerouslySetInnerHTML={{
                   __html: lcrModuleInfo.LCR_BANK_WIRE_ADDRESS,
                 }}
@@ -498,12 +483,9 @@ export default function ConfirmationCommande() {
 
         {lcrModuleInfo30?.LCR_30_BANK_WIRE_DETAILS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
-                className="  text-black font-londrina space-y-1"
+                className="text-lg font-medium text-gray-900 space-y-1"
                 dangerouslySetInnerHTML={{
                   __html: lcrModuleInfo30?.LCR_30_BANK_WIRE_DETAILS,
                 }}
@@ -514,12 +496,9 @@ export default function ConfirmationCommande() {
 
         {bankTransferModuleInfo?.BANK_WIRE_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
-                className="  text-black font-londrina space-y-1"
+                className="  text-lg font-medium text-gray-900 space-y-1"
                 dangerouslySetInnerHTML={{
                   __html: bankTransferModuleInfo?.BANK_WIRE_ADDRESS,
                 }}
@@ -530,12 +509,9 @@ export default function ConfirmationCommande() {
 
         {bankTransferModuleInfo30?.BANK_WIRE_30_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <p className="text-lg text-gray-500">
-              Votre commande sur MinusB2B a bien été enregistrée.
-            </p>
             <div className="text-base text-gray-500">
               <div
-                className="  text-black font-londrina space-y-1"
+                className="  text-lg font-medium text-gray-900 space-y-1"
                 dangerouslySetInnerHTML={{
                   __html: bankTransferModuleInfo30?.BANK_WIRE_30_ADDRESS,
                 }}
