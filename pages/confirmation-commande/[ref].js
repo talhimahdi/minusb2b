@@ -418,105 +418,89 @@ export default function ConfirmationCommande() {
 
         {checkModuleInfo?.CHEQUE_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <div className="text-base text-gray-500">
-              <div
-                className="  text-lg font-medium text-gray-900 space-y-1"
-                dangerouslySetInnerHTML={{
-                  __html: checkModuleInfo.CHEQUE_ADDRESS,
-                }}
-              ></div>
-            </div>
+            <div
+              className="  text-lg font-medium text-gray-900 space-y-1"
+              dangerouslySetInnerHTML={{
+                __html: checkModuleInfo.CHEQUE_ADDRESS,
+              }}
+            ></div>
           </div>
         )}
 
         {checkModuleInfo30?.CHEQUE_30_ADDRESS && (
           <div className=" bg-primary px-7 py-5 space-y-2">
-            <div className="text-base text-gray-500">
-              <div
-                className="  text-lg font-medium text-gray-900 space-y-1"
-                dangerouslySetInnerHTML={{
-                  __html: checkModuleInfo30.CHEQUE_30_ADDRESS,
-                }}
-              ></div>
-            </div>
+            <div
+              className="  text-lg font-medium text-gray-900 space-y-1"
+              dangerouslySetInnerHTML={{
+                __html: checkModuleInfo30.CHEQUE_30_ADDRESS,
+              }}
+            ></div>
           </div>
         )}
 
         {checkModuleInfo45?.CHEQUE_45_ADDRESS && (
           <div className=" bg-primary px-7 py-5 space-y-2">
-            <div className="text-base text-gray-500">
-              <div
-                className="  text-lg font-medium text-gray-900 space-y-1"
-                dangerouslySetInnerHTML={{
-                  __html: checkModuleInfo45.CHEQUE_45_ADDRESS,
-                }}
-              ></div>
-            </div>
+            <div
+              className="  text-lg font-medium text-gray-900 space-y-1"
+              dangerouslySetInnerHTML={{
+                __html: checkModuleInfo45.CHEQUE_45_ADDRESS,
+              }}
+            ></div>
           </div>
         )}
 
         {checkModuleInfo60?.CHEQUE_60_ADDRESS && (
           <div className=" bg-primary px-7 py-5 space-y-2">
-            <div className="text-base text-gray-500">
-              <div
-                className="text-lg font-medium text-gray-900 space-y-1"
-                dangerouslySetInnerHTML={{
-                  __html: checkModuleInfo60.CHEQUE_60_ADDRESS,
-                }}
-              ></div>
-            </div>
+            <div
+              className="text-lg font-medium text-gray-900 space-y-1"
+              dangerouslySetInnerHTML={{
+                __html: checkModuleInfo60.CHEQUE_60_ADDRESS,
+              }}
+            ></div>
           </div>
         )}
 
         {lcrModuleInfo.LCR_BANK_WIRE_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <div className="text-base text-gray-500">
-              <div
-                className="  text-lg font-medium text-gray-900 space-y-1"
-                dangerouslySetInnerHTML={{
-                  __html: lcrModuleInfo.LCR_BANK_WIRE_ADDRESS,
-                }}
-              ></div>
-            </div>
+            <div
+              className="  text-lg font-medium text-gray-900 space-y-1"
+              dangerouslySetInnerHTML={{
+                __html: lcrModuleInfo.LCR_BANK_WIRE_ADDRESS,
+              }}
+            ></div>
           </div>
         )}
 
         {lcrModuleInfo30?.LCR_30_BANK_WIRE_DETAILS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <div className="text-base text-gray-500">
-              <div
-                className="text-lg font-medium text-gray-900 space-y-1"
-                dangerouslySetInnerHTML={{
-                  __html: lcrModuleInfo30?.LCR_30_BANK_WIRE_DETAILS,
-                }}
-              ></div>
-            </div>
+            <div
+              className="text-lg font-medium text-gray-900 space-y-1"
+              dangerouslySetInnerHTML={{
+                __html: lcrModuleInfo30?.LCR_30_BANK_WIRE_DETAILS,
+              }}
+            ></div>
           </div>
         )}
 
         {bankTransferModuleInfo?.BANK_WIRE_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <div className="text-base text-gray-500">
-              <div
-                className="  text-lg font-medium text-gray-900 space-y-1"
-                dangerouslySetInnerHTML={{
-                  __html: bankTransferModuleInfo?.BANK_WIRE_ADDRESS,
-                }}
-              ></div>
-            </div>
+            <div
+              className="  text-lg font-medium text-gray-900 space-y-1"
+              dangerouslySetInnerHTML={{
+                __html: bankTransferModuleInfo?.BANK_WIRE_ADDRESS,
+              }}
+            ></div>
           </div>
         )}
 
         {bankTransferModuleInfo30?.BANK_WIRE_30_ADDRESS && (
           <div className="bg-primary px-7 py-5 space-y-2">
-            <div className="text-base text-gray-500">
-              <div
-                className="  text-lg font-medium text-gray-900 space-y-1"
-                dangerouslySetInnerHTML={{
-                  __html: bankTransferModuleInfo30?.BANK_WIRE_30_ADDRESS,
-                }}
-              ></div>
-            </div>
+            <div
+              className="  text-lg font-medium text-gray-900 space-y-1"
+              dangerouslySetInnerHTML={{
+                __html: bankTransferModuleInfo30?.BANK_WIRE_30_ADDRESS,
+              }}
+            ></div>
           </div>
         )}
       </div>
