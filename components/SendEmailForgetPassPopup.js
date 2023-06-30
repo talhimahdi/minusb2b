@@ -52,9 +52,13 @@ export default function SendEmailForgetPassPopup({
                       >
                         {title}
                       </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">{message}</p>
-                      </div>
+
+                      <div
+                        className="mt-2 text-sm text-gray-500"
+                        dangerouslySetInnerHTML={{
+                          __html: message,
+                        }}
+                      ></div>
                     </div>
                   </div>
                   <div className="mt-5 sm:mt-6">
