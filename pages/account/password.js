@@ -168,7 +168,7 @@ function Password() {
               type={"button"}
               onClick={updatePassword}
             >
-              Confirmer la commande
+              Changer le mot de passe
             </button>
           </div>
           <div>

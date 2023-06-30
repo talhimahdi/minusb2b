@@ -16,6 +16,7 @@ export default function ForgetPassword() {
   const [emailInput, setEmailInput] = useState("");
 
   const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const resetPass = async () => {
@@ -44,9 +45,21 @@ export default function ForgetPassword() {
       .catch((error) => console.log("error", error));
 
     if (result?.results?.code == 200 && result?.results?.succes) {
+      setPopupMessage(
+        "Si votre adresse email est reliée à un compte Minus, alors vous avez dû recevoir un email de réinitialisation. Merci de vérifier votre boîte spam."
+      );
       setPopupOpen(true);
     } else {
-      setErrorMessage(result?.results?.message);
+      if (result?.results?.message === "not exist") {
+        setPopupMessage(
+          "Cet email n'est relié à aucun compte. Nous vous prions de créer votre compte " +
+            "<a href='/register' class='underline font-semibold'> via le formulaire d'enregistrement</a>" +
+            "."
+        );
+        setPopupOpen(true);
+      } else {
+        setErrorMessage(result?.results?.message);
+      }
     }
   };
 
@@ -65,9 +78,7 @@ export default function ForgetPassword() {
         open={popupOpen}
         setOpen={setPopupOpen}
         title={"Email envoyé avec succes"}
-        message={
-          "Si votre adresse email est reliée à un compte Minus, alors vous avez dû recevoir un email de réinitialisation. Merci de vérifier votre boîte spam."
-        }
+        message={popupMessage}
       />
 
       <div className="max-w-xl mx-auto mt-10 py-5 px-4 sm:px-6 lg:px-8">
