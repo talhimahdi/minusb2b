@@ -114,12 +114,12 @@ export default function Orders() {
                         >
                           Statut
                         </th>
-                        {/* <th
+                        <th
                           scope="col"
                           className="px-3 py-3.5 text-left text-md font-semibold text-gray-900"
                         >
                           Facture
-                        </th> */}
+                        </th>
                         <th
                           scope="col"
                           className="relative py-3.5 pl-3 pr-4 sm:pr-6"
@@ -155,7 +155,8 @@ export default function Orders() {
                                 // onClick={() => {
                                 //   downloadInvoice(order.reference);
                                 // }}
-                                className=" text-blue-500 hover:text-blue-300 cursor-pointer"
+                                // className=" text-blue-500 hover:text-blue-300 cursor-pointer"
+                                className="w-full rounded-md bg-black shadow-sm py-2 px-4 text-md font-extrabold text-white hover:font-bold focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-offset-gray-50"
                               >
                                 Télécharger
                                 <span className="sr-only">, {order.name}</span>
