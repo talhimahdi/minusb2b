@@ -152,7 +152,7 @@ function Checkout() {
     const result = await fetch("/api/cart/update", requestOptions)
       .then((response) => response?.json())
       .then((data) => data)
-      .catch((error) => console.log("error", error));
+      .catch((error) => error);
 
     if (result?.code == 200 && result?.succes) {
       await auth?.getCart(auth?.user?.id_cart);
@@ -183,41 +183,32 @@ function Checkout() {
       }),
     };
 
-    await fetch("/api/payment", requestOptions)
+    const result = await fetch("/api/payment", requestOptions)
       .then((response) => response?.json())
-      .then((result) => {
-        if (result?.results?.code == 200 && result?.results?.succes == false) {
-          console.log(result?.results?.message);
-          alert(result?.results?.message);
-          console.log(result?.results?.message);
-          // setLoading(false);
-          return;
-        }
+      .then((data) => data.results)
+      .catch((error) => error);
 
-        if (result?.results?.newCartId) {
-          console.log(result?.results);
-          auth?.setUser({
-            ...auth?.user,
-            id_cart: result?.results?.newCartId,
-          });
-          auth?.editLocalStorage({
-            ...auth?.user,
-            id_cart: result?.results?.newCartId,
-          });
-        }
+    if (result?.code == 200 && result?.succes == false) {
+      alert(result?.message);
+      return;
+    }
 
-        if (result?.results?.payplug) {
-          Payplug.showPayment(result?.results?.payplug?.payment_url);
-        } else {
-          console.log(result?.results);
-          // setLoading(false);
+    if (result?.newCartId) {
+      auth?.setUser({
+        ...auth?.user,
+        id_cart: result?.newCartId,
+      });
+      auth?.editLocalStorage({
+        ...auth?.user,
+        id_cart: result?.newCartId,
+      });
+    }
 
-          router.replace(
-            `/confirmation-commande/${result?.results?.order?.reference}`
-          );
-        }
-      })
-      .catch((error) => console.log("error", error));
+    if (result?.payplug) {
+      Payplug.showPayment(result?.payplug?.payment_url);
+    } else {
+      router.push(`/confirmation-commande/${result?.order?.reference}`);
+    }
 
     setLoading(false);
   };
@@ -246,7 +237,7 @@ function Checkout() {
       .then((data) => {
         return data?.results;
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => error);
 
     if (result?.code == 200 && result?.succes) {
       setAddressesFacturation([...addressesFacturation, result?.new_address]);
@@ -255,7 +246,6 @@ function Checkout() {
       setIsAddFormOpen(false);
     } else {
       setErrorAddAddressMessage(result?.message);
-      console.log("error!!!");
     }
     setLoading(false);
   };
@@ -276,13 +266,12 @@ function Checkout() {
       .then((data) => {
         return data?.results;
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => error);
 
     if (result?.code == 200 && result?.succes) {
       await getAddresses();
       setIsEditFormOpen(false);
     } else {
-      console.log(result?.message);
       setErrorAddAddressMessage(result?.message);
     }
     setLoading(false);
@@ -304,12 +293,10 @@ function Checkout() {
       .then((data) => {
         return data?.results;
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => error);
 
     if (result?.code == 200 && result?.succes) {
       getAddresses();
-    } else {
-      console.log("error!!!");
     }
     setLoading(false);
   };
@@ -357,7 +344,7 @@ function Checkout() {
           }
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => error);
   };
 
   const getCarriers = async () => {
@@ -385,7 +372,7 @@ function Checkout() {
           }
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => error);
   };
 
   const getPaymentMethods = async () => {
@@ -410,7 +397,7 @@ function Checkout() {
           }
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => error);
   };
 
   return (
