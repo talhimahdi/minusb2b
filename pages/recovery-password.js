@@ -74,6 +74,7 @@ export default function RecoveryPassword() {
         setOpen={setPopupOpen}
         title={"Mot de passe modifié !"}
         message={"Votre mot de passe a été modifié avec succès."}
+        isSent={true}
       />
       <div className="max-w-xl mx-auto mt-10 py-5 px-4 sm:px-6 lg:px-8">
         <div className="pt-6 order-1 md:order-2">
