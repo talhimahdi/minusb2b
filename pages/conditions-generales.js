@@ -1,12 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
-import ActionCard from "../components/ActionCard";
-import Cover from "../components/Cover";
-import Infos from "../components/Infos";
-import { useAuth } from "../RestHelper/useAuth";
-import localStorageX from "../configs/localStorage";
-import Link from "next/link";
-import SendEmailForgetPassPopup from "../components/SendEmailForgetPassPopup";
 
 export default function ConditionsGenerales() {
   const router = useRouter();
