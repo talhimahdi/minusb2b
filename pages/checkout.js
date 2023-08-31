@@ -1,25 +1,25 @@
-import { Fragment, useState, useEffect } from "react";
-import { RadioGroup } from "@headlessui/react";
-import { PlusCircleIcon } from "@heroicons/react/outline";
-import { CheckCircleIcon, TrashIcon, PencilIcon } from "@heroicons/react/solid";
-import { useAuth } from "../RestHelper/useAuth";
-import CheckoutSummary from "../components/CheckoutSummary";
-import { useRouter } from "next/router";
-import NewAddressForm from "../components/NewAddressForm";
-import Loader from "../components/Loader";
+import { Fragment, useState, useEffect } from 'react';
+import { RadioGroup } from '@headlessui/react';
+import { PlusCircleIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon, TrashIcon, PencilIcon } from '@heroicons/react/solid';
+import { useAuth } from '../RestHelper/useAuth';
+import CheckoutSummary from '../components/CheckoutSummary';
+import { useRouter } from 'next/router';
+import NewAddressForm from '../components/NewAddressForm';
+import Loader from '../components/Loader';
 
-import localStorageX from "../configs/localStorage";
-import EditAddressForm from "../components/EditAddressForm";
+import localStorageX from '../configs/localStorage';
+import EditAddressForm from '../components/EditAddressForm';
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 function Checkout() {
   const auth = useAuth();
   const router = useRouter();
   const [selectedAddressFacturation, setSelectedAddressFacturation] = useState(
-    {}
+    {},
   );
   const [addressesFacturation, setAddressesFacturation] = useState([]);
   const [selectedAddressLivraison, setSelectedAddressLivraison] = useState({});
@@ -35,14 +35,14 @@ function Checkout() {
   const [isLoading, setLoading] = useState(false);
   const [showPaypalButton, setShowPaypalButton] = useState(false);
   const [isOtherDeliveryAddress, setIsOtherDeliveryAddress] = useState(true);
-  const [errorAddAddressMessage, setErrorAddAddressMessage] = useState("");
+  const [errorAddAddressMessage, setErrorAddAddressMessage] = useState('');
 
   const [updatedAddress, setUpdatedAddress] = useState({});
 
   useEffect(() => {
     const init = async () => {
       if (!localStorageX.isConnected()) {
-        router.push("/connexion");
+        router.push('/connexion');
       }
     };
     init();
@@ -82,8 +82,8 @@ function Checkout() {
   useEffect(() => {
     const init = async () => {
       if (auth?.user?.id) {
-        await getAddresses();
-        await getCarriers();
+        const addressCountry = await getAddresses();
+        await getCarriers(addressCountry);
       }
       setLoading(false);
     };
@@ -93,7 +93,7 @@ function Checkout() {
   useEffect(() => {
     const init = async () => {
       if (auth?.cart?.products_count < 1) {
-        router.push("/products");
+        router.push('/products');
       }
     };
     init();
@@ -103,7 +103,7 @@ function Checkout() {
     const init = async () => {
       if (
         paymentMethods.filter(
-          (e) => e.id === auth?.cart?.last_payment_methode?.id
+          (e) => e.id === auth?.cart?.last_payment_methode?.id,
         ).length > 0
       ) {
         setSelectedPaymentMethod(auth?.cart?.last_payment_methode);
@@ -137,10 +137,10 @@ function Checkout() {
     }
 
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         cartId: auth?.user?.id_cart,
@@ -149,7 +149,7 @@ function Checkout() {
         addressLivraisonId: addressLivraisonId,
       }),
     };
-    const result = await fetch("/api/cart/update", requestOptions)
+    const result = await fetch('/api/cart/update', requestOptions)
       .then((response) => response?.json())
       .then((data) => data)
       .catch((error) => error);
@@ -167,10 +167,10 @@ function Checkout() {
   const confirmCommande = async () => {
     setLoading(true);
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         cartId: auth?.user?.id_cart,
@@ -183,7 +183,7 @@ function Checkout() {
       }),
     };
 
-    const result = await fetch("/api/payment", requestOptions)
+    const result = await fetch('/api/payment', requestOptions)
       .then((response) => response?.json())
       .then((data) => data.results)
       .catch((error) => error);
@@ -225,14 +225,14 @@ function Checkout() {
     setLoading(true);
     addressInfos.id_customer = auth?.user?.id;
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ addressInfos }),
     };
-    const result = await fetch("/api/addresses/add", requestOptions)
+    const result = await fetch('/api/addresses/add', requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         return data?.results;
@@ -253,15 +253,15 @@ function Checkout() {
   const editAddress = async (addressInfos) => {
     setLoading(true);
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ addressInfos }),
     };
 
-    const result = await fetch("/api/addresses/edit", requestOptions)
+    const result = await fetch('/api/addresses/edit', requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         return data?.results;
@@ -281,14 +281,14 @@ function Checkout() {
     if (!confirm("voulez vous vraiment supprimer l'adresse?")) return;
     setLoading(true);
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ addressId: addressId }),
     };
-    const result = await fetch("/api/addresses/delete", requestOptions)
+    const result = await fetch('/api/addresses/delete', requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         return data?.results;
@@ -303,15 +303,15 @@ function Checkout() {
 
   const getAddresses = async () => {
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ customerId: auth?.user?.id }),
     };
 
-    await fetch("/api/addresses/get", requestOptions)
+    return await fetch('/api/addresses/get', requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
@@ -325,51 +325,57 @@ function Checkout() {
           ) {
             setSelectedAddressFacturation(
               data?.results?.addresses.find(
-                (address) => address.id === auth?.cart?.id_address_invoice
-              )
+                (address) => address.id === auth?.cart?.id_address_invoice,
+              ),
             );
           }
           if (
             data?.results?.addresses.length > 0 &&
             auth?.cart?.id_address_delivery > 0
           ) {
-            setSelectedAddressLivraison(
-              data?.results?.addresses.find(
-                (address) => address.id === auth?.cart?.id_address_delivery
-              )
+            const usedAddress = data?.results?.addresses.find(
+              (address) => address.id === auth?.cart?.id_address_delivery,
             );
+            setSelectedAddressLivraison(usedAddress);
+            return usedAddress.country_name;
           } else {
             setSelectedAddressFacturation(data?.results?.addresses[0]);
             setSelectedAddressLivraison(data?.results?.addresses[0]);
+            return data?.results?.addresses[0].country_name;
           }
         }
       })
       .catch((error) => error);
   };
 
-  const getCarriers = async () => {
+  const getCarriers = async (addressCountry = '') => {
+    const franceCountries = ['France', 'Luxembourg', 'Belgique', 'Pays-Bas'];
+    const Dcountry = franceCountries.includes(addressCountry)
+      ? 'france'
+      : 'monde';
     var requestOptions = {
-      method: "GET",
+      method: 'GET',
     };
-
-    await fetch("/api/carriers", requestOptions)
+    await fetch('/api/carriers', requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
-          setCarriers(data?.results?.carriers);
-
-          if (
-            data?.results?.carriers.length > 0 &&
-            auth?.cart?.id_carrier > 0
-          ) {
-            setSelectedCarrier(
-              data?.results?.carriers.find(
-                (carrier) => carrier.id_carrier === auth?.cart?.id_carrier
-              )
-            );
-          } else {
-            setSelectedCarrier(data?.results?.carriers[0]);
-          }
+          const usedCarriers = data?.results?.carriers.filter((carrier) =>
+            carrier.name.includes(Dcountry),
+          );
+          const usedSelectedCarrier = data?.results?.carriers.find((carrier) =>
+            carrier.name.includes(Dcountry),
+          );
+          setCarriers(usedCarriers);
+          setSelectedCarrier(usedSelectedCarrier);
+          // if (
+          //   data?.results?.carriers.length > 0 &&
+          //   auth?.cart?.id_carrier > 0
+          // ) {
+          //   setSelectedCarrier(usedSelectedCarrier);
+          // } else {
+          //   setSelectedCarrier(usedSelectedCarrier);
+          // }
         }
       })
       .catch((error) => error);
@@ -377,17 +383,17 @@ function Checkout() {
 
   const getPaymentMethods = async () => {
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         customerId: auth?.user?.id,
       }),
     };
 
-    await fetch("/api/paymentMethods", requestOptions)
+    await fetch('/api/paymentMethods', requestOptions)
       .then((response) => response?.json())
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
@@ -457,10 +463,10 @@ function Checkout() {
                           className={({ checked, active }) =>
                             classNames(
                               checked
-                                ? "border-transparent"
-                                : "border-gray-300",
-                              active ? "ring-2 ring-secondary" : "",
-                              "relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none"
+                                ? 'border-transparent'
+                                : 'border-gray-300',
+                              active ? 'ring-2 ring-secondary' : '',
+                              'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none',
                             )
                           }
                         >
@@ -513,11 +519,11 @@ function Checkout() {
                               ) : null}
                               <span
                                 className={classNames(
-                                  active ? "border" : "border-2",
+                                  active ? 'border' : 'border-2',
                                   checked
-                                    ? "border-secondary"
-                                    : "border-transparent",
-                                  "absolute -inset-px pointer-events-none"
+                                    ? 'border-secondary'
+                                    : 'border-transparent',
+                                  'absolute -inset-px pointer-events-none',
                                 )}
                                 aria-hidden="true"
                               />
@@ -573,10 +579,10 @@ function Checkout() {
                             className={({ checked, active }) =>
                               classNames(
                                 checked
-                                  ? "border-transparent"
-                                  : "border-gray-300",
-                                active ? "ring-2 ring-secondary" : "",
-                                "relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none"
+                                  ? 'border-transparent'
+                                  : 'border-gray-300',
+                                active ? 'ring-2 ring-secondary' : '',
+                                'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none',
                               )
                             }
                           >
@@ -621,11 +627,11 @@ function Checkout() {
                                 ) : null}
                                 <span
                                   className={classNames(
-                                    active ? "border" : "border-2",
+                                    active ? 'border' : 'border-2',
                                     checked
-                                      ? "border-secondary"
-                                      : "border-transparent",
-                                    "absolute -inset-px pointer-events-none"
+                                      ? 'border-secondary'
+                                      : 'border-transparent',
+                                    'absolute -inset-px pointer-events-none',
                                   )}
                                   aria-hidden="true"
                                 />
@@ -670,10 +676,10 @@ function Checkout() {
                           className={({ checked, active }) =>
                             classNames(
                               checked
-                                ? "border-transparent"
-                                : "border-gray-300",
-                              active ? "ring-2 ring-secondary" : "",
-                              "relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none"
+                                ? 'border-transparent'
+                                : 'border-gray-300',
+                              active ? 'ring-2 ring-secondary' : '',
+                              'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none',
                             )
                           }
                         >
@@ -703,11 +709,11 @@ function Checkout() {
                               ) : null}
                               <span
                                 className={classNames(
-                                  active ? "border" : "border-2",
+                                  active ? 'border' : 'border-2',
                                   checked
-                                    ? "border-secondary"
-                                    : "border-transparent",
-                                  "absolute -inset-px pointer-events-none"
+                                    ? 'border-secondary'
+                                    : 'border-transparent',
+                                  'absolute -inset-px pointer-events-none',
                                 )}
                                 aria-hidden="true"
                               />
@@ -739,7 +745,7 @@ function Checkout() {
                               paymentMethod.id === selectedPaymentMethod?.id
                             }
                             onChange={(e) => {
-                              if (paymentMethod.module_name == "paypal") {
+                              if (paymentMethod.module_name == 'paypal') {
                                 setShowPaypalButton(true);
                               } else {
                                 setShowPaypalButton(false);
