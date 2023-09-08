@@ -350,9 +350,7 @@ function Checkout() {
 
   const getCarriers = async (addressCountry = '') => {
     const franceCountries = ['France', 'Luxembourg', 'Belgique', 'Pays-Bas'];
-    const Dcountry = franceCountries.includes(addressCountry)
-      ? 'france'
-      : 'monde';
+    const isFranceCountries = franceCountries.includes(addressCountry);
     var requestOptions = {
       method: 'GET',
     };
@@ -360,12 +358,20 @@ function Checkout() {
       .then((response) => response?.json())
       .then((data) => {
         if (data?.results?.code == 200 && data?.results?.succes) {
-          const usedCarriers = data?.results?.carriers.filter((carrier) =>
-            carrier.name.includes(Dcountry),
-          );
-          const usedSelectedCarrier = data?.results?.carriers.find((carrier) =>
-            carrier.name.includes(Dcountry),
-          );
+          const usedCarriers = data?.results?.carriers
+            .slice(0, 2)
+            .filter((carrier) =>
+              isFranceCountries
+                ? !carrier.name.includes('monde')
+                : carrier.name.includes('monde'),
+            );
+          const usedSelectedCarrier = data?.results?.carriers
+            .slice(0, 2)
+            .find((carrier) =>
+              isFranceCountries
+                ? !carrier.name.includes('monde')
+                : carrier.name.includes('monde'),
+            );
           setCarriers(usedCarriers);
           setSelectedCarrier(usedSelectedCarrier);
           // if (
