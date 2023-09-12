@@ -132,9 +132,9 @@ function Checkout() {
         : selectedAddressLivraison.id;
     }
 
-    if (addressFacturationId != addressLivraisonId) {
-      setIsOtherDeliveryAddress(false);
-    }
+    // if (addressFacturationId != addressLivraisonId) {
+    //   setIsOtherDeliveryAddress(false);
+    // }
 
     var requestOptions = {
       method: 'POST',
@@ -365,23 +365,23 @@ function Checkout() {
                 ? !carrier.name.includes('monde')
                 : carrier.name.includes('monde'),
             );
-          const usedSelectedCarrier = data?.results?.carriers
-            .slice(0, 2)
-            .find((carrier) =>
-              isFranceCountries
-                ? !carrier.name.includes('monde')
-                : carrier.name.includes('monde'),
-            );
           setCarriers(usedCarriers);
-          setSelectedCarrier(usedSelectedCarrier);
-          // if (
-          //   data?.results?.carriers.length > 0 &&
-          //   auth?.cart?.id_carrier > 0
-          // ) {
-          //   setSelectedCarrier(usedSelectedCarrier);
-          // } else {
-          //   setSelectedCarrier(usedSelectedCarrier);
-          // }
+          if (
+            data?.results?.carriers.length > 0 &&
+            auth?.cart?.id_carrier > 0
+          ) {
+            if (usedCarriers[0].id_carrier !== auth?.cart?.id_carrier) {
+              setSelectedCarrier(usedCarriers[0]);
+            } else {
+              setSelectedCarrier(
+                data?.results?.carriers.find(
+                  (carrier) => carrier.id_carrier === auth?.cart?.id_carrier,
+                ),
+              );
+            }
+          } else {
+            setSelectedCarrier(data?.results?.carriers[0]);
+          }
         }
       })
       .catch((error) => error);
@@ -458,12 +458,15 @@ function Checkout() {
                     <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                       {addressesFacturation?.map((address) => (
                         <RadioGroup.Option
-                          onClick={() =>
+                          onClick={() => {
                             updateCart({
                               id_carrier: selectedCarrier?.id_carrier,
                               id_address_invoice: address.id,
-                            })
-                          }
+                              id_address_delivery: isOtherDeliveryAddress
+                                ? address.id
+                                : null,
+                            });
+                          }}
                           key={address.id}
                           value={address}
                           className={({ checked, active }) =>
