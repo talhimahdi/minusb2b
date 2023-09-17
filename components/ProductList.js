@@ -1,6 +1,6 @@
-import { SearchIcon } from "@heroicons/react/solid";
-import React, { useState } from "react";
-import SingleProductList from "./SingleProductList";
+import { SearchIcon } from '@heroicons/react/solid';
+import React, { useState } from 'react';
+import SingleProductList from './SingleProductList';
 
 function ProductList({
   products,
@@ -31,7 +31,7 @@ function ProductList({
     setIsSearching(true);
 
     let result;
-    if (idCategorySearch != 0 || term != "") {
+    if (idCategorySearch != 0 || term != '') {
       result = await getProducts(true);
       setShowReset(true);
     } else {
@@ -49,8 +49,8 @@ function ProductList({
   };
 
   const onReset = async () => {
-    onCategoryChange("0");
-    onChangeTerm("");
+    onCategoryChange('0');
+    onChangeTerm('');
 
     const result = await getProducts(false, true);
 
@@ -61,7 +61,11 @@ function ProductList({
       setEmptyResult(false);
     }
   };
-
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      onSearch();
+    }
+  };
   return (
     <div className="bg-primary pt-20 -mt-20 -mb-10">
       <div className="max-w-sm  mx-5 md:mx-auto md:max-w-7xl my-5 py-5">
@@ -77,6 +81,7 @@ function ProductList({
               type="text"
               placeholder="recherche"
               className="block w-full outline-none border-none focus:ring-0 focus:border-none sm:text-sm"
+              onKeyUp={handleKeyPress}
             />
           </div>
           <div className="flex mt-1 sm:mt-0 shadow-sm px-3 ring-1 ring-secondary sm:text-sm h-10 bg-white items-center w-full  md:w-auto">
@@ -149,7 +154,7 @@ function ProductList({
             <div className="text-center border-t border-gray-200 py-6 px-4 sm:px-6">
               <div
                 className={
-                  "flex flex-col items-center justify-center h-full space-y-5"
+                  'flex flex-col items-center justify-center h-full space-y-5'
                 }
               >
                 {!isEmptyResult && (
