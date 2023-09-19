@@ -1,14 +1,20 @@
-import Urls from "./configs";
+import Urls from './configs';
 
 export default async function handler(req, res) {
-  const { cartId, carrierId, addressDeliveryId, addressInvoiceId, moduleName } =
-    req.body;
+  const {
+    cartId,
+    carrierId,
+    addressDeliveryId,
+    addressInvoiceId,
+    moduleName,
+    noteMessage,
+  } = req.body;
 
   var requestOptions = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       id_cart: cartId,
@@ -16,6 +22,7 @@ export default async function handler(req, res) {
       id_address_delivery: addressDeliveryId,
       id_address_invoice: addressInvoiceId,
       pm_module_name: moduleName,
+      note_message: noteMessage,
     }),
   };
 
