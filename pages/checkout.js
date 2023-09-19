@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import { PlusCircleIcon } from '@heroicons/react/outline';
+import { InformationCircleIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon, TrashIcon, PencilIcon } from '@heroicons/react/solid';
 import { useAuth } from '../RestHelper/useAuth';
 import CheckoutSummary from '../components/CheckoutSummary';
@@ -36,6 +37,7 @@ function Checkout() {
   const [showPaypalButton, setShowPaypalButton] = useState(false);
   const [isOtherDeliveryAddress, setIsOtherDeliveryAddress] = useState(true);
   const [errorAddAddressMessage, setErrorAddAddressMessage] = useState('');
+  const [noteMessage, setNoteMessage] = useState('');
 
   const [updatedAddress, setUpdatedAddress] = useState({});
 
@@ -180,6 +182,7 @@ function Checkout() {
           ? selectedAddressFacturation?.id
           : selectedAddressLivraison?.id,
         moduleName: selectedPaymentMethod?.module_name,
+        noteMessage: noteMessage,
       }),
     };
 
@@ -665,6 +668,33 @@ function Checkout() {
                   </div>
                 </div>
 
+                <div className="mt-10 border-t border-gray-200 pt-5">
+                  <label
+                    htmlFor="last-name"
+                    className="block text-sm font-bold text-gray-700"
+                  >
+                    Note
+                  </label>
+                  <div className="mt-1">
+                    <textarea
+                      name="last-name"
+                      type="text"
+                      rows={4}
+                      value={noteMessage}
+                      onChange={(e) => {
+                        setNoteMessage(e.target.value);
+                      }}
+                      className="block w-full border-gray-300 shadow-sm focus:ring-secondary focus:border-secondary sm:text-sm"
+                    />
+                    <div className="group inline-block relative mt-1 ">
+                      <InformationCircleIcon className="w-4 h-4 " />
+                      <span className="group-hover:opacity-100 transition-opacity py-1 px-2 bg-gray-800/70 text-sm text-white rounded-md absolute left-0 opacity-0 w-96 mx-auto">
+                        Pensez à utiliser ce champ pour ajouter une note à votre
+                        commande !
+                      </span>
+                    </div>
+                  </div>
+                </div>
                 <div className="mt-10 border-t border-gray-200 pt-10">
                   <RadioGroup
                     value={selectedCarrier}
