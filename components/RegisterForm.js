@@ -171,7 +171,7 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                   onChange={(e) =>
                     setForm({
                       ...form,
-                      email: e.target.value,
+                      email: e.target.value.trim(),
                     })
                   }
                   placeholder="jules.verne@email.fr"
