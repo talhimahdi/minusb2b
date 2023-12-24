@@ -6,14 +6,23 @@ function ProductCheckout({ product, currency_symbol, removeProduct }) {
   return (
     <div className="flex-1 flex flex-col">
       <div className="flex">
-        <div className="min-w-0 flex-1 space-y-1">
-          <h4 className="text-xl text-black">{product.name}</h4>
-          <h2 className="leading-none text-gray-700 text-sm">
-            {product.display_categorie}
-          </h2>
+        <div className="flex flex-1 space-x-5">
+          <div className="w-20">
+            <img src={product.image_url} alt="  " />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h4 className="leading-none text-xl text-black">{product.name}</h4>
+            <h2 className="leading-none text-gray-700 text-sm mt-1">
+              {product.display_categorie}
+            </h2>
+            <p className="text-xl font-medium text-gray-900 font-londrina">
+              {parseFloat(product?.price).toFixed(2)} {currency_symbol} HT
+              {/* {product?.formatted_total} */}
+            </p>
+          </div>
         </div>
 
-        <div className="ml-4 flex-shrink-0 flow-root">
+        <div className="ml-4">
           <button
             type="button"
             className="-m-2.5 bg-white p-2.5 flex items-center justify-center text-gray-400 hover:text-gray-500"
@@ -28,12 +37,7 @@ function ProductCheckout({ product, currency_symbol, removeProduct }) {
         </div>
       </div>
 
-      <div className="flex-1 pt-2 flex items-end justify-between">
-        <p className="text-xl font-medium text-gray-900 font-londrina">
-          {parseFloat(product?.price).toFixed(2)} {currency_symbol} HT
-          {/* {product?.formatted_total} */}
-        </p>
-
+      <div className="flex-1 flex pt-2 justify-end">
         <div className="ml-4">
           <label htmlFor="quantity" className="sr-only">
             Quantité
