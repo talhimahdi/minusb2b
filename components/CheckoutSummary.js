@@ -39,7 +39,7 @@ function CheckoutSummary({ onConfirmCommande, showConfirmButton }) {
         <h3 className="sr-only">Articles dans votre panier</h3>
         <ul role="list" className="divide-y divide-gray-200">
           {auth?.cart?.products?.map((product) => (
-            <li key={product.id_product} className="flex py-6 px-4 sm:px-6">
+            <li key={product.id_product} className="flex py-4 px-4">
               <ProductCheckout
                 removeProduct={removeProduct}
                 product={product}
@@ -159,7 +159,7 @@ function CheckoutSummary({ onConfirmCommande, showConfirmButton }) {
           </div>
         </section>
 
-        <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
+        <div className="border-t border-gray-200 py-4 px-4">
           {showConfirmButton ? (
             <button
               className="w-full bg-black shadow-sm py-3 px-4 text-xl font-extrabold text-white hover:font-bold focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-offset-gray-50"
