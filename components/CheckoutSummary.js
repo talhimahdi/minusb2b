@@ -84,15 +84,16 @@ function CheckoutSummary({ onConfirmCommande, showConfirmButton }) {
                   Livraison HT
                 </h2>
               </div>
-              <div className="text-sm font-medium text-gray-900">
+              <div className="text-sm font-medium text-gray-900 text-right">
                 <h2
                   id="summary-heading"
                   className="text-2xl font-medium text-gray-900 font-londrina"
                 >
-                  {auth?.cart?.subtotals?.shipping?.value == "gratuit"
+                  {auth.cart?.can_deliver ? (auth?.cart?.subtotals?.shipping?.value == "gratuit"
                     ? auth?.cart?.subtotals?.shipping?.value
-                    : auth?.cart?.subtotals?.shipping?.wt_taxe}
+                    : auth?.cart?.subtotals?.shipping?.wt_taxe) : "-"}
                 </h2>
+                <p>{!auth.cart?.can_deliver && "La livraison n'est pas disponible à cette adresse"}</p>
               </div>
             </div>
           </div>
