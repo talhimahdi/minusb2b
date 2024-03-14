@@ -344,6 +344,29 @@ export default function Header({ pageName }) {
         </div>
       );
 
+    case "/catalogue":
+      return (
+        <div className="fixed left-0 top-10 md:top-12 right-0 bg-white pb-5 z-10">
+          <header className="relative">
+            <nav aria-label="Top" className="mx-6 xl:max-w-7xl xl:mx-auto py-5">
+              <div className="flex items-center justify-between">
+                {/* Logo */}
+                <Link href="/">
+                  <a className="flex-none relative w-32 h-16 md:w-48 md:h-20">
+                    <img
+                      src={"/logo-minus-pro.svg"}
+                      alt=""
+                      className="relative object-fill"
+                    />
+                  </a>
+                </Link>
+
+              </div>
+            </nav>
+          </header>
+        </div>
+      );
+
     default:
       return <></>;
       break;

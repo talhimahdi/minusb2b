@@ -42,6 +42,7 @@ function useAuthProvider() {
         "/forget-password",
         "/recovery-password",
         "/conditions-generales",
+        "/catalogue",
       ];
       if (!withoutConnexion.includes(router?.pathname))
         router.push("/connexion");

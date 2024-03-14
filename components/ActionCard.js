@@ -30,22 +30,27 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                 {auth?.frontContent?.card_1_title}
               </h3>
               <p className="mt-5 text-base text-black text-center">
-                {auth?.frontContent?.card_1_desc}
+                {/* {auth?.frontContent?.card_1_desc} */}
+                Le rêve pour vous c&apos;est de passer votre commande en quelques clics ?
               </p>
               <div className="flex justify-center md:justify-end mt-8">
                 <button
                   type="button"
                   className="uppercase justify-center items-center w-60 h-10 shadow-sm text-md text-white bg-black focus:outline-none"
                 >
-                  <Link href={"/register"}>
+                  {/* <Link href={"/register"}>
                     <a>{auth?.frontContent?.card_1_button_text}</a>
+                  </Link> */}
+                  <Link href={"/catalogue"}>
+                    <a>J&apos;accède au catalogue</a>
                   </Link>
                 </button>
               </div>
               <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md space-y-5 border-black border-t-2 pt-5">
                 <div>
                   <h3 className="uppercase text-xl text-gray-900 font-londrina text-center">
-                    Déjà inscrit ?
+                    {/* Déjà inscrit ? */}
+                    Accéder à son compte
                   </h3>
                   <p className="mt-3 text-base text-black text-center">
                     Connectez-vous avec votre email et mot de passe.
