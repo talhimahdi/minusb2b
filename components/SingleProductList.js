@@ -74,35 +74,16 @@ function SingleProductList({ product, isCatalogue }) {
                 }}
               ></div>
             </div>
-            <div className="PRICE flex-auto items-center justify-center w-full sm:w-auto text-center sm:text-start">
-              <div className="space-y-4 md:space-y-4 ">
 
-
-                <div className="flex justify-center md:justify-end">
-                  <button
-                    type="button"
-                    className="uppercase justify-center items-center w-40 h-10 shadow-sm text-md text-white bg-black focus:outline-none"
-                  >
-                    {/* <Link href={"/register"}>
-                    <a>{auth?.frontContent?.card_1_button_text}</a>
-                  </Link> */}
-                    <Link href={"/register"}>
-                      <a>Je le veux !</a>
-                    </Link>
-                  </button>
-                </div>
-                {/* <AddToCart
-                  max={150}
-                  min={1}
-                  product={productState}
-                  idProduct={productState?.id}
-                  btnVisible={true}
-                  btnText={"Je le veux !"}
-                  setModalOpen={setModalOpen}
-                  modalTitle={"Produit ajouté avec succes!"}
-                  setModalTitle={setModalTitle}
-                /> */}
-              </div>
+            <div className="flex justify-center md:justify-end self-center md:self-end pt-10 md:pt-0">
+              <button
+                type="button"
+                className="uppercase justify-center items-center w-40 h-10 shadow-sm text-md text-white bg-black focus:outline-none"
+              >
+                <Link href={"/register"}>
+                  <a>Je le veux !</a>
+                </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -160,9 +141,6 @@ function SingleProductList({ product, isCatalogue }) {
                       : productState?.name}
                   </h3>
                   <h2 className="leading-none text-gray-700 text-sm">
-                    {/* {productState?.legend?.length > 27
-                      ? productState?.legend.slice(0, 27).concat("...")
-                      : productState?.legend} */}
                     {productState?.display_categorie.toUpperCase()}
                   </h2>
                 </div>
