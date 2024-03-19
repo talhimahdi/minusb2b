@@ -142,7 +142,7 @@ export default function ActionCard({ onLogin, errorMessage = "" }) {
                     </Link>
                   </div>
                   <div className="flex flex-col items-center mb-5 md:mb-0">
-                    <p>Vous n'avez pas de compte ?</p>
+                    <p>Vous n&apos;avez pas de compte ?</p>
                     <Link href={"/register"}>
                       <a className="underline ">
                         Je crée mon compte
