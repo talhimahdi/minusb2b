@@ -233,25 +233,23 @@ export default function RegisterForm({ onRegister, errorMessage }) {
                     })
                   }
                 >
-                  <option value={"Concept store"}>Concept store</option>
-                  <option value={"Boutique déco"}>Boutique déco</option>
-                  <option value={"Librairie généraliste"}>
-                    Librairie généraliste
-                  </option>
-                  <option value={"Librairie Jeunesse"}>
-                    Librairie Jeunesse
-                  </option>
+                  <option value={"Concept store indé"}>Concept store indé</option>
+                  <option value={"Boutique déco indé"}>Boutique déco indé</option>
+                  <option value={"Boutique déco enfants"}>Boutique déco enfants</option>
                   <option value={"Papeterie"}>Papeterie</option>
                   <option value={"Jouets"}>Jouets</option>
-                  <option value={"Distribution spécialée"}>
-                    Distribution spécialée
-                  </option>
-                  <option value={"Site"}>Site</option>
-                  <option value={"Presse"}>Presse</option>
+                  <option value={"Maison de la Presse"}>Maison de la Presse</option>
+                  <option value={"Librairie Généraliste"}>Librairie Généraliste</option>
+                  <option value={"Librairie Jeunesse"}>Librairie Jeunesse</option>
+                  <option value={"Chaîne librairies"}>Chaîne librairies</option>
+                  <option value={"Chaîne lifestyles"}>Chaîne lifestyles</option>
+                  <option value={"Site web"}>Site web</option>
                   <option value={"Magasin bio"}>Magasin bio</option>
+                  <option value={"Jardinerie"}>Jardinerie</option>
                   <option value={"Distributeur"}>Distributeur</option>
                   <option value={"Collab"}>Collab</option>
                   <option value={"Boutique de musée"}>Boutique de musée</option>
+                  <option value={"Cadeau d’affaires"}>Cadeau d’affaires</option>
                 </select>
               </div>
             </div>
