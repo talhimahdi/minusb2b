@@ -4,7 +4,7 @@ import ProductPreview from "./ProductPreview";
 import Link from "next/link";
 import ResponseModal from "./ResponseModal";
 
-function SingleProductList({ product, isCatalogue }) {
+function SingleProductList({ product, isCatalogue, isKencreEligibility }) {
   const [productState, setProductState] = useState(product);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -183,17 +183,46 @@ function SingleProductList({ product, isCatalogue }) {
                     </span>
                   </div>
                 </div>
-                <AddToCart
-                  max={150}
-                  min={1}
-                  product={productState}
-                  idProduct={productState?.id}
-                  btnVisible={true}
-                  btnText={"Je le veux !"}
-                  setModalOpen={setModalOpen}
-                  modalTitle={"Produit ajouté avec succes!"}
-                  setModalTitle={setModalTitle}
-                />
+
+
+                {
+                  productState.reference.startsWith("S0") ? (
+
+                    isKencreEligibility ? (
+                      <AddToCart
+                        max={150}
+                        min={1}
+                        product={productState}
+                        idProduct={productState?.id}
+                        btnVisible={true}
+                        btnText={"Je le veux !"}
+                        setModalOpen={setModalOpen}
+                        modalTitle={"Produit ajouté avec succes!"}
+                        setModalTitle={setModalTitle}
+                      />
+                    ) : (
+                      <div class="bg-black w-52 justify-end py-2 text-center">
+                        <a href="mailto:contact@minus-editions.fr" class="h-full w-52 text-white block">
+                          Contactez Minus
+                          {/* {productState.reference} */}
+                        </a>
+                      </div>
+                    )
+                  ) : (
+                    <AddToCart
+                      max={150}
+                      min={1}
+                      product={productState}
+                      idProduct={productState?.id}
+                      btnVisible={true}
+                      btnText={"Je le veux !"}
+                      setModalOpen={setModalOpen}
+                      modalTitle={"Produit ajouté avec succes!"}
+                      setModalTitle={setModalTitle}
+                    />
+                  )
+                }
+
               </div>
             </div>
           </div>

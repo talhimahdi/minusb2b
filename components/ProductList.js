@@ -12,7 +12,8 @@ function ProductList({
   onCategoryChange,
   term,
   onChangeTerm,
-  isCatalogue = false
+  isCatalogue = false,
+  isKencreEligibility = false
 }) {
   const [isEmptyResult, setEmptyResult] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -149,7 +150,7 @@ function ProductList({
           <>
             <section className="space-y-6 mt-4">
               {products?.map((product) => (
-                <SingleProductList key={product?.id} product={product} isCatalogue={isCatalogue} />
+                <SingleProductList key={product?.id} product={product} isCatalogue={isCatalogue} isKencreEligibility={isKencreEligibility} />
               ))}
             </section>
             <div className="text-center border-t border-gray-200 py-6 px-4 sm:px-6">

@@ -24,6 +24,8 @@ function Products() {
   const [isLoading, setLoading] = useState(false);
   const [isButtonSpin, setIsButtonSpin] = useState(false);
 
+  const [isKencreEligibility, setIsKencreEligibility] = useState(false);
+
   const getCategories = async () => {
     var requestOptions = {
       method: "GET",
@@ -112,6 +114,8 @@ function Products() {
         ]);
       }
 
+      setIsKencreEligibility(result?.results?.kencreEligibility);
+
       setIsButtonSpin(false);
       setLoading(false);
     }
@@ -163,6 +167,7 @@ function Products() {
             onCategoryChange={setIdCategorySearch}
             term={term}
             onChangeTerm={setTerm}
+            isKencreEligibility={isKencreEligibility}
           />
           <Cart
             open={auth?.openCart}
