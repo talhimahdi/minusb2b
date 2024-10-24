@@ -201,8 +201,8 @@ function SingleProductList({ product, isCatalogue, isKencreEligibility }) {
                         setModalTitle={setModalTitle}
                       />
                     ) : (
-                      <div class="bg-black w-52 justify-end py-2 text-center">
-                        <a href="mailto:contact@minus-editions.fr" class="h-full w-52 text-white block">
+                      <div className="bg-black w-52 justify-end py-2 text-center">
+                        <a href="mailto:contact@minus-editions.fr" className="h-full w-52 text-white block">
                           Contactez Minus
                           {/* {productState.reference} */}
                         </a>
