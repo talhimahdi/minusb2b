@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 import AddToCart from "./AddToCart";
 import ResponseModal from "./ResponseModal";
 
-export default function ProductPreview({ isOpen, setIsOpen, product }) {
+export default function ProductPreview({ isOpen, setIsOpen, product, isKencreEligibility }) {
   const [productState, setProductState] = useState(product);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
@@ -86,8 +86,8 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
                         }}
                         // Navigation arrows
                         navigation
-                        // onSlideChange={() => console.log("slide change")}
-                        // onSwiper={(swiper) => console.log(swiper)}
+                      // onSlideChange={() => console.log("slide change")}
+                      // onSwiper={(swiper) => console.log(swiper)}
                       >
                         {productState?.images?.map((image, index) => (
                           <SwiperSlide key={index} className="w-full">
@@ -134,17 +134,43 @@ export default function ProductPreview({ isOpen, setIsOpen, product }) {
                       </div>
 
                       <div className="mt-10 flex items-center justify-center sm:justify-start">
-                        <AddToCart
-                          max={150}
-                          min={1}
-                          product={productState}
-                          idProduct={productState?.id}
-                          btnVisible={true}
-                          btnText={"Je le veux !"}
-                          setModalOpen={setModalOpen}
-                          modalTitle={"Produit ajouté avec succes!"}
-                          setModalTitle={setModalTitle}
-                        />
+                        {
+                          productState.reference.startsWith("S0") ? (
+
+                            isKencreEligibility ? (
+                              <AddToCart
+                                max={150}
+                                min={1}
+                                product={productState}
+                                idProduct={productState?.id}
+                                btnVisible={true}
+                                btnText={"Je le veux !"}
+                                setModalOpen={setModalOpen}
+                                modalTitle={"Produit ajouté avec succes!"}
+                                setModalTitle={setModalTitle}
+                              />
+                            ) : (
+                              <div className="bg-black w-52 justify-end py-2 text-center">
+                                <a href="mailto:contact@minus-editions.fr" className="h-full w-52 text-white block">
+                                  Contactez Minus
+                                  {/* {productState.reference} */}
+                                </a>
+                              </div>
+                            )
+                          ) : (
+                            <AddToCart
+                              max={150}
+                              min={1}
+                              product={productState}
+                              idProduct={productState?.id}
+                              btnVisible={true}
+                              btnText={"Je le veux !"}
+                              setModalOpen={setModalOpen}
+                              modalTitle={"Produit ajouté avec succes!"}
+                              setModalTitle={setModalTitle}
+                            />
+                          )
+                        }
                       </div>
                     </div>
                   </div>

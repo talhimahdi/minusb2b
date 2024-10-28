@@ -231,6 +231,7 @@ function SingleProductList({ product, isCatalogue, isKencreEligibility }) {
             setIsOpen={setPreviewOpen}
             product={productState}
             onchange={setProductState}
+            isKencreEligibility={isKencreEligibility}
           />
         </div>
       </>
