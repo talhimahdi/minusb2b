@@ -1,5 +1,5 @@
 import { SearchIcon } from '@heroicons/react/solid';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SingleProductList from './SingleProductList';
 
 function ProductList({
@@ -68,6 +68,9 @@ function ProductList({
       onSearch();
     }
   };
+  useEffect(() => {
+    idCategorySearch !== 0 && onSearch();
+  }, [idCategorySearch]);
   return (
     <div className="bg-primary pt-20 -mt-20 -mb-10">
       <div className="max-w-sm  mx-5 md:mx-auto md:max-w-7xl my-5 py-5">

@@ -92,6 +92,8 @@ export default function Footer({ pageName, withMargin }) {
                   <li>
                     <a
                       href={auth?.frontContent?.instagram_link}
+                      target="_blank"
+                      rel="noreferrer"
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Instagram
@@ -100,6 +102,8 @@ export default function Footer({ pageName, withMargin }) {
                   <li>
                     <a
                       href={auth?.frontContent?.facebooklink}
+                      target="_blank"
+                      rel="noreferrer"
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Facebook
@@ -108,6 +112,8 @@ export default function Footer({ pageName, withMargin }) {
                   <li>
                     <a
                       href={auth?.frontContent?.pinterest_link}
+                      target="_blank"
+                      rel="noreferrer"
                       className="text-sm text-gray-900 hover:text-gray-500 font-semibold"
                     >
                       Pinterest
