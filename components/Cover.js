@@ -1,21 +1,15 @@
-import Image from "next/image";
 import React from "react";
-import coverImage from "../public/images/cover_image.png";
+import { useAuth } from "../RestHelper/useAuth";
 
 export default function Cover() {
+  const auth = useAuth();
+
   return (
     <div className="bg-primary max-w-6xl mx-auto relative h-40 md:h-52">
-      {/* <Image
-        src={coverImage}
-        placeholder="blur"
-        layout="fill"
-        objectFit="cover"
-        alt=""
-      /> */}
       <img
-        src={"/images/cover_image.png"}
+        src={auth?.frontContent?.hero_banner_url}
         alt=""
-        className="object-cover h-full"
+        className="object-cover h-full w-full"
       />
     </div>
   );
