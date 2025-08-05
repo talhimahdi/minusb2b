@@ -79,6 +79,10 @@ export default {
   frontContent:
     process.env.BASE_URL +
     `getFrontContent?output_format=JSON&ws_key=${process.env.WS_KEY}`,
+  
+  loginPopup:
+    process.env.BASE_URL +
+    `loginPopup?output_format=JSON&ws_key=${process.env.WS_KEY}`,
 
   editPassword:
     process.env.BASE_URL +

@@ -6,6 +6,7 @@ import BottomCart from "../components/BottomCart";
 import Cart from "../components/Cart";
 import { useAuth } from "../RestHelper/useAuth";
 import Loader from "../components/Loader";
+import LoginPopupModal from "../components/LoginPopupModal";
 
 import localStorageX from "../configs/localStorage";
 
@@ -182,6 +183,14 @@ function Products() {
           />
         </div>
       )}
+
+      {/* Login Popup Modal - shown once per session after login */}
+      <LoginPopupModal
+        isOpen={auth?.showLoginPopup || false}
+        setIsOpen={() => {}}
+        popupData={auth?.loginPopup}
+        onClose={auth?.markLoginPopupAsShown}
+      />
     </>
   );
 }
